@@ -315,6 +315,22 @@ th{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;le
 .nextl{display:flex;flex-direction:column;gap:2px;text-align:left;width:100%;padding:12px 16px;border-top:1px solid var(--line);font-size:14px}
 .nextl small{color:var(--muted)}
 
+/* Démarrer dans la fiche + compteur */
+.stage .demo{display:inline-block;font-family:var(--f-body);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:var(--surface);border-radius:99px;padding:3px 9px;box-shadow:0 0 0 1px var(--line)}
+.runw{padding:0 12px 12px}
+.btn.run{width:100%;justify-content:flex-start;gap:12px;padding:10px 16px;min-height:60px;text-align:left}
+.btn.run span{display:flex;flex-direction:column;line-height:1.15}
+.btn.run small{font-weight:600;font-size:13px;opacity:.85}
+.btn.run svg{width:22px;height:22px;flex:none}
+.pl-ring .ctr{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.pl-ring .pl-num{position:static;display:block}
+.pl-small{font-size:12px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums;text-align:center;line-height:1.2;max-width:110px}
+.pl-donebtn{width:100%}
+.pl-donebtn svg{width:20px;height:20px}
+.tins{display:flex;flex-direction:column;gap:8px;width:100%;max-width:420px;text-align:left}
+.tin{display:grid;grid-template-columns:1fr 96px 34px;gap:8px;align-items:center;font-size:14px}
+.tin small{color:var(--muted)}
+
 /* Bonhomme */
 .fig polyline,.fig path{fill:none;stroke-linecap:round;stroke-linejoin:round}
 .fig .leg{stroke-width:7}.fig .lft{stroke:var(--blue)}.fig .rgt{stroke:var(--red)}
@@ -470,60 +486,90 @@ const CATS={force:"Force",plyo:"Explosivité",core:"Gainage",agil:"Agilité",car
 const EX={
 echauf:{n:"Échauffement dynamique",cat:"mob",
   why:"Monte la température des muscles et prépare genoux et chevilles aux appuis. On ne saute jamais à froid.",
-  cues:["2 min de jumping jacks","10 balanciers de jambe avant/arrière et 10 latéraux, chaque jambe","10 squats, 10 fentes marchées, 10 fentes latérales","3 accélérations de sauts sur place, de plus en plus dynamiques"],
+  cues:["Jumping jacks, 2 min","Balanciers avant-arrière, 10 par jambe","Balanciers latéraux, 10 par jambe","10 squats, 10 fentes avant, 10 fentes latérales","Montées de genoux 20 s, rebonds chevilles 20 s. Touche Démarrer : tout s’enchaîne."],
   avoid:"Écourter l’échauffement les jours de sauts.",
   anim:{fr:[[fS({l:[-3,-3],r:[3,3],la:[-12,-6],ra:[12,6]}),200,60,"Jumping jacks, 2 min","out"],[fS({kl:20,kr:20,l:[-10,-10],r:[10,10],la:[-95,-95],ra:[95,95],lift:10}),200,0,"Jumping jacks, 2 min","in"],[fS({l:[-17,-17],r:[17,17],la:[-165,-172],ra:[165,172]}),200,60,"Jumping jacks, 2 min","out"],[fS({kl:20,kr:20,l:[-10,-10],r:[10,10],la:[-95,-95],ra:[95,95],lift:10}),200,0,"Jumping jacks, 2 min","in"]],th:2}},
-revlunge:{n:"Fente arrière lente",cat:"force",uni:1,
+revlunge:{n:"Fente arrière lente",cat:"force",side:"swap",uni:1,
   why:"Force de la jambe avant en freinage, genou stable : c’est la jambe d’appui qui encaisse le virage.",
   cues:["Debout, mains sur les hanches","Recule une jambe et descends en 3 s, genou arrière qui frôle le sol","Genou avant au-dessus de la cheville, aligné avec le pied","Pousse dans le pied avant pour revenir debout"],
   avoid:"Le genou avant qui rentre vers l’intérieur.",easy:"Descendre moins bas.",hard:"Descente 4 s + pause 2 s en bas, ou 1,5 répétition (remonte à mi-hauteur, redescends, remonte).",
   anim:{anchor:"ran",fr:[[P({t:3,r:[0,0],l:[0,0],la:[-25,70],ra:[-20,75]}),1400,250,"Recule une jambe, descends en 3 s"],[P({t:6,r:[70,-10],l:[-10,-84],la:[-25,70],ra:[-20,75],fl:30}),800,250,"Pousse dans le pied avant pour revenir"]],th:1}},
-bulgare:{n:"Squat bulgare",cat:"force",uni:1,eq:"chair",
+jj:{n:"Jumping jacks",cat:"mob",
+  why:"Fait monter le cardio et la température en douceur, tout le corps participe.",
+  cues:["Saute en écartant bras et jambes","Reviens pieds joints, bras le long du corps","Rythme régulier, sur l’avant du pied"],
+  avoid:"Atterrir sur les talons.",easy:"Sans sauter : un pas sur le côté à chaque fois.",hard:"Plus vite.",
+  anim:null},
+swing_fb:{n:"Balanciers avant-arrière",cat:"mob",side:"swap",
+  why:"Mobilise les hanches et étire les ischios avant les sauts.",
+  cues:["Debout sur une jambe, bras écartés pour l’équilibre","Balance l’autre jambe d’avant en arrière","Amplitude de plus en plus grande","Buste droit, sans te cambrer"],
+  avoid:"Se pencher en avant ou forcer l’amplitude d’entrée.",easy:"Une main sur un mur.",hard:"Plus haut, sans perdre l’équilibre.",
+  anim:{anchor:"lan",fr:[[P({t:2,l:[0,0],r:[-35,-30],la:[45,60],ra:[-30,-20]}),600,0,"Balance d’avant en arrière, buste droit"],[P({t:-2,l:[0,0],r:[65,55],la:[-20,-10],ra:[40,55]}),600,0,"Balance d’avant en arrière, buste droit"]],th:1}},
+swing_lat:{n:"Balanciers latéraux",cat:"mob",side:"swap",
+  why:"Ouvre les hanches dans le plan latéral, celui des virages.",
+  cues:["Debout sur une jambe, bras écartés","Balance l’autre jambe sur le côté","Puis devant toi, en croisant","Garde le bassin face à toi"],
+  avoid:"Tourner le bassin avec la jambe.",easy:"Une main sur un mur.",hard:"Plus d’amplitude.",
+  anim:{anchor:"lan",fr:[[fS({l:[-2,-2],r:[38,38],la:[-75,-85],ra:[75,85]}),600,0,"Sur le côté…"],[fS({l:[-2,-2],r:[-22,-22],la:[-75,-85],ra:[75,85]}),600,0,"…puis devant toi, en croisant"]],th:0}},
+squat:{n:"Squat",cat:"mob",
+  why:"Réveille cuisses, fessiers et chevilles dans la position de base du ski.",
+  cues:["Pieds largeur d’épaules","Descends en poussant les fesses en arrière, bras devant","Cuisses parallèles au sol, talons au sol","Remonte en poussant dans les talons"],
+  avoid:"Genoux qui rentrent vers l’intérieur.",easy:"Descendre moins bas.",hard:"Pause 2 s en bas.",
+  anim:{anchor:"ran",fr:[[P({t:3,l:[2,2],r:[-1,-1],la:[10,14],ra:[-4,0]}),1000,150,"Descends, fesses en arrière"],[P({t:40,l:[82,-25],r:[86,-27],la:[80,85],ra:[76,80]}),900,150,"Pousse dans les talons"]],th:1}},
+walklunge:{n:"Fentes avant alternées",cat:"mob",side:"alt",
+  why:"Ouvre les hanches et prépare les cuisses aux appuis sur une jambe.",
+  cues:["Grand pas en avant","Genou arrière près du sol, buste droit","Pousse pour revenir","Change de jambe à chaque fois"],
+  avoid:"Genou avant qui dépasse loin devant le pied.",easy:"Pas plus petit.",hard:"Pause 2 s en bas.",
+  anim:{fr:[[P({t:3,l:[2,2],r:[-1,-1],la:[-25,70],ra:[-20,75]}),700,150,"Grand pas en avant"],[P({t:4,r:[70,-10],l:[-10,-84],la:[-25,70],ra:[-20,75],fl:30,px:-14}),700,200,"Genou arrière près du sol, reviens"],[P({t:3,l:[2,2],r:[-1,-1],la:[-25,70],ra:[-20,75]}),700,150,"Puis l’autre jambe"],[P({t:4,l:[70,-10],r:[-10,-84],la:[-25,70],ra:[-20,75],fr:30,px:-14}),700,200,"Genou arrière près du sol, reviens"]],th:1}},
+highknees:{n:"Montées de genoux",cat:"mob",per:2,
+  why:"Active la fréquence des appuis et monte le cardio juste avant l’effort.",
+  cues:["Sur place, genoux à hauteur de hanches","Bras qui accompagnent","Sur l’avant du pied, rapide"],
+  avoid:"Se pencher en arrière.",easy:"Plus lent.",hard:"Plus vite.",
+  anim:{fr:[[P({t:8,r:[95,0],l:[0,5],la:[50,130],ra:[-40,40],fl:60,lift:4}),180,0,"Genoux hauts, rapide"],[P({t:8,l:[95,0],r:[0,5],ra:[50,130],la:[-40,40],fr:60,lift:4}),180,0,"Genoux hauts, rapide"]],th:0}},
+bulgare:{n:"Squat bulgare",cat:"force",side:"swap",uni:1,eq:"chair",
   why:"Le roi de l’unilatéral. Il construit la force de la jambe d’appui extérieure en virage et la stabilité genou-hanche.",
   cues:["Pied arrière posé sur une chaise, un banc ou un muret","Descends en 3 s jusqu’à ce que le genou arrière frôle le sol","Genou avant aligné avec le 2e orteil, il ne rentre pas vers l’intérieur","Pousse dans tout le pied avant pour remonter"],
   avoid:"Le genou avant qui s’effondre vers l’intérieur.",easy:"Descente plus rapide, amplitude réduite.",hard:"Descente 4 s + pause 2 s en bas, ou 1,5 répétition (remonte à mi-hauteur, redescends, remonte).",
   anim:{anchor:"ran",fr:[[P({t:8,r:[20,-2],l:[-25,-80],la:[-25,70],ra:[-20,75],fl:-90}),1500,250,"Descends en 3 s"],[BULB,800,250,"Pousse dans le pied avant"]],props:[{k:"box",at:"lan",f:0,w:40,dx:-14}]}},
-bulgjump:{n:"Squat bulgare sauté",cat:"plyo",uni:1,eq:"chair",
+bulgjump:{n:"Squat bulgare sauté",cat:"plyo",rt:1.6,side:"swap",uni:1,eq:"chair",
   why:"La puissance d’une seule jambe, en explosif. C’est la poussée qui relance le ski en sortie de virage.",
   cues:["Même position que le squat bulgare, pied arrière sur la chaise (ou le banc)","Descends, bras en arrière","Explose vers le haut : le pied avant décolle","Réception souple et redescends directement"],
   avoid:"Se réceptionner jambe tendue ou genou vers l’intérieur.",easy:"Squat bulgare rapide sans décoller.",hard:"Enchaîner sans pause, le plus haut possible.",
   anim:{anchor:"lan",fr:[[P({t:18,r:[75,-10],l:[-7,-128],la:[-30,-20],ra:[-35,-25],fl:-90}),260,220,"Descends, bras en arrière","out"],[P({t:6,r:[15,0],l:[-35,-55],la:[150,160],ra:[145,155],fl:-90,fr:45}),380,60,"Explose : le pied avant décolle","in"]],props:[{k:"box",at:"lan",f:0,w:40,dx:-14}],th:1}},
-skatersq:{n:"Squat patineur",cat:"force",uni:1,
+skatersq:{n:"Squat patineur",cat:"force",side:"swap",uni:1,
   why:"Un squat sur une jambe sans aucun matériel. Il construit la force et le contrôle de la jambe d’appui, comme en virage serré.",
   cues:["Debout sur une jambe, l’autre pliée derrière toi","Descends en penchant le buste, bras devant","Le genou arrière vient frôler le sol, juste derrière le talon d’appui","Remonte en poussant dans le pied d’appui"],
   avoid:"Le genou d’appui qui rentre vers l’intérieur, ou se laisser tomber sur le genou arrière.",easy:"Descendre à mi-hauteur.",hard:"Descente 4 s, pause 1 s en bas.",
   anim:{anchor:"ran",fr:[[P({t:5,r:[0,0],l:[-5,-80],la:[20,40],ra:[15,35],fl:-20}),1500,250,"Descends, genou arrière vers le sol"],[P({t:35,r:[80,-25],l:[-15,-100],la:[80,85],ra:[78,82],fl:-20}),900,250,"Frôle le sol et remonte"]],th:1}},
-pistolfull:{n:"Pistol squat",cat:"force",uni:1,
+pistolfull:{n:"Pistol squat",cat:"force",side:"swap",uni:1,
   why:"Le test ultime de force et d’équilibre sur une jambe. Si tu le maîtrises, l’appui extérieur ne te lâchera pas.",
   cues:["Sur une jambe, l’autre tendue devant","Bras devant, descends le plus bas possible en 3 s","Talon au sol, genou aligné avec le pied","Remonte sans élan"],
   avoid:"Le talon qui décolle ou le dos qui s’enroule en bas.",easy:"Descends seulement à mi-hauteur, ou fais le squat patineur.",hard:"Pause 3 s en bas, remontée lente.",
   anim:{anchor:"ran",fr:[[P({t:5,r:[0,0],l:[45,30],la:[85,88],ra:[82,86]}),1700,250,"Descends tout en bas en 3 s"],[P({t:45,r:[100,-38],l:[85,85],la:[95,95],ra:[90,92]}),1000,250,"Remonte sans élan"]]}},
-rdl1:{n:"Soulevé de terre 1 jambe",cat:"force",uni:1,
+rdl1:{n:"Soulevé de terre 1 jambe",cat:"force",side:"swap",uni:1,
   why:"Ischios et fessiers protègent le ligament croisé et gardent ton bassin stable quand les skis accélèrent.",
   cues:["Genou d’appui légèrement fléchi","Le buste descend et la jambe libre monte en même temps, comme une planche","Bassin bien horizontal, ne t’ouvre pas sur le côté","Remonte en serrant le fessier"],
   avoid:"Arrondir le dos.",easy:"Une main posée sur un mur.",hard:"Descente 4 s, et genou libre qui monte explosif en remontant.",
   anim:{anchor:"ran",fr:[[P({t:3,r:[0,0],l:[-4,-4],la:[2,0],ra:[0,0]}),1500,300,"Bascule : le buste descend, la jambe monte"],[P({t:84,r:[14,-2],l:[-94,-94],la:[2,0],ra:[-2,0],fl:0}),1100,300,"Remonte en serrant le fessier"]]}},
-kneedrive:{n:"Fente + genou explosif",cat:"plyo",uni:1,
+kneedrive:{n:"Fente + genou explosif",cat:"plyo",side:"swap",rt:2.5,uni:1,
   why:"Passer de la position basse à l’extension en une fraction de seconde : c’est la relance du ski en sortie de virage.",
   cues:["Descends en fente arrière","Explose vers le haut sur la jambe avant","Le genou arrière monte jusqu’à la hanche, bras opposé en avant","Tiens 1 s en équilibre, puis recule à nouveau"],
   avoid:"Perdre l’équilibre en haut ou se relever lentement.",easy:"Sans tenir l’équilibre en haut.",hard:"Petit saut sur la jambe d’appui en haut.",
   anim:{anchor:"ran",fr:[[P({t:8,r:[70,-10],l:[-10,-84],la:[40,70],ra:[-35,-10],fl:30}),360,350,"Explose : genou vers le haut","out"],[P({t:4,r:[0,0],l:[92,0],la:[-40,-20],ra:[70,110]}),750,400,"Tiens 1 s, puis recule en fente"]],th:1}},
-lunge_lat:{n:"Fente latérale",cat:"force",uni:1,
+lunge_lat:{n:"Fente latérale",cat:"force",side:"alt",uni:1,
   why:"Adducteurs et mobilité de hanche dans le plan latéral, celui des virages.",
   cues:["Pieds très écartés","Descends sur une jambe, l’autre reste tendue","Talon de la jambe fléchie au sol","Dos droit, poitrine ouverte"],
   avoid:"Décoller le talon de la jambe fléchie.",easy:"Descendre moins bas.",hard:"Pause 3 s en bas, remontée explosive.",
   anim:{fr:[[fS({l:[-36,-36],r:[36,36],la:[-20,120],ra:[20,-120]}),700,200,"Pieds très écartés"],[fS({t:-8,kr:25,l:[-49,-49],r:[70,-15],la:[-20,120],ra:[20,-120],px:16}),700,500,"Assise sur la jambe droite"],[fS({l:[-36,-36],r:[36,36],la:[-20,120],ra:[20,-120]}),700,200,"Repasse au centre"],[fS({t:8,kl:25,l:[-70,15],r:[49,49],la:[-20,120],ra:[20,-120],px:-16}),700,500,"Puis sur la gauche"]],th:1}},
-hambridge:{n:"Pont ischios 1 jambe",cat:"force",uni:1,
+hambridge:{n:"Pont ischios 1 jambe",cat:"force",side:"swap",uni:1,
   why:"Le talon loin des fesses fait travailler les ischios, les muscles qui protègent le ligament croisé du genou.",
   cues:["Sur le dos, un talon posé loin devant toi, jambe presque tendue","L’autre jambe tendue vers le plafond","Pousse dans le talon et monte les hanches","Tiens 2 s en haut, redescends en 3 s"],
   avoid:"Cambrer le bas du dos ou pousser avec les épaules.",easy:"Deux pieds au sol.",hard:"Talon encore plus loin, descente en 4 s. Ou nordic curl si quelqu’un peut te tenir les chevilles.",
   anim:{anchor:"ran",fr:[[P({t:-90,hd:-90,r:[104,62.2],l:[175,175],la:[90,90],ra:[90,90],fr:170,fl:170}),900,300,"Talon loin, pousse dans le talon"],[P({t:-110,hd:-90,r:[80,63.6],l:[160,160],la:[90,90],ra:[90,90],fr:170,fl:170}),1200,700,"Hanches hautes 2 s, redescends lentement"]],th:1}},
-sidestar:{n:"Gainage latéral étoile",cat:"core",uni:1,
+sidestar:{n:"Gainage latéral étoile",cat:"core",side:"swap",uni:1,
   why:"Moyen fessier et obliques : ils empêchent le genou de rentrer vers l’intérieur quand le ski accroche.",
   cues:["Gainage latéral sur l’avant-bras, coude sous l’épaule","Corps aligné, hanches hautes","Monte la jambe du dessus et tiens 2 s","Redescends sans laisser tomber les hanches"],
   avoid:"Hanches qui s’affaissent ou partent en arrière.",easy:"Genou du dessous posé au sol.",hard:"Jambe du dessus tenue en l’air toute la série.",
   anim:{fr:[[P({t:72,l:[-81.5,-81.5],r:[-81,-81],la:[0,90],ra:[-75,-100],fl:170,fr:170}),600,600,"Hanches hautes, corps aligné"],[P({t:72,l:[-108,-108],r:[-81,-81],la:[0,90],ra:[-75,-100],fl:170,fr:170}),600,800,"Monte la jambe du dessus, 2 s"]],th:1}},
-copen:{n:"Planche de Copenhague",cat:"core",uni:1,eq:"chair",
+copen:{n:"Planche de Copenhague",cat:"core",side:"swap",uni:1,eq:"chair",
   why:"Adducteurs et gainage latéral : stabilise les genoux quand les skis divergent ou accrochent.",
   cues:["Gainage latéral sur l’avant-bras","Pied (ou genou) du dessus posé sur une chaise, un banc ou un muret","Monte les hanches bien alignées","Jambe du dessous décollée"],
   avoid:"Hanches qui tombent ou partent en arrière.",easy:"Genou posé sur la chaise au lieu du pied.",hard:"Monte et descends les hanches lentement pendant la série.",
@@ -533,22 +579,22 @@ wallsit:{n:"Chaise contre le mur",cat:"force",eq:"wall",
   cues:["Dos plaqué au mur, cuisses parallèles au sol","Genoux au-dessus des chevilles","Respire calmement","Variante : tends une jambe quelques secondes, puis l’autre"],
   avoid:"Mains sur les cuisses pour pousser.",easy:"Moins bas.",hard:"Sur une jambe, en alternant toutes les 10 s.",
   anim:{fr:[[P({t:0,l:[90,0],r:[88,0],la:[90,90],ra:[88,88]}),600,1000,"Cuisses parallèles au sol"],[P({t:0,l:[90,90],r:[88,0],la:[90,90],ra:[88,88]}),600,1200,"Tends la jambe gauche"],[P({t:0,l:[90,0],r:[88,0],la:[90,90],ra:[88,88]}),600,1000,"Repose"],[P({t:0,l:[90,0],r:[88,88],la:[90,90],ra:[88,88]}),600,1200,"Tends la jambe droite"]],props:[{k:"wall",at:"pel",f:0,dx:-14}],th:0}},
-calf:{n:"Mollets 1 jambe",cat:"force",uni:1,
+calf:{n:"Mollets 1 jambe",cat:"force",side:"swap",uni:1,
   why:"Chevilles solides et réactives dans la chaussure ; aide à rester en avant sur les skis.",
   cues:["Au sol, sur une jambe","Monte le plus haut possible sur la pointe, tiens 1 s","Redescends lentement, le talon frôle le sol","Une main au mur pour l’équilibre"],
   avoid:"Rebondir vite en bas.",easy:"Deux pieds.",hard:"Descente 4 s, pause 2 s en haut.",
   anim:{fr:[[P({t:2,r:[0,0],l:[12,-60],ra:[70,80],la:[60,70]}),700,250,"Monte sur la pointe"],[P({t:2,r:[0,0],l:[12,-60],ra:[70,80],la:[60,70],fr:30}),700,500,"Tiens 1 s, redescends lentement"]],props:[{k:"wall",at:"rw",f:0,dx:3}]}},
-hipthrust:{n:"Pont fessier 1 jambe",cat:"force",uni:1,
+hipthrust:{n:"Pont fessier 1 jambe",cat:"force",side:"swap",uni:1,
   why:"Des fessiers puissants stabilisent le bassin et poussent fort en fin de virage.",
   cues:["Dos au sol, un pied au sol, l’autre jambe tendue","Pousse dans le talon et monte le bassin","Serre les fesses 1 s en haut","Le bassin reste à plat, il ne pivote pas"],
   avoid:"Cambrer le bas du dos.",easy:"Deux pieds au sol.",hard:"Pause 3 s en haut, descente en 3 s.",
   anim:{anchor:"ran",fr:[[P({t:-90,hd:-90,r:[140,0],l:[140,140],la:[90,90],ra:[90,90]}),800,300,"Pousse dans le talon"],[P({t:-126,hd:-90,r:[95,-5],l:[100,100],la:[90,90],ra:[90,90]}),800,700,"Serre les fesses 1 s"]]}},
-skater:{n:"Bonds du patineur",cat:"plyo",uni:1,
+skater:{n:"Bonds du patineur",cat:"plyo",side:"alt",uni:1,
   why:"Le mouvement le plus proche du ski : poussée latérale d’une jambe et réception stable sur l’autre, comme un changement de carre.",
   cues:["Bondis sur le côté le plus loin possible","Réception sur une jambe, genou fléchi, tiens 1 s","La jambe libre passe derrière","Repars de l’autre côté"],
   avoid:"Genou qui rentre à la réception.",easy:"Petits bonds, pied libre qui touche le sol.",hard:"Enchaînement continu, distance maximale.",
   anim:{fr:[[fS({t:-6,kr:55,kl:60,r:[24,-10],l:[30,55],la:[40,75],ra:[30,15],px:38}),380,450,"Réception sur une jambe, tiens 1 s","out"],[fS({kl:35,kr:35,l:[-14,6],r:[14,-6],la:[-15,-5],ra:[15,5],lift:26}),380,0,"Bondis loin sur le côté","in"],[fS({t:6,kl:55,kr:60,l:[-24,10],r:[-30,-55],ra:[-40,-75],la:[-30,-15],px:-38}),380,450,"Réception sur une jambe, tiens 1 s","out"],[fS({kl:35,kr:35,l:[-14,6],r:[14,-6],la:[-15,-5],ra:[15,5],lift:26}),380,0,"Bondis loin sur le côté","in"]],th:0}},
-squatjump:{n:"Squat sauté",cat:"plyo",
+squatjump:{n:"Squat sauté",cat:"plyo",rt:2,
   why:"Explosivité des deux jambes : la base de la puissance pour relancer.",
   cues:["Descends en demi-squat","Saute le plus haut possible, bras vers le haut","Réception souple et silencieuse, genoux dans l’axe","Pause 1 s entre chaque saut"],
   avoid:"Atterrir jambes tendues.",easy:"Sauts plus petits.",hard:"Enchaîner sans pause.",
@@ -558,57 +604,57 @@ pogo:{n:"Rebonds chevilles",cat:"plyo",
   cues:["Debout, jambes presque tendues","Petits rebonds rapides sur l’avant du pied","Contact au sol le plus court possible, comme sur un sol brûlant","Gainage serré, regard devant"],
   avoid:"Plier les genoux ou atterrir sur les talons.",easy:"Rebonds plus petits et plus lents.",hard:"Sur une jambe.",
   anim:{fr:[[P({t:3,l:[2,4],r:[-1,2],la:[10,30],ra:[-4,20],fl:40,fr:40}),140,30,"Contact au sol très court","out"],[P({t:3,l:[1,3],r:[-1,1],la:[10,30],ra:[-4,20],fl:25,fr:25,lift:12}),140,0,"Rebondis sur l’avant du pied","in"]],th:0}},
-linehop:{n:"Sauts latéraux rapides",cat:"agil",
+linehop:{n:"Sauts latéraux rapides",cat:"agil",per:2,
   why:"Vitesse des appuis et rythme, comme l’enchaînement serré des portes de slalom.",
   cues:["Pieds joints à côté d’une ligne au sol (joint de carrelage, bord de tapis) ou de ta bouteille couchée","Saute de part et d’autre le plus vite possible","Petits sauts, sur l’avant du pied","Buste stable, ce sont les jambes qui bougent"],
   avoid:"Sauter trop haut.",easy:"Un saut, une pause.",hard:"Sur une jambe.",
   anim:{fr:[[lineS(-18),150,30,"Petits sauts, le plus vite possible","out"],[lineA,150,0,"Petits sauts, le plus vite possible","in"],[lineS(18),150,30,"Petits sauts, le plus vite possible","out"],[lineA,150,0,"Petits sauts, le plus vite possible","in"]],props:[{k:"line",x:100}],th:0}},
-hurdle:{n:"Sauts par-dessus la bouteille",cat:"agil",eq:"bottle",
+hurdle:{n:"Sauts par-dessus la bouteille",cat:"agil",per:2,eq:"bottle",
   why:"Explosivité latérale et vitesse de contact au sol : le rythme du slalom avec plus d’amplitude.",
   cues:["Ta bouteille d’eau couchée au sol","Pieds joints, saute par-dessus en ramenant les genoux","Rebondis aussitôt de l’autre côté","Réceptions sur l’avant du pied, genoux dans l’axe"],
   avoid:"Faire une pause entre les sauts ou se réceptionner jambes tendues.",easy:"Une simple ligne au sol.",hard:"Bouteille debout, ou sur une jambe.",
   anim:{fr:[[hurS(-34),230,40,"Pieds joints, rebondis","out"],[hurA,230,0,"Genoux hauts par-dessus la bouteille","in"],[hurS(34),230,40,"Pieds joints, rebondis","out"],[hurA,230,0,"Genoux hauts par-dessus la bouteille","in"]],props:[{k:"rect",x:86,w:28,h:11,rx:5}],th:1}},
-splitjump:{n:"Fentes sautées",cat:"plyo",uni:1,
+splitjump:{n:"Fentes sautées",cat:"plyo",side:"alt",uni:1,
   why:"Puissance unilatérale et coordination rapide des deux jambes.",
   cues:["Position de fente","Saute et inverse les jambes en l’air","Réception en fente, genou arrière proche du sol","Bras opposés aux jambes"],
   avoid:"Genou avant qui rentre vers l’intérieur.",easy:"Fentes alternées sans saut.",hard:"Enchaîner sans pause.",
   anim:{fr:[[P({t:4,r:[70,-10],l:[-10,-84],la:[40,70],ra:[-35,-10],fl:30}),330,300,"Saute et inverse les jambes","out"],[P({t:2,l:[30,-20],r:[30,-20],la:[0,10],ra:[0,10],lift:24}),330,0,"Réception en fente","in"],[P({t:4,l:[70,-10],r:[-10,-84],ra:[40,70],la:[-35,-10],fr:30}),330,300,"Saute et inverse les jambes","out"],[P({t:2,l:[30,-20],r:[30,-20],la:[0,10],ra:[0,10],lift:24}),330,0,"Réception en fente","in"]],th:0}},
-broadjump:{n:"Saut en longueur pieds joints",cat:"plyo",
+broadjump:{n:"Saut en longueur pieds joints",cat:"plyo",rt:5,
   why:"Puissance horizontale et réception stable : apprendre à freiner fort sans que les genoux rentrent.",
   cues:["Pieds largeur de hanches, bras en arrière","Saute le plus loin possible vers l’avant","Réception en demi-squat, figée 2 s","Reviens en marchant et recommence"],
   avoid:"Réception jambes tendues ou genoux qui rentrent.",easy:"Saut plus court.",hard:"3 sauts enchaînés sans pause.",
   anim:{fr:[[P({t:40,l:[78,-25],r:[82,-27],la:[-55,-45],ra:[-60,-50],px:-45}),330,300,"Bras en arrière, pousse loin","out"],[P({t:20,l:[95,10],r:[98,8],la:[90,110],ra:[85,105],lift:30}),330,0,"Ramène les genoux","in"],[P({t:38,l:[80,-25],r:[84,-27],la:[75,85],ra:[70,80],px:45}),0,1100,"Réception figée 2 s"]],th:1}},
-hopstick:{n:"Saut 1 jambe + réception figée",cat:"plyo",uni:1,
+hopstick:{n:"Saut 1 jambe + réception figée",cat:"plyo",side:"swap",rt:4.5,uni:1,
   why:"Apprend au genou à encaisser sur une jambe sans plier vers l’intérieur. Clé de la prévention des blessures.",
   cues:["Sur une jambe, saute vers l’avant","Réception sur la même jambe","Fige la position 2 s, genou au-dessus du pied","Recule et recommence"],
   avoid:"Réception jambe tendue.",easy:"Petite distance.",hard:"Saut plus long, en diagonale ou par-dessus un obstacle.",
   anim:{fr:[[P({t:22,r:[40,-15],l:[10,-70],la:[-40,-20],ra:[-45,-25],px:-30}),330,300,"Saute sur une jambe","out"],[P({t:12,r:[20,-30],l:[30,-60],la:[100,120],ra:[95,115],lift:22}),330,0,"Réception sur la même jambe","in"],[P({t:35,r:[72,-22],l:[15,-75],la:[70,80],ra:[65,75],px:30}),0,1200,"Fige 2 s, genou au-dessus du pied"]],th:2}},
-hoplat:{n:"Sauts latéraux 1 jambe",cat:"agil",uni:1,
+hoplat:{n:"Sauts latéraux 1 jambe",cat:"agil",side:"swap",uni:1,
   why:"Indépendance des jambes et stabilité de cheville dans le plan latéral.",
   cues:["Sur une jambe à côté d’une ligne","Saute de l’autre côté et stabilise","Reviens","Hanche, genou et pied alignés"],
   avoid:"Pied qui s’écrase vers l’intérieur.",easy:"Petite amplitude.",hard:"Enchaîner vite, sans pause.",
-  anim:{fr:[[hopS(-18),260,350,"Stabilise sur la jambe droite","out"],[hopA,260,0,"Saute de l’autre côté","in"],[hopS(18),260,350,"Stabilise sur la jambe droite","out"],[hopA,260,0,"Saute de l’autre côté","in"]],props:[{k:"line",x:100}],th:0}},
+  anim:{fr:[[hopS(-18),260,350,"Stabilise sur une jambe","out"],[hopA,260,0,"Saute de l’autre côté","in"],[hopS(18),260,350,"Stabilise sur une jambe","out"],[hopA,260,0,"Saute de l’autre côté","in"]],props:[{k:"line",x:100}],th:0}},
 tuck:{n:"Sauts genoux-poitrine",cat:"plyo",
   why:"Vitesse de contraction et gainage en l’air.",
   cues:["Saute haut","Ramène vite les genoux vers la poitrine","Rallonge les jambes avant de toucher le sol","Réception souple"],
   avoid:"Dos qui s’arrondit à la réception.",easy:"Squat sauté.",hard:"Enchaîner 5 sauts sans pause.",
   anim:{fr:[[P({t:20,l:[50,-20],r:[52,-22],la:[-30,-20],ra:[-35,-25]}),300,250,"Saute haut","out"],[P({t:15,l:[110,-5],r:[112,-8],la:[60,140],ra:[55,135],lift:46,fl:20,fr:20}),330,80,"Genoux à la poitrine","in"]]}},
-plank:{n:"Planche",cat:"core",
+plank:{n:"Planche",cat:"core",side:"alt",
   why:"Un tronc solide garde les skis sous toi, même en position déséquilibrée.",
   cues:["Sur les avant-bras, coudes sous les épaules","Corps aligné, fesses serrées","Lève une jambe 2 s, puis l’autre","Respire"],
   avoid:"Fesses trop hautes ou dos creusé.",easy:"Sans lever de jambe.",hard:"Bras tendus et toucher d’épaule.",
   anim:{fr:[[PLK,500,700,"Gainée, fesses serrées"],[P(Object.assign({},PLK,{l:[-100,-100]})),500,900,"Lève la jambe gauche 2 s"],[PLK,500,700,"Gainée, fesses serrées"],[P(Object.assign({},PLK,{r:[-100,-100]})),500,900,"Puis la droite"]],th:0}},
-sideplank:{n:"Gainage latéral + rotation",cat:"core",
+sideplank:{n:"Gainage latéral + rotation",cat:"core",side:"swap",
   why:"Les obliques tiennent l’angulation : hanches vers l’intérieur, buste vers l’extérieur.",
   cues:["Coude sous l’épaule, corps aligné","Bras du dessus vers le ciel","Passe le bras sous le corps en tournant le buste","Hanches hautes tout du long"],
   avoid:"Hanches qui s’affaissent.",easy:"Genoux au sol, sans rotation.",hard:"Jambe du dessus levée.",
   anim:{fr:[[P({t:72,l:[-81.5,-81.5],r:[-81,-81],la:[0,90],ra:[180,180],fl:170,fr:170}),700,700,"Hanches hautes, bras au ciel"],[P({t:76,l:[-81.5,-81.5],r:[-81,-81],la:[0,90],ra:[-60,-80],fl:170,fr:170}),700,500,"Passe le bras sous le corps"]],th:0}},
-deadbug:{n:"Dead bug",cat:"core",
+deadbug:{n:"Dead bug",cat:"core",side:"alt",
   why:"Bras et jambes bougent, le tronc reste fixe : coordination et bas du dos protégé.",
   cues:["Sur le dos, bras vers le plafond, genoux à 90°","Tends une jambe et le bras opposé","Bas du dos collé au sol","Expire en tendant"],
   avoid:"Dos qui se décolle du sol.",easy:"Bouger seulement les jambes.",hard:"Plus lent, 4 s par mouvement.",
   anim:{fr:[[DB,700,250,"Bas du dos collé au sol"],[P(Object.assign({},DB,{l:[100,100],fl:100,ra:[-95,-95]})),700,450,"Jambe gauche + bras droit"],[DB,700,250,"Bas du dos collé au sol"],[P(Object.assign({},DB,{r:[100,100],fr:100,la:[-95,-95]})),700,450,"Puis l’autre côté"]]}},
-climber:{n:"Mountain climbers",cat:"core",
+climber:{n:"Mountain climbers",cat:"core",per:2,
   why:"Cardio et gainage : les genoux bougent vite sous un tronc fixe.",
   cues:["Mains sous les épaules","Ramène un genou vers la poitrine puis alterne","Hanches basses","Rythme régulier et rapide"],
   avoid:"Fesses en l’air.",easy:"Plus lent.",hard:"Plus vite, genou vers le coude opposé.",
@@ -618,12 +664,12 @@ shuffle:{n:"Pas chassés bas",cat:"agil",
   cues:["Position basse, pieds largeur d’épaules","Pas chassés rapides sans croiser les pieds","Reste à la même hauteur","Change de sens tous les 3 pas"],
   avoid:"Se redresser entre les pas.",easy:"Plus haut et plus lent.",hard:"Touche le sol de la main à chaque changement de sens.",
   anim:{fr:shuffleFr,th:0}},
-latsquat:{n:"Sauts latéraux en squat",cat:"plyo",
+latsquat:{n:"Sauts latéraux en squat",cat:"plyo",per:2,
   why:"Puissance latérale en restant basse, dans la position du skieur. Chaque réception travaille le freinage d’un virage, chaque poussée la relance.",
   cues:["Pieds largeur de hanches, descends en squat","Saute sur le côté (environ 1 m) en poussant fort","Réception en squat, genoux dans l’axe des pieds","Repars aussitôt dans l’autre sens, sans te relever"],
   avoid:"Se relever entre les sauts, ou genoux qui rentrent à la réception.",easy:"Pas chassés en squat au lieu de sauter.",hard:"Plus loin, et touche le sol de la main à chaque réception.",
   anim:{fr:[[fS({kl:85,kr:85,l:[-44,8],r:[44,-8],la:[-20,120],ra:[20,-120],px:-36}),300,260,"Reste basse… et pousse sur le côté","out"],[fS({kl:45,kr:45,l:[-18,6],r:[18,-6],la:[-65,-35],ra:[65,35],lift:26}),300,0,"Réception en squat, genoux dans l’axe","in"],[fS({kl:85,kr:85,l:[-44,8],r:[44,-8],la:[-20,120],ra:[20,-120],px:36}),300,260,"Reste basse… et pousse sur le côté","out"],[fS({kl:45,kr:45,l:[-18,6],r:[18,-6],la:[-65,-35],ra:[65,35],lift:26}),300,0,"Réception en squat, genoux dans l’axe","in"]],th:0}},
-balance:{n:"Équilibre 1 jambe",cat:"agil",uni:1,
+balance:{n:"Équilibre 1 jambe",cat:"agil",side:"swap",uni:1,
   why:"Proprioception de cheville et de genou : le ski est un sport d’équilibre permanent.",
   cues:["Sur une jambe, genou légèrement fléchi","Ferme les yeux","Puis monte sur la pointe du pied","Bouge les bras ou tourne la tête sans perdre l’appui"],
   avoid:"Bloquer le genou tendu.",easy:"Yeux ouverts au sol.",hard:"Yeux fermés, avec petites flexions de genou.",
@@ -644,28 +690,29 @@ run_hill:{n:"Sprints en côte",cat:"cardio",eq:"hill",
   avoid:"Raccourcir la récupération : on cherche la vitesse, pas la fatigue.",easy:"6 répétitions.",hard:"15 s par sprint.",
   anim:{fr:[[H1,230,0,"10 à 12 s à fond en côte"],[H2,230,0,"10 à 12 s à fond en côte"]],th:0}}
 };
+EX.jj.anim=EX.echauf.anim;
 const FAST=new Set(["plyo","agil","cardio"]);
 
 /* ============ Séances ============ */
 const TYPES={force:["Force","var(--blue)"],plyo:["Explosivité","var(--red)"],cardio:["Cardio","var(--teal)"],circuit:["Circuit ski","var(--amber)"],tabata:["Tabata ski","var(--violet)"],test:["Tests","var(--ink)"],race:["Jour J","var(--red)"]};
 const SES={
-P1A:{t:"Force unilatérale",type:"force",min:55,note:"Sans charge, la difficulté vient de la lenteur : descente en 3 s, repos 90 s. Les 2 dernières répétitions de chaque série doivent être dures.",items:[["echauf","10 min"],["revlunge","4 × 12 / jambe · descente 3 s"],["rdl1","4 × 12 / jambe"],["kneedrive","3 × 10 / jambe"],["hambridge","3 × 10 / jambe"],["sidestar","3 × 25 s / côté"],["calf","3 × 20 / jambe · pause 1 s en haut"],["plank","3 × 60 s"]]},
+P1A:{t:"Force unilatérale",type:"force",min:55,note:"Sans charge, la difficulté vient de la lenteur : descente en 3 s, repos 90 s. Les 2 dernières répétitions de chaque série doivent être dures.",items:[["echauf","Échauffement guidé · 5 min"],["revlunge","4 × 12 / jambe · descente 3 s"],["rdl1","4 × 12 / jambe"],["kneedrive","3 × 10 / jambe"],["hambridge","3 × 10 / jambe"],["sidestar","3 × 25 s / côté"],["calf","3 × 20 / jambe · pause 1 s en haut"],["plank","3 × 60 s"]]},
 P1B:{t:"Endurance & équilibre",type:"cardio",min:65,items:[["run_easy","45 min à 6:00–6:30 /km"],["balance","3 × 45 s / jambe · yeux fermés"],["hipthrust","3 × 15 / jambe"],["deadbug","3 × 12 / côté"],["sideplank","3 × 45 s / côté"]]},
-P1C:{t:"Force & premiers sauts",type:"force",min:55,note:"Sauts en premier, quand tu es fraîche. Repos 60 à 90 s.",items:[["echauf","10 min"],["squatjump","4 × 6 · réception silencieuse"],["linehop","4 × 20 s · récup 40 s"],["skatersq","4 × 8 / jambe"],["hambridge","3 × 10 / jambe"],["lunge_lat","3 × 12 / côté · pause 2 s en bas"],["wallsit","3 × 60 s · 20 dernières s sur 1 jambe"]]},
-P1D:{t:"Circuit ski découverte",type:"circuit",min:40,note:"3 tours de 7 exercices. 40 s d’effort, 20 s pour passer au suivant, 2 min entre les tours. Le chrono te guide de bout en bout.",timed:{warm:true,full:true,blocks:[{name:"Circuit",circuit:true,ex:["wallsit","skater","climber","lunge_lat","shuffle","latsquat","plank"],work:40,rest:20,rounds:3,roundRest:120}]},items:[["echauf","Échauffement guidé · 4 min"],["wallsit","40 s"],["skater","40 s"],["climber","40 s"],["lunge_lat","40 s"],["shuffle","40 s"],["latsquat","40 s"],["plank","40 s"]]},
-P2A:{t:"Force au tempo",type:"force",min:60,note:"Sans charge, on durcit avec le tempo : 4 s de descente, 2 s de pause en bas, remontée dynamique. Repos 90 s. Si c’est trop facile, ajoute 2 répétitions la fois suivante.",items:[["echauf","10 min"],["bulgare","5 × 10 / jambe · descente 4 s + pause 2 s"],["pistolfull","4 × 5 / jambe"],["skatersq","3 × 8 / jambe · descente 3 s"],["rdl1","4 × 12 / jambe · descente 4 s"],["hambridge","4 × 10 / jambe · descente 3 s"],["copen","3 × 25 s / côté"],["calf","4 × 20 / jambe · pause 2 s en haut"]]},
-P2B:{t:"Pliométrie",type:"plyo",min:50,note:"Récupère complètement entre les séries (1 à 2 min). Un saut lent ou mou ne sert à rien.",items:[["echauf","10 min, finis par 5 petits sauts"],["squatjump","5 × 5 · hauteur max"],["splitjump","4 × 6 / jambe"],["skater","4 × 10 · tiens 1 s chaque réception"],["hopstick","4 × 5 / jambe"],["hurdle","4 × 10 sauts"],["plank","3 × 60 s"]]},
+P1C:{t:"Force & premiers sauts",type:"force",min:55,note:"Sauts en premier, quand tu es fraîche. Repos 60 à 90 s.",items:[["echauf","Échauffement guidé · 5 min"],["squatjump","4 × 6 · réception silencieuse"],["linehop","4 × 20 s · récup 40 s"],["skatersq","4 × 8 / jambe"],["hambridge","3 × 10 / jambe"],["lunge_lat","3 × 12 / côté · pause 2 s en bas"],["wallsit","3 × 60 s · 20 dernières s sur 1 jambe"]]},
+P1D:{t:"Circuit ski découverte",type:"circuit",min:40,note:"3 tours de 7 exercices. 40 s d’effort, 20 s pour passer au suivant, 2 min entre les tours. Le chrono te guide de bout en bout.",timed:{warm:true,full:true,blocks:[{name:"Circuit",circuit:true,ex:["wallsit","skater","climber","lunge_lat","shuffle","latsquat","plank"],work:40,rest:20,rounds:3,roundRest:120}]},items:[["echauf","Échauffement guidé · 5 min"],["wallsit","40 s"],["skater","40 s"],["climber","40 s"],["lunge_lat","40 s"],["shuffle","40 s"],["latsquat","40 s"],["plank","40 s"]]},
+P2A:{t:"Force au tempo",type:"force",min:60,note:"Sans charge, on durcit avec le tempo : 4 s de descente, 2 s de pause en bas, remontée dynamique. Repos 90 s. Si c’est trop facile, ajoute 2 répétitions la fois suivante.",items:[["echauf","Échauffement guidé · 5 min"],["bulgare","5 × 10 / jambe · descente 4 s + pause 2 s"],["pistolfull","4 × 5 / jambe"],["skatersq","3 × 8 / jambe · descente 3 s"],["rdl1","4 × 12 / jambe · descente 4 s"],["hambridge","4 × 10 / jambe · descente 3 s"],["copen","3 × 25 s / côté"],["calf","4 × 20 / jambe · pause 2 s en haut"]]},
+P2B:{t:"Pliométrie",type:"plyo",min:50,note:"Récupère complètement entre les séries (1 à 2 min). Un saut lent ou mou ne sert à rien.",items:[["echauf","Échauffement guidé · 5 min"],["squatjump","5 × 5 · hauteur max"],["splitjump","4 × 6 / jambe"],["skater","4 × 10 · tiens 1 s chaque réception"],["hopstick","4 × 5 / jambe"],["hurdle","4 × 10 sauts"],["plank","3 × 60 s"]]},
 P2C:{t:"Fractionné",type:"cardio",min:55,note:"Fais d’abord tes 15 min de footing, puis lance le chrono : il bipe chaque changement 30 s vite / 30 s trot. Garde le téléphone en main ou au bras, écran allumé.",timed:{warm:false,full:false,items:[0,1],blocks:[{name:"Série 1",ex:["run_int"],work:30,rest:30,rounds:10,restLabel:"Trot",after:180},{name:"Série 2",ex:["run_int"],work:30,rest:30,rounds:10,restLabel:"Trot",after:180},{name:"Série 3",ex:["run_int"],work:30,rest:30,rounds:10,restLabel:"Trot"}]},items:[["run_easy","15 min d’échauffement"],["run_int","3 × 10 × (30 s vite / 30 s trot) · 3 min entre les séries"],["run_easy","10 min de retour au calme"],["sideplank","3 × 45 s / côté"],["deadbug","3 × 12 / côté · lent"]]},
-P2D:{t:"Circuit ski",type:"circuit",min:45,note:"4 tours de 7 exercices. 45 s d’effort, 15 s pour passer au suivant, 2 min entre les tours.",timed:{warm:true,full:true,blocks:[{name:"Circuit",circuit:true,ex:["wallsit","skater","lunge_lat","climber","shuffle","latsquat","hipthrust"],work:45,rest:15,rounds:4,roundRest:120}]},items:[["echauf","Échauffement guidé · 4 min"],["wallsit","45 s"],["skater","45 s"],["lunge_lat","45 s"],["climber","45 s"],["shuffle","45 s"],["latsquat","45 s"],["hipthrust","45 s · change de jambe à mi-temps"]]},
-P3A:{t:"Contraste force → saut",type:"plyo",min:55,note:"Enchaîne chaque exercice de force directement avec le saut qui suit, puis récupère 2 min 30. C’est la séance la plus efficace pour l’explosivité.",items:[["echauf","12 min"],["bulgare","5 × 8 / jambe · descente 4 s"],["bulgjump","5 × 4 / jambe · juste après"],["skatersq","4 × 6 / jambe"],["kneedrive","4 × 6 / jambe · juste après, explosif"],["pogo","4 × 20 rebonds"],["hambridge","4 × 10 / jambe"],["copen","3 × 30 s / côté"]]},
-P3B:{t:"Réactivité & agilité",type:"plyo",min:50,items:[["echauf","12 min"],["linehop","8 × 10 s vitesse max · récup 40 s"],["hurdle","5 × 8 sauts"],["hoplat","4 × 10 / jambe"],["skater","5 × 8 · enchaîné, bonds max"],["shuffle","6 × 15 s · change de sens tous les 3 pas"],["broadjump","5 × 3 sauts · réception figée"],["balance","3 × 45 s / jambe · yeux fermés"]]},
+P2D:{t:"Circuit ski",type:"circuit",min:45,note:"4 tours de 7 exercices. 45 s d’effort, 15 s pour passer au suivant, 2 min entre les tours.",timed:{warm:true,full:true,blocks:[{name:"Circuit",circuit:true,ex:["wallsit","skater","lunge_lat","climber","shuffle","latsquat","hipthrust"],work:45,rest:15,rounds:4,roundRest:120}]},items:[["echauf","Échauffement guidé · 5 min"],["wallsit","45 s"],["skater","45 s"],["lunge_lat","45 s"],["climber","45 s"],["shuffle","45 s"],["latsquat","45 s"],["hipthrust","45 s · change de jambe à mi-temps"]]},
+P3A:{t:"Contraste force → saut",type:"plyo",min:55,note:"Enchaîne chaque exercice de force directement avec le saut qui suit, puis récupère 2 min 30. C’est la séance la plus efficace pour l’explosivité.",items:[["echauf","Échauffement guidé · 5 min"],["bulgare","5 × 8 / jambe · descente 4 s"],["bulgjump","5 × 4 / jambe · juste après"],["skatersq","4 × 6 / jambe"],["kneedrive","4 × 6 / jambe · juste après, explosif"],["pogo","4 × 20 rebonds"],["hambridge","4 × 10 / jambe"],["copen","3 × 30 s / côté"]]},
+P3B:{t:"Réactivité & agilité",type:"plyo",min:50,items:[["echauf","Échauffement guidé · 5 min"],["linehop","8 × 10 s vitesse max · récup 40 s"],["hurdle","5 × 8 sauts"],["hoplat","4 × 10 / jambe"],["skater","5 × 8 · enchaîné, bonds max"],["shuffle","6 × 15 s · change de sens tous les 3 pas"],["broadjump","5 × 3 sauts · réception figée"],["balance","3 × 45 s / jambe · yeux fermés"]]},
 P3C:{t:"Manches de slalom",type:"cardio",min:55,note:"Une manche de slalom dure 45 à 60 s. Après 15 min de footing, lance le chrono pour les 8 manches (elles alternent sauts en squat et patineur). Puis sprints en côte et gainage.",timed:{warm:false,full:false,items:[0,1,2],blocks:[{name:"Manches",ex:["latsquat","skater"],work:45,rest:{4:135,5:120,6:90,d:120},rounds:4,tip:"À fond, comme une vraie manche"}]},items:[["run_easy","15 min"],["latsquat","Manches 1, 3, 5, 7 · 45 s à fond"],["skater","Manches 2, 4, 6, 8 · 45 s, enchaîné rapide"],["run_hill","8 × 12 s en côte · récup en marchant"],["plank","3 × 60 s · lever de jambe"]]},
-P3D:{t:"Circuit force-endurance",type:"circuit",min:50,note:"4 tours de 7 exercices, 45 s / 15 s, 2 min entre les tours. Finisher : chaise au mur 2 min.",timed:{warm:true,full:true,blocks:[{name:"Circuit",circuit:true,ex:["splitjump","skater","lunge_lat","climber","hurdle","sideplank","latsquat"],work:45,rest:15,rounds:4,roundRest:120,after:60},{name:"Finisher",ex:["wallsit"],work:120,rest:0,rounds:1,tip:"Tiens jusqu’au bip, ne lâche rien"}]},items:[["echauf","Échauffement guidé · 4 min"],["splitjump","45 s · inverse à chaque saut"],["skater","45 s"],["lunge_lat","45 s"],["climber","45 s"],["hurdle","45 s"],["sideplank","45 s · change de côté à mi-temps"],["latsquat","45 s"],["wallsit","Finisher : 2 min"]]},
-P4A:{t:"Activation explosive",type:"plyo",min:35,note:"Affûtage : moitié moins de volume, gestes vifs. Tu dois finir en ayant envie d’en faire plus.",items:[["echauf","10 min"],["pogo","3 × 15 rebonds"],["skater","3 × 6"],["splitjump","3 × 4 / jambe"],["revlunge","3 × 6 / jambe · descente 3 s"],["plank","2 × 45 s"]]},
-P4B:{t:"Réveil neuromusculaire",type:"plyo",min:30,items:[["echauf","10 min"],["linehop","4 × 10 s"],["hoplat","3 × 6 / jambe"],["latsquat","3 × 6 sauts"],["balance","2 × 30 s / jambe"]]},
-TAB1:{t:"Tabata ski",type:"tabata",min:30,note:"Tabata : 20 s à fond, 10 s de repos, 8 fois de suite (4 min par bloc). 1 min entre les blocs. Suis le chrono, il s’occupe de tout.",timed:{warm:true,full:true,blocks:[{name:"Bloc 1",ex:["latsquat"],work:20,rest:10,rounds:8,after:60},{name:"Bloc 2",ex:["skater"],work:20,rest:10,rounds:8,after:60},{name:"Bloc 3",ex:["squatjump","wallsit"],work:20,rest:10,rounds:4,after:60,tip:"Alterne squat sauté et chaise"},{name:"Bloc 4",ex:["linehop","climber"],work:20,rest:10,rounds:4,tip:"Alterne sauts latéraux et mountain climbers"}]},items:[["echauf","Échauffement guidé · 4 min"],["latsquat","Bloc 1 · 8 × 20 s / 10 s"],["skater","Bloc 2 · 8 × 20 s / 10 s"],["squatjump","Bloc 3 · alterné avec la chaise"],["wallsit","Bloc 3 · alterné"],["linehop","Bloc 4 · alterné avec mountain climbers"],["climber","Bloc 4 · alterné"]]},
-TAB2:{t:"Tabata slalom finale",type:"tabata",min:35,note:"La séance la plus dure du programme : 5 blocs Tabata (20 s à fond / 10 s). 1 min entre les blocs.",timed:{warm:true,full:true,blocks:[{name:"Bloc 1",ex:["latsquat"],work:20,rest:10,rounds:8,after:60},{name:"Bloc 2",ex:["splitjump"],work:20,rest:10,rounds:8,after:60,tip:"Inverse les jambes à chaque saut"},{name:"Bloc 3",ex:["skater"],work:20,rest:10,rounds:8,after:60},{name:"Bloc 4",ex:["hurdle","wallsit"],work:20,rest:10,rounds:4,after:60,tip:"Alterne sauts par-dessus la bouteille et chaise"},{name:"Bloc 5",ex:["linehop","climber"],work:20,rest:10,rounds:4,tip:"Dernier bloc : tout ce qu’il te reste !"}]},items:[["echauf","Échauffement guidé · 4 min"],["latsquat","Bloc 1 · 8 × 20 s / 10 s"],["splitjump","Bloc 2 · 8 × 20 s / 10 s"],["skater","Bloc 3 · 8 × 20 s / 10 s"],["hurdle","Bloc 4 · alterné avec la chaise"],["wallsit","Bloc 4 · alterné"],["linehop","Bloc 5 · alterné avec mountain climbers"],["climber","Bloc 5 · alterné"]]},
-T:{t:"Tests",type:"test",min:40,note:"Aucun matériel : juste le chrono de l’appli. Touche le nom d’un test pour voir le mouvement et lancer le chrono. Repose-toi 2 à 3 min entre les tests.",items:[["echauf","12 min"]]},
+P3D:{t:"Circuit force-endurance",type:"circuit",min:50,note:"4 tours de 7 exercices, 45 s / 15 s, 2 min entre les tours. Finisher : chaise au mur 2 min.",timed:{warm:true,full:true,blocks:[{name:"Circuit",circuit:true,ex:["splitjump","skater","lunge_lat","climber","hurdle","sideplank","latsquat"],work:45,rest:15,rounds:4,roundRest:120,after:60},{name:"Finisher",ex:["wallsit"],work:120,rest:0,rounds:1,tip:"Tiens jusqu’au bip, ne lâche rien"}]},items:[["echauf","Échauffement guidé · 5 min"],["splitjump","45 s · inverse à chaque saut"],["skater","45 s"],["lunge_lat","45 s"],["climber","45 s"],["hurdle","45 s"],["sideplank","45 s · change de côté à mi-temps"],["latsquat","45 s"],["wallsit","Finisher : 2 min"]]},
+P4A:{t:"Activation explosive",type:"plyo",min:35,note:"Affûtage : moitié moins de volume, gestes vifs. Tu dois finir en ayant envie d’en faire plus.",items:[["echauf","Échauffement guidé · 5 min"],["pogo","3 × 15 rebonds"],["skater","3 × 6"],["splitjump","3 × 4 / jambe"],["revlunge","3 × 6 / jambe · descente 3 s"],["plank","2 × 45 s"]]},
+P4B:{t:"Réveil neuromusculaire",type:"plyo",min:30,items:[["echauf","Échauffement guidé · 5 min"],["linehop","4 × 10 s"],["hoplat","3 × 6 / jambe"],["latsquat","3 × 6 sauts"],["balance","2 × 30 s / jambe"]]},
+TAB1:{t:"Tabata ski",type:"tabata",min:30,note:"Tabata : 20 s à fond, 10 s de repos, 8 fois de suite (4 min par bloc). 1 min entre les blocs. Suis le chrono, il s’occupe de tout.",timed:{warm:true,full:true,blocks:[{name:"Bloc 1",ex:["latsquat"],work:20,rest:10,rounds:8,after:60},{name:"Bloc 2",ex:["skater"],work:20,rest:10,rounds:8,after:60},{name:"Bloc 3",ex:["squatjump","wallsit"],work:20,rest:10,rounds:4,after:60,tip:"Alterne squat sauté et chaise"},{name:"Bloc 4",ex:["linehop","climber"],work:20,rest:10,rounds:4,tip:"Alterne sauts latéraux et mountain climbers"}]},items:[["echauf","Échauffement guidé · 5 min"],["latsquat","Bloc 1 · 8 × 20 s / 10 s"],["skater","Bloc 2 · 8 × 20 s / 10 s"],["squatjump","Bloc 3 · alterné avec la chaise"],["wallsit","Bloc 3 · alterné"],["linehop","Bloc 4 · alterné avec mountain climbers"],["climber","Bloc 4 · alterné"]]},
+TAB2:{t:"Tabata slalom finale",type:"tabata",min:35,note:"La séance la plus dure du programme : 5 blocs Tabata (20 s à fond / 10 s). 1 min entre les blocs.",timed:{warm:true,full:true,blocks:[{name:"Bloc 1",ex:["latsquat"],work:20,rest:10,rounds:8,after:60},{name:"Bloc 2",ex:["splitjump"],work:20,rest:10,rounds:8,after:60,tip:"Inverse les jambes à chaque saut"},{name:"Bloc 3",ex:["skater"],work:20,rest:10,rounds:8,after:60},{name:"Bloc 4",ex:["hurdle","wallsit"],work:20,rest:10,rounds:4,after:60,tip:"Alterne sauts par-dessus la bouteille et chaise"},{name:"Bloc 5",ex:["linehop","climber"],work:20,rest:10,rounds:4,tip:"Dernier bloc : tout ce qu’il te reste !"}]},items:[["echauf","Échauffement guidé · 5 min"],["latsquat","Bloc 1 · 8 × 20 s / 10 s"],["splitjump","Bloc 2 · 8 × 20 s / 10 s"],["skater","Bloc 3 · 8 × 20 s / 10 s"],["hurdle","Bloc 4 · alterné avec la chaise"],["wallsit","Bloc 4 · alterné"],["linehop","Bloc 5 · alterné avec mountain climbers"],["climber","Bloc 5 · alterné"]]},
+T:{t:"Tests",type:"test",min:40,note:"Aucun matériel : juste le chrono de l’appli. Touche le nom d’un test pour voir le mouvement et lancer le chrono. Repose-toi 2 à 3 min entre les tests.",items:[["echauf","Échauffement guidé · 5 min"]]},
 J:{t:"Début de saison",type:"race",min:0,items:[]}
 };
 const TESTS=[
@@ -750,7 +797,7 @@ function weekStrip(){
 function exRow(id,rx,i,ok,k){
   const ex=EX[id];
   return `<li class="it${ok?" ok":""}"><button class="chk" data-chk="${i}" data-k="${k}" aria-label="Cocher ${esc(ex.n)}"><span></span></button>
-  <button class="exb" data-ex="${id}" data-rx="${esc(rx)}"><span class="th">${thumb(id)}</span><span style="min-width:0"><b>${esc(ex.n)}${ex.uni?'<span class="uni">1 jambe</span>':""}</b><small>${esc(rx)}</small></span><span class="chev"></span></button></li>`;
+  <button class="exb" data-ex="${id}" data-rx="${esc(rx)}" data-k="${k}" data-i="${i}"><span class="th">${thumb(id)}</span><span style="min-width:0"><b>${esc(ex.n)}${ex.uni?'<span class="uni">1 jambe</span>':""}</b><small>${esc(rx)}</small></span><span class="chev"></span></button></li>`;
 }
 function sessionCard(k){
   const sid=PLAN[k],s=SES[sid],ty=TYPES[s.type],d=D(k);
@@ -761,12 +808,12 @@ function sessionCard(k){
   const tot=n+(s.type==="test"?TESTS.length:0),got=chk.length+(s.type==="test"?TESTS.filter(t=>st.tests[k]&&st.tests[k][t.id]!=null&&st.tests[k][t.id]!=="").length:0);
   h+=`<div class="prog"><div style="width:${tot?got/tot*100:0}%"></div></div>`;
   if(!dn)h+=`<div class="eqwrap">${eqBox(sid)}</div>`;
-  if(s.timed){const mn=Math.round(planDur(buildSteps(k))/60);h+=`<div class="cta"><button class="btn go" data-play="${k}"><svg viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg>${dn?"Refaire":"Lancer"} la séance guidée</button><small>≈ ${mn} min · chrono, bips et consignes à chaque exercice</small></div>`;}
+  {const mn=Math.round(planDur(buildSteps(k))/60);h+=`<div class="cta"><button class="btn go" data-play="${k}"><svg viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg>${dn?"Refaire":"Lancer"} ${sid==="T"?"les tests guidés":"la séance guidée"}</button><small>≈ ${mn} min · tout s’enchaîne : chrono, compteur de répétitions, repos et bips</small></div>`;}
   if(s.note)h+=`<div class="sess-note">${esc(s.note)}</div>`;
   h+=`<ul class="items">`+s.items.map((it,i)=>exRow(it[0],it[1],i,chk.includes(i),k)).join("")+`</ul>`;
   if(s.type==="test"){
     const v=st.tests[k]||{};
-    h+=TESTS.map(t=>`<div class="test"><div><button class="link" data-ex="${t.ex}" data-rx="${esc(t.p)}">${esc(t.n)}</button><p>${esc(t.p)}</p></div><div><input type="number" inputmode="decimal" id="t-${t.id}" data-test="${t.id}" data-k="${k}" value="${v[t.id]!=null?esc(v[t.id]):""}" placeholder="—"><div class="u">${t.u}</div></div></div>`).join("");
+    h+=TESTS.map(t=>`<div class="test"><div><button class="link" data-ex="${t.ex}" data-rx="${esc(t.p)}" data-test="${t.id}" data-k="${k}">${esc(t.n)}</button><p>${esc(t.p)}</p></div><div><input type="number" inputmode="decimal" id="t-${t.id}" data-test="${t.id}" data-k="${k}" value="${v[t.id]!=null?esc(v[t.id]):""}" placeholder="—"><div class="u">${t.u}</div></div></div>`).join("");
   }
   if(dn){h+=`<div class="done-b"><span class="big"></span><div><b>Séance validée</b><br>Ressenti ${dn.rpe}/10${dn.note?` · ${esc(dn.note)}`:""}</div><button class="btn ghost sm" data-undo="${k}">Annuler</button></div>`;
     const nx=nextSession(addD(d,1));if(nx)h+=`<button class="nextl" data-day="${nx}"><span>Prochaine séance : <b>${esc(SES[PLAN[nx]].t)}</b> · ${fmt(D(nx))}</span><small>À prévoir : ${eqShort(PLAN[nx])}</small></button>`;}
@@ -858,26 +905,27 @@ function renderLib(){
 }
 
 /* ============ Fiche exercice animée ============ */
-let raf=0,paused=false,speed=1,timer={end:0,id:0,ac:null};
-function openEx(id,rx){
-  const ex=EX[id];prep(ex);paused=false;speed=1;
+let raf=0,paused=false,speed=1,SHEET=null;
+function openEx(id,rx,ctx){
+  const ex=EX[id];prep(ex);paused=false;speed=1;ctx=ctx||{};SHEET={id,rx:rx||"",ctx};
+  const steps=itemPlan(id,rx,ctx),mn=Math.max(1,Math.round(planDur(steps)/60));
   let h=`<div class="grab"></div><button class="x" data-close aria-label="Fermer">×</button>
   <div class="stage"><svg ${VB} class="fig" id="anim" role="img" aria-label="Animation : ${esc(ex.n)}"></svg>
-  <div class="rep" id="rep"></div><div class="lg"><span><i style="background:var(--red)"></i>droite</span><span><i style="background:var(--blue)"></i>gauche</span></div>
+  <div class="rep"><span class="demo">Démo</span></div><div class="lg"><span><i style="background:var(--red)"></i>droite</span><span><i style="background:var(--blue)"></i>gauche</span></div>
   <div class="cyc"><i id="cyc"></i></div>
-  <div class="sbar"><div class="cap" id="cap"></div><div class="ctl"><button id="sl" aria-pressed="false">Ralenti</button><button id="pp" aria-pressed="false">Pause</button></div></div></div>
+  <div class="sbar"><div class="cap" id="cap"></div><div class="ctl"><button id="sl" aria-pressed="false">Ralenti</button><button id="pp" aria-pressed="false">Pause</button></div></div>
+  <div class="runw"><button class="btn go run" data-run="1">${ICON.play}<span>Démarrer<small>${esc(planSummary(id,rx,ctx))} · ≈ ${mn} min</small></span></button></div></div>
   <h2>${esc(ex.n)}</h2><div class="meta" style="margin-top:6px"><span class="tag">${CATS[ex.cat]}</span>${ex.uni?'<span class="tag" style="color:var(--red)">Unilatéral</span>':""}</div>`;
   if(rx)h+=`<div class="rx">${esc(rx)}</div>`;
   h+=`<div class="sec"><h4>Pourquoi pour le slalom</h4><p>${esc(ex.why)}</p></div>
   <div class="sec"><h4>Comment faire</h4><ol class="cues">${ex.cues.map(c=>`<li>${esc(c)}</li>`).join("")}</ol></div>
   <div class="sec"><h4>À éviter</h4><p>${esc(ex.avoid)}</p></div>`;
   if(ex.easy||ex.hard)h+=`<div class="sec var"><div><b>Plus facile</b>${esc(ex.easy||"–")}</div><div><b>Plus dur</b>${esc(ex.hard||"–")}</div></div>`;
-  h+=`<div class="sec timer"><h4 style="margin:0">Chrono</h4><div class="tv" id="tv">0:00</div><div class="tbtns"><button class="btn ghost sm" data-tm="-1">Chrono libre</button>${[30,45,60,90,120].map(s=>`<button class="btn ghost sm" data-tm="${s}">${s<60?s+" s":s===60?"1 min":s===90?"1 min 30":"2 min"}</button>`).join("")}<button class="btn ghost sm" data-tm="0">Stop</button></div></div>`;
   $("#pnl").innerHTML=h;$("#sheet").hidden=false;$("#pnl").scrollTop=0;
   document.body.style.overflow="hidden";
   cancelAnimationFrame(raf);
-  const svg=$("#anim"),capEl=$("#cap"),repEl=$("#rep"),cyc=$("#cyc"),ghost=FAST.has(ex.cat);
-  let sim=0,last=performance.now(),capI=-1,rep=0,tail=null;
+  const svg=$("#anim"),capEl=$("#cap"),cyc=$("#cyc"),ghost=FAST.has(ex.cat);
+  let sim=0,last=performance.now(),capI=-1,tail=null;
   const loop=now=>{
     const dt=Math.min(64,now-last);last=now;if(!paused)sim+=dt*speed;
     const s=sample(ex,sim),pts=place(ex,s.p),hb=hairBase(pts,s.p);
@@ -885,72 +933,161 @@ function openEx(id,rx){
       const dx=tail[0]-hb[0],dy=tail[1]-hb[1],dd=Math.hypot(dx,dy);if(dd>15){tail=[hb[0]+dx/dd*15,hb[1]+dy/dd*15]}}else tail=null;
     const gh=ghost&&!paused?[sample(ex,sim-55).p,sample(ex,sim-110).p]:null;
     svg.innerHTML=figInner(ex,s.p,{s:pts,a:s.a,tail,ghosts:gh});
-    const r=Math.floor(sim/ex._tot)+1;if(r!==rep){rep=r;repEl.innerHTML=`Rép. <b>${r}</b>`}
     cyc.style.width=((sim%ex._tot)/ex._tot*100).toFixed(1)+"%";
     if(s.i!==capI){capI=s.i;const c=ex.anim.fr[s.i][3]||"";if(c!==capEl.textContent){capEl.textContent=c;capEl.classList.remove("in");void capEl.offsetWidth;capEl.classList.add("in")}}
     raf=requestAnimationFrame(loop)};
   raf=requestAnimationFrame(loop);
 }
-function closeEx(){cancelAnimationFrame(raf);stopTimer();$("#sheet").hidden=true;document.body.style.overflow=""}
+function closeEx(){cancelAnimationFrame(raf);$("#sheet").hidden=true;document.body.style.overflow=""}
 let AC=null;
 function audio(){try{if(!AC){const C=window.AudioContext||window.webkitAudioContext;if(C)AC=new C()}if(AC&&AC.state==="suspended")AC.resume()}catch(e){}return AC}
 function tone(f,d,when,vol,type){const a=audio();if(!a)return;try{const t=a.currentTime+(when||0),o=a.createOscillator(),g=a.createGain();o.type=type||"sine";o.frequency.value=f;o.connect(g);g.connect(a.destination);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(vol||.35,t+.015);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.start(t);o.stop(t+d+.03)}catch(e){}}
-const SND={tick:()=>tone(880,.13),go:()=>{tone(1175,.55,0,.42,"triangle")},rest:()=>{tone(784,.18);tone(523,.32,.2)},end:()=>{tone(523,.18);tone(659,.18,.18);tone(784,.18,.36);tone(1046,.6,.54,.4,"triangle")}};
-function beep(n){for(let i=0;i<n;i++)tone(880,.18,i*.25)}
-function stopTimer(keep){clearInterval(timer.id);timer.id=0;const tv=$("#tv");if(tv){if(!keep)tv.textContent="0:00";tv.classList.remove("go")}}
-function startTimer(s){stopTimer();if(!s)return;if(s<0){beep(1);timer.t0=Date.now();const tv=$("#tv");tv.classList.add("go");const tk=()=>{const e=Math.floor((Date.now()-timer.t0)/1000);tv.textContent=`${Math.floor(e/60)}:${pad(e%60)}`};tk();timer.id=setInterval(tk,250);return}beep(1);timer.end=Date.now()+s*1000;const tv=$("#tv");tv.classList.add("go");
-  const tick=()=>{const r=Math.max(0,Math.ceil((timer.end-Date.now())/1000));tv.textContent=`${Math.floor(r/60)}:${pad(r%60)}`;if(r<=0){clearInterval(timer.id);timer.id=0;tv.classList.remove("go");beep(3);try{navigator.vibrate&&navigator.vibrate(400)}catch(e){}}};
-  tick();timer.id=setInterval(tick,250);}
+const SND={tick:()=>tone(880,.13),rep:()=>tone(620,.07,0,.16),go:()=>{tone(1175,.55,0,.42,"triangle")},rest:()=>{tone(784,.18);tone(523,.32,.2)},end:()=>{tone(523,.18);tone(659,.18,.18);tone(784,.18,.36);tone(1046,.6,.54,.4,"triangle")}};
 
+/* ============ Côté gauche : animation miroir ============ */
+const SWP={lan:"ran",ran:"lan",lk:"rk",rk:"lk",lt:"rt",rt:"lt",lw:"rw",rw:"lw",le:"re",re:"le",lh:"rh",rh:"lh",ls:"rs",rs:"ls"};
+function mirP(p){const q=Object.assign({},p);
+  if(p.v==="f"){q.l=[-p.r[0],-p.r[1]];q.r=[-p.l[0],-p.l[1]];q.la=[-p.ra[0],-p.ra[1]];q.ra=[-p.la[0],-p.la[1]];q.kl=p.kr;q.kr=p.kl;q.t=-p.t;q.px=-p.px;}
+  else{q.l=p.r;q.r=p.l;q.fl=p.fr;q.fr=p.fl;q.la=p.ra;q.ra=p.la;}
+  return q}
+const EXG={};
+function exSide(id,side){
+  if(side!=="G")return EX[id];
+  if(!EXG[id]){const e=EX[id],A=e.anim;
+    EXG[id]=Object.assign({},e,{_ok:false,anim:Object.assign({},A,{anchor:A.anchor?(SWP[A.anchor]||A.anchor):undefined,
+      fr:A.fr.map(f=>[mirP(f[0])].concat(f.slice(1))),props:(A.props||[]).map(pr=>Object.assign({},pr,pr.at?{at:SWP[pr.at]||pr.at}:{}))})});}
+  return EXG[id];
+}
 
-/* ============ Séance guidée : chrono type Tabata ============ */
-const WARM=[["echauf",60],["lunge_lat",40],["shuffle",30],["linehop",20]];
+/* ============ Construction des étapes (séries, répétitions, repos) ============ */
 const restVal=(v,wk)=>typeof v==="object"?(v[wk]||v.d):v;
 const mmss=s=>{s=Math.max(0,Math.round(s));return `${Math.floor(s/60)}:${pad(s%60)}`};
 const ICON={play:'<svg viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg>',pause:'<svg viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>',
-  prev:'<svg viewBox="0 0 24 24"><rect x="5" y="5" width="2.6" height="14" rx="1"/><path d="M19 5v14L9 12z"/></svg>',next:'<svg viewBox="0 0 24 24"><rect x="16.4" y="5" width="2.6" height="14" rx="1"/><path d="M5 5v14l10-7z"/></svg>'};
-function buildSteps(k){
-  const T=SES[PLAN[k]].timed,wk=weekIdx(D(k))+1,out=[];
-  out.push({kind:"prep",dur:10,ex:T.warm?WARM[0][0]:T.blocks[0].ex[0],label:"Prête ?"});
-  if(T.warm)WARM.forEach((w,i)=>{const last=i===WARM.length-1;
-    out.push({kind:"work",warm:1,ex:w[0],dur:w[1],head:"Échauffement",sub:`${i+1}/${WARM.length}`,tip:"Tranquille, on monte en température"});
-    out.push({kind:"rest",dur:last?30:10,ex:last?T.blocks[0].ex[0]:WARM[i+1][0],label:last?"Prépare-toi":"Transition"});});
-  T.blocks.forEach((b,bi)=>{const n=b.ex.length,tot=b.rounds*n;
-    for(let r=0;r<b.rounds;r++)for(let j=0;j<n;j++){const idx=r*n+j;
-      out.push({kind:"work",ex:b.ex[j],dur:b.work,head:b.name,sub:b.circuit?`Tour ${r+1}/${b.rounds} · ${j+1}/${n}`:`${b.name} · ${idx+1}/${tot}`,tip:b.tip||""});
-      if(idx<tot-1){const tourEnd=b.circuit&&j===n-1;out.push({kind:"rest",dur:tourEnd?b.roundRest:restVal(b.rest,wk),ex:b.ex[(j+1)%n],label:tourEnd?"Fin du tour":(b.restLabel||"Repos")});}
-      else if(bi<T.blocks.length-1){out.push({kind:"rest",dur:b.after||60,ex:T.blocks[bi+1].ex[0],label:"Récup · bloc suivant"});}}});
+  prev:'<svg viewBox="0 0 24 24"><rect x="5" y="5" width="2.6" height="14" rx="1"/><path d="M19 5v14L9 12z"/></svg>',next:'<svg viewBox="0 0 24 24"><rect x="16.4" y="5" width="2.6" height="14" rx="1"/><path d="M5 5v14l10-7z"/></svg>',
+  ok:'<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>'};
+const DEFREST={force:90,plyo:90,agil:45,core:30,cardio:60,mob:10};
+const SIDEW={D:"jambe droite",G:"jambe gauche"},SIDEC={D:"côté droit",G:"côté gauche"};
+function parseRx(rx){
+  rx=rx||"";const r={sets:1,reps:null,secs:null,side:/\/\s*(jambe|côté)/.test(rx),cote:/\/\s*côté/.test(rx),rest:null};
+  let m=rx.match(/(\d+)\s*×\s*(\d+)\s*(s\b|min\b)?/);
+  if(m){r.sets=+m[1];if(m[3]==="s")r.secs=+m[2];else if(m[3]==="min")r.secs=+m[2]*60;else r.reps=+m[2];}
+  else{m=rx.match(/(\d+)(?:\s*à\s*\d+)?\s*min/);if(m)r.secs=+m[1]*60;else{m=rx.match(/(\d+)\s*s\b/);if(m)r.secs=+m[1];else{m=rx.match(/^(\d+)\b/);if(m)r.reps=+m[1];}}}
+  const rr=rx.match(/récup\s*(\d+)\s*(min|s)?(?:\s*(\d+))?/);if(rr)r.rest=rr[2]==="min"?+rr[1]*60+(+rr[3]||0):+rr[1];
+  const ws=rx.match(/(\d+)\s*s\s*\/\s*(\d+)\s*s/);if(ws){r.secs=+ws[1];r.rest=+ws[2];}
+  return r;
+}
+function defRx(id){const e=EX[id];return e.cat==="cardio"?"20 min":e.cat==="core"?(e.side==="swap"?"3 × 30 s / côté":"3 × 30 s"):e.cat==="agil"?(e.side==="swap"?"3 × 30 s / jambe":"3 × 20 s"):e.side==="swap"?"3 × 10 / jambe":"3 × 10"}
+function setSteps(id,rx,s,sets){
+  const ex=EX[id],r=parseRx(rx),out=[];
+  if(!r.secs&&!r.reps){if(ex.cat==="force"||ex.cat==="plyo")r.reps=10;else r.secs=30}
+  const swap=r.side&&ex.side==="swap",sides=swap?["D","G"]:[null],per=ex.side==="alt"?(r.side?1:2):(ex.per||1);
+  const tip=(rx||"").split("·").slice(1).join("·").trim();
+  sides.forEach((sd,si)=>{
+    const e=exSide(id,sd);prep(e);
+    const lab=sd?(r.cote?SIDEC[sd]:SIDEW[sd]):"",sub=[sets>1?`Série ${s}/${sets}`:"",lab].filter(Boolean).join(" · ");
+    if(r.secs)out.push({kind:"work",ex:id,side:sd,dur:r.secs,sub,tip});
+    else{const cyc=e.rt?e.rt*1000*per:e._tot,cycles=Math.ceil(r.reps/per);out.push({kind:"work",ex:id,side:sd,reps:r.reps,per,cyc,dur:cycles*cyc/1000,sub,tip,perSide:ex.side==="alt"&&r.side});}
+    if(swap&&si===0)out.push({kind:"rest",dur:6,label:r.cote?"Change de côté":"Change de jambe"});
+  });
   return out;
 }
-const planDur=steps=>steps.reduce((a,x)=>a+x.dur,0);
+function itemSteps(id,rx){
+  if(id==="echauf")return wuSteps();
+  const ex=EX[id],r=parseRx(rx),sets=r.sets||1,rest=r.rest||DEFREST[ex.cat]||60,out=[];
+  for(let k=1;k<=sets;k++){out.push(...setSteps(id,rx,k,sets));if(k<sets)out.push({kind:"rest",dur:rest,label:"Repos"});}
+  return out;
+}
+function pairSteps(a,ra,b,rb){
+  const sets=Math.max(parseRx(ra).sets,parseRx(rb).sets),out=[];
+  for(let k=1;k<=sets;k++){out.push(...setSteps(a,ra,k,sets));out.push({kind:"rest",dur:8,label:"Enchaîne !"});out.push(...setSteps(b,rb,k,sets));if(k<sets)out.push({kind:"rest",dur:150,label:"Repos"});}
+  return out;
+}
+const WU=[["jj","2 min"],["swing_fb","10 / jambe"],["swing_lat","10 / jambe"],["squat","10"],["walklunge","10"],["lunge_lat","10"],["highknees","20 s"],["pogo","20 s"]];
+function wuSteps(){const out=[];WU.forEach(([id,rx],i)=>{
+  out.push(...setSteps(id,rx,1,1).map(x=>x.kind==="work"?Object.assign(x,{warm:1,sub:`Échauffement ${i+1}/${WU.length}`+(x.sub?` · ${x.sub}`:""),tip:""}):Object.assign(x,{dur:4})));
+  if(i<WU.length-1)out.push({kind:"rest",dur:5,label:"Enchaîne"});});return out}
+function testSteps(ids){const out=[];ids.forEach((id,i)=>{
+  if(id==="wall")out.push({kind:"work",open:1,test:id,ex:"wallsit",dur:1e9,est:60,sub:"Test · tiens le plus longtemps possible",tip:"Touche « J’ai terminé » quand tu lâches"});
+  else if(id==="hops")out.push({kind:"work",test:id,ex:"linehop",dur:30,sub:"Test · 30 s",tip:"Compte chaque passage de la ligne"});
+  else if(id==="sj")out.push({kind:"work",test:id,ex:"squatjump",dur:30,sub:"Test · 30 s",tip:"Compte tes sauts"});
+  else out.push({kind:"work",open:1,test:id,ex:"skatersq",side:id==="sqG"?"G":"D",dur:1e9,est:60,sub:`Test · max de répétitions · ${id==="sqG"?"jambe gauche":"jambe droite"}`,tip:"Compte tes répétitions, touche « J’ai terminé » à la fin"});
+  if(i<ids.length-1)out.push({kind:"rest",dur:120,label:"Récup · retiens ton score"});});return out}
+function blockSteps(T,k){
+  const wk=weekIdx(D(k))+1,out=[];
+  T.blocks.forEach((b,bi)=>{const n=b.ex.length,tot=b.rounds*n;
+    for(let r=0;r<b.rounds;r++)for(let j=0;j<n;j++){const idx=r*n+j;
+      out.push({kind:"work",ex:b.ex[j],dur:b.work,sub:b.circuit?`Tour ${r+1}/${b.rounds} · ${j+1}/${n}`:`${b.name} · ${idx+1}/${tot}`,tip:b.tip||""});
+      if(idx<tot-1){const tourEnd=b.circuit&&j===n-1;out.push({kind:"rest",dur:tourEnd?b.roundRest:restVal(b.rest,wk),label:tourEnd?"Fin du tour":(b.restLabel||"Repos")});}
+      else if(bi<T.blocks.length-1)out.push({kind:"rest",dur:b.after||60,label:"Récup · bloc suivant"});}});
+  return out;
+}
+function finalize(out){let nx=null;for(let i=out.length-1;i>=0;i--){const x=out[i];if(x.kind==="work")nx=x;else if(nx&&!x.ex){x.ex=nx.ex;x.side=nx.side}}return out.filter(x=>x.dur>0)}
+function buildSteps(k){
+  const sid=PLAN[k],s=SES[sid],T=s.timed,bx=new Set(T?T.blocks.flatMap(b=>b.ex):[]),parts=[];let bd=false;
+  for(let i=0;i<s.items.length;i++){const[id,rx]=s.items[i];
+    if(id==="echauf"){parts.push({st:wuSteps(),after:20,lab:"Prépare-toi"});continue}
+    if(bx.has(id)){if(!bd){parts.push({st:blockSteps(T,k),after:60});bd=true}continue}
+    const nx=s.items[i+1];if(nx&&/juste après/.test(nx[1])){parts.push({st:pairSteps(id,rx,nx[0],nx[1]),after:60});i++;continue}
+    parts.push({st:itemSteps(id,rx),after:45});}
+  if(sid==="T")parts.push({st:testSteps(TESTS.map(t=>t.id)),after:0});
+  const out=[{kind:"prep",dur:10,label:"Prête ?"}];
+  parts.forEach((pt,pi)=>{out.push(...pt.st);if(pi<parts.length-1)out.push({kind:"rest",dur:pt.after,label:pt.lab||"Exercice suivant"})});
+  return finalize(out);
+}
+function itemPlan(id,rx,ctx){
+  ctx=ctx||{};const pre={kind:"prep",dur:5,label:"Prête ?"};
+  if(ctx.test)return finalize([pre,...testSteps([ctx.test])]);
+  if(id==="echauf")return finalize([pre,...wuSteps()]);
+  if(ctx.k&&PLAN[ctx.k]){const T=SES[PLAN[ctx.k]].timed;if(T){const bl=T.blocks.filter(b=>!b.circuit&&b.ex.includes(id));if(bl.length)return finalize([pre,...blockSteps({blocks:bl},ctx.k)])}}
+  return finalize([pre,...itemSteps(id,rx||defRx(id))]);
+}
+function planSummary(id,rx,ctx){
+  if(ctx&&ctx.test)return "Chrono du test";if(id==="echauf")return `${WU.length} mouvements enchaînés`;
+  if(ctx&&ctx.k&&PLAN[ctx.k]&&SES[PLAN[ctx.k]].timed&&SES[PLAN[ctx.k]].timed.blocks.some(b=>!b.circuit&&b.ex.includes(id)))return "Chrono guidé";
+  const r=parseRx(rx||defRx(id)),e=EX[id],sd=r.side?(r.cote?" / côté":" / jambe"):"";
+  if(!r.secs&&!r.reps)r.reps=10;
+  return `${r.sets>1?r.sets+" séries · ":""}${r.reps?r.reps+" rép."+sd:(r.secs>=60?mmss(r.secs):r.secs+" s")+sd}`;
+}
+const planDur=steps=>steps.reduce((a,x)=>a+(x.open?x.est:x.dur),0);
+
+/* ============ Lecteur guidé (séance entière ou un exercice) ============ */
 let PL={on:false};
 let plVoice=true;try{plVoice=localStorage.getItem("prepaSlalom.voice")!=="0"}catch(e){}
 function say(t){if(!plVoice||!("speechSynthesis" in window))return;try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="fr-FR";u.rate=1.05;const v=speechSynthesis.getVoices().find(v=>/^fr/i.test(v.lang));if(v)u.voice=v;speechSynthesis.speak(u)}catch(e){}}
 async function wake(on){try{if(on&&"wakeLock" in navigator){if(!PL.wl)PL.wl=await navigator.wakeLock.request("screen")}else if(!on&&PL.wl){await PL.wl.release();PL.wl=null}}catch(e){}}
-function openPlayer(k){
-  const s=SES[PLAN[k]],T=s.timed,steps=buildSteps(k),tot=planDur(steps),works=steps.filter(x=>x.kind==="work"&&!x.warm).length,wk=weekIdx(D(k))+1;
-  PL={on:false,k,steps,tot,works,i:0,el:0,paused:false,raf:0,lastSec:-1,starts:[],sim:0,tail:null,capI:-1,wl:null};
-  let acc=0;steps.forEach(x=>{PL.starts.push(acc);acc+=x.dur});
+function plInit(steps,meta){
+  const tot=planDur(steps),works=steps.filter(x=>x.kind==="work"&&!x.warm).length;
+  PL={on:false,steps,tot,works,meta,i:0,el:0,paused:false,raf:0,lastSec:-1,lastRep:-1,starts:[],sim:0,tail:null,capI:-1,wl:null,rec:{}};
+  let acc=0;steps.forEach(x=>{PL.starts.push(acc);acc+=x.open?x.est:x.dur});
   $("#player").hidden=false;$("#player").dataset.ph="prep";document.body.style.overflow="hidden";
-  $("#pl-title").textContent=s.t;$("#pl-tot").textContent=mmss(tot);$("#pl-el").textContent="0:00";$("#pl-fill").style.width="0";
+  $("#pl-title").textContent=meta.title;$("#pl-tot").textContent=mmss(tot);$("#pl-el").textContent="0:00";$("#pl-fill").style.width="0";
   $("#pl-voice").setAttribute("aria-pressed",plVoice);$("#pl-conf").hidden=true;
-  const fmtB=b=>{const r=restVal(b.rest,wk);return b.circuit?`${b.rounds} tours · ${b.work} s d’effort / ${r} s · ${b.roundRest/60} min entre les tours`:b.rounds*b.ex.length===1?`${b.work>=60?mmss(b.work):b.work+" s"} d’affilée`:`${b.rounds*b.ex.length} × ${b.work} s ${b.restLabel?"vite":"à fond"} / ${r} s ${b.restLabel?b.restLabel.toLowerCase():"repos"}`};
-  let li=(T.warm?`<li><span><b>Échauffement guidé</b></span><small>4 exercices · environ 4 min</small><span class="ths"><span class="th">${thumb("echauf")}</span></span></li>`:"")+
-    T.blocks.map(b=>`<li><span><b>${esc(b.circuit?"Circuit":b.name)}</b> · ${b.ex.map(e=>esc(EX[e].n)).join(" / ")}</span><small>${esc(fmtB(b))}</small><span class="ths">${[...new Set(b.ex)].slice(0,3).map(e=>`<span class="th">${thumb(e)}</span>`).join("")}</span></li>`).join("");
+}
+function openPlayer(k){
+  const sid=PLAN[k],s=SES[sid],steps=buildSteps(k);
+  plInit(steps,{mode:"session",k,title:s.t});
+  const nEx=s.items.filter(i=>i[0]!=="echauf").length;
+  const li=s.items.map(([id,rx])=>`<li><span><b>${esc(EX[id].n)}</b></span><small>${esc(rx)}</small><span class="ths"><span class="th">${thumb(id)}</span></span></li>`).join("");
   $("#pl-body").innerHTML=`<div class="pl-intro"><div><div class="eyebrow">Séance guidée · ${fmt(D(k))}</div><h2>${esc(s.t)}</h2></div>
-    <div class="pl-sum"><div><b>${Math.round(tot/60)}</b><span>minutes</span></div><div><b>${works}</b><span>efforts</span></div><div><b>${T.blocks.length}</b><span>${T.blocks.length>1?"blocs":"bloc"}</span></div></div>
-    ${eqBox(PLAN[k])}
+    <div class="pl-sum"><div><b>${Math.round(PL.tot/60)}</b><span>minutes</span></div><div><b>${PL.works}</b><span>séries / efforts</span></div><div><b>${nEx}</b><span>exercices</span></div></div>
+    ${eqBox(sid)}
     <ol class="pl-blocks">${li}</ol>
-    <div class="panel-c" style="gap:8px"><b>Comment ça marche</b><div class="pl-key"><i style="background:var(--red)"></i><span><b>Rouge = effort.</b> Bip long au départ.</span><i style="background:var(--teal)"></i><span><b>Vert = repos.</b> On te montre l’exercice suivant.</span><i style="background:var(--line)"></i><span>3 bips courts = ça change dans 3 secondes.</span></div>
+    <div class="panel-c" style="gap:8px"><b>Comment ça marche</b><div class="pl-key"><i style="background:var(--red)"></i><span><b>Rouge = effort.</b> Bip long au départ.</span><i style="background:var(--teal)"></i><span><b>Vert = repos.</b> On te montre l’exercice suivant.</span><i style="background:var(--blue)"></i><span><b>Répétitions :</b> suis le rythme du bonhomme, le compteur avance tout seul. Finie avant ? Touche ⏭.</span><i style="background:var(--line)"></i><span>3 bips courts = ça change dans 3 secondes.</span></div>
     <span class="muted" style="font-size:13.5px">Monte le son et coupe le mode silencieux de l’iPhone. L’écran reste allumé pendant la séance.</span></div>
     <button class="btn go" id="pl-start">${ICON.play} Démarrer</button></div>`;
+}
+function openItem(id,rx,ctx){
+  const steps=itemPlan(id,rx,ctx);
+  plInit(steps,{mode:ctx.test?"test":"item",k:ctx.k,i:ctx.i,test:ctx.test,id,title:EX[id].n});
+  plStart();
 }
 function runView(){
   $("#pl-body").innerHTML=`<div class="pl-run"><div class="pl-head"><span class="pl-chip" id="pl-chip"></span><span class="pl-sub" id="pl-sub"></span></div>
   <div class="pl-stage" id="pl-stage"><svg ${VB} class="fig" id="pl-fig" role="img" aria-label="Animation de l’exercice"></svg><span class="pl-nl">Ensuite</span></div>
-  <div class="pl-info"><div class="pl-ring"><svg viewBox="0 0 160 160"><circle class="trk" cx="80" cy="80" r="72"/><circle class="arc" id="pl-arc" cx="80" cy="80" r="72" stroke-dasharray="452.4" stroke-dashoffset="0"/></svg><b class="pl-num" id="pl-num"></b></div>
+  <div class="pl-info"><div class="pl-ring"><svg viewBox="0 0 160 160"><circle class="trk" cx="80" cy="80" r="72"/><circle class="arc" id="pl-arc" cx="80" cy="80" r="72" stroke-dasharray="452.4" stroke-dashoffset="0"/></svg><div class="ctr"><b class="pl-num" id="pl-num"></b><small class="pl-small" id="pl-small"></small></div></div>
   <div class="pl-txt"><div class="pl-name" id="pl-name"></div><div class="pl-cap" id="pl-cap"></div><div class="pl-tip" id="pl-tip"></div></div></div>
   <div class="pl-after" id="pl-after"></div>
+  <button class="btn go pl-donebtn" id="pl-done" hidden>${ICON.ok} J’ai terminé</button>
   <div class="pl-ctl"><button id="pl-prev" aria-label="Précédent">${ICON.prev}</button><button class="big" id="pl-pp" aria-label="Pause">${ICON.pause}</button><button id="pl-next" aria-label="Suivant">${ICON.next}</button></div></div>`;
 }
 function plStart(){
@@ -959,22 +1096,27 @@ function plStart(){
   cancelAnimationFrame(PL.raf);PL.raf=requestAnimationFrame(plLoop);
 }
 function nextWorkAfter(i){for(let j=i+1;j<PL.steps.length;j++)if(PL.steps[j].kind==="work")return PL.steps[j];return null}
+const sideTxt=x=>x.side?(x.sub&&/côté/.test(x.sub)?(x.side==="G"?" · côté gauche":" · côté droit"):(x.side==="G"?" · jambe gauche":" · jambe droite")):"";
 function enterStep(fx){
-  const st_=PL.steps[PL.i];if(!st_)return;const ex=EX[st_.ex],pl=$("#player");
-  pl.dataset.ph=st_.kind;PL.sim=0;PL.capI=-1;PL.tail=null;PL.lastSec=-1;
-  $("#pl-chip").textContent=st_.kind==="work"?(st_.warm?"ÉCHAUFFEMENT":"GO"):st_.kind==="prep"?"PRÊTE ?":st_.label.toUpperCase();
-  $("#pl-sub").textContent=st_.kind==="work"?st_.sub:st_.kind==="rest"?`${mmss(st_.dur)} de récup`:"Le chrono démarre dans 10 s";
+  const st_=PL.steps[PL.i];if(!st_)return;const ex=exSide(st_.ex,st_.side),pl=$("#player");
+  pl.dataset.ph=st_.kind;PL.sim=0;PL.capI=-1;PL.tail=null;PL.lastSec=-1;PL.lastRep=-1;
+  $("#pl-chip").textContent=st_.kind==="work"?(st_.warm?"ÉCHAUFFEMENT":st_.test?"TEST":"GO"):st_.kind==="prep"?"PRÊTE ?":st_.label.toUpperCase();
+  const nw=nextWorkAfter(PL.i);
+  $("#pl-sub").textContent=st_.kind==="work"?(st_.sub||""):st_.kind==="rest"?`${mmss(st_.dur)} de récup`:`Départ dans ${st_.dur} s`;
   const nm=$("#pl-name");nm.textContent=ex.n;nm.classList.remove("in");void nm.offsetWidth;nm.classList.add("in");
-  $("#pl-tip").textContent=st_.kind==="work"?st_.tip:"Ensuite : mets-toi en place";
+  $("#pl-tip").textContent=st_.kind==="work"?(st_.tip||(st_.reps?"Suis le rythme du bonhomme":"")):`Ensuite : ${st_.sub||PL.steps[PL.i+1]&&PL.steps[PL.i+1].sub||"mets-toi en place"}`;
   $("#pl-stage").classList.toggle("next",st_.kind!=="work");
-  $("#pl-num").classList.toggle("long",st_.dur>=60);
-  const nw=st_.kind==="work"?nextWorkAfter(PL.i):null;
-  $("#pl-after").innerHTML=nw?`<span class="th">${thumb(nw.ex)}</span><span>Ensuite : <b>${esc(EX[nw.ex].n)}</b></span>`:st_.kind==="work"?`<span>Dernier effort, à fond !</span>`:"";
+  $("#pl-num").classList.toggle("long",!!st_.open||(!st_.reps&&st_.dur>=60));
+  $("#pl-done").hidden=!st_.open;
+  $("#pl-after").innerHTML=st_.kind==="work"?(nw?`<span class="th">${thumb(nw.ex)}</span><span>Ensuite : <b>${esc(EX[nw.ex].n)}</b>${esc(sideTxt(nw))}</span>`:`<span>Dernier effort, à fond !</span>`):"";
   if(!fx)return;
-  if(st_.kind==="work"){SND.go();if(!st_.warm){const f=$("#pl-flash");f.textContent="GO";f.classList.remove("on");void f.offsetWidth;f.classList.add("on")}if(st_.warm)say(ex.n);}
-  else if(st_.kind==="rest"){SND.rest();const pv=PL.steps[PL.i-1];if(st_.dur>=20||!pv||pv.ex!==st_.ex)say(`${st_.label==="Repos"||st_.label==="Transition"?"":st_.label+". "}Ensuite : ${ex.n}`);}
+  if(st_.kind==="work"){SND.go();if(!st_.warm){const f=$("#pl-flash");f.textContent="GO";f.classList.remove("on");void f.offsetWidth;f.classList.add("on")}else say(ex.n);}
+  else if(st_.kind==="rest"){SND.rest();const pv=PL.steps[PL.i-1];
+    if(/^Change/.test(st_.label))say(st_.label);
+    else if(st_.dur>=15||!pv||pv.ex!==st_.ex)say(`${/^(Repos|Enchaîne)$/.test(st_.label)?"":st_.label+". "}Ensuite : ${ex.n}${st_.side==="G"?", jambe gauche":""}`);}
   else say(`Prépare-toi. ${ex.n}`);
 }
+function plAdvance(){PL.el=0;PL.i++;if(PL.i>=PL.steps.length){plDone();return}enterStep(true)}
 function plLoop(now){
   const dt=Math.min(100,now-PL.last);PL.last=now;
   if(!PL.paused){PL.el+=dt/1000;PL.sim+=dt*(PL.steps[PL.i].kind==="work"?1:.6);}
@@ -982,37 +1124,52 @@ function plLoop(now){
   while(PL.i<PL.steps.length&&PL.el>=PL.steps[PL.i].dur){PL.el-=PL.steps[PL.i].dur;PL.i++;moved++;}
   if(PL.i>=PL.steps.length){plDone();return}
   if(moved)enterStep(moved===1);
-  const s_=PL.steps[PL.i],ex=EX[s_.ex],rem=s_.dur-PL.el,sec=Math.ceil(rem);
-  if(sec!==PL.lastSec){PL.lastSec=sec;const n=$("#pl-num");n.textContent=s_.dur>=60?mmss(sec):sec;
-    if(sec<=3&&sec>=1&&!PL.paused&&PL.el>.05){SND.tick();n.classList.remove("tick");void n.offsetWidth;n.classList.add("tick")}
-    if(sec===10&&s_.kind==="rest"&&s_.dur>=30&&!PL.paused)say("Dix secondes");
-    if(s_.kind==="work"&&s_.dur>=40&&sec===Math.round(s_.dur/2)&&!PL.paused)say("Moitié");}
-  $("#pl-arc").setAttribute("stroke-dashoffset",(452.4*(PL.el/s_.dur)).toFixed(1));
-  const g=PL.starts[PL.i]+PL.el;$("#pl-fill").style.width=(g/PL.tot*100).toFixed(2)+"%";$("#pl-el").textContent=mmss(g);
+  const s_=PL.steps[PL.i],ex=exSide(s_.ex,s_.side),n=$("#pl-num"),sm=$("#pl-small"),sec=Math.ceil(s_.dur-PL.el);
+  if(s_.open){const e=Math.floor(PL.el);if(e!==PL.lastSec){PL.lastSec=e;n.textContent=mmss(e);sm.textContent="chrono"}
+    $("#pl-arc").setAttribute("stroke-dashoffset",(452.4*(1-(PL.el%60)/60)).toFixed(1));}
+  else if(s_.reps){const done=Math.min(s_.reps,Math.floor(PL.sim/s_.cyc)*s_.per),e=Math.floor(PL.el);
+    if(done!==PL.lastRep){PL.lastRep=done;n.textContent=done;if(done>0&&!PL.paused){SND.rep();n.classList.remove("tick");void n.offsetWidth;n.classList.add("tick")}}
+    if(e!==PL.lastSec){PL.lastSec=e;sm.textContent=`sur ${s_.reps}${s_.perSide?" /jambe":""} · ${mmss(e)}`}
+    $("#pl-arc").setAttribute("stroke-dashoffset",(452.4*(PL.el/s_.dur)).toFixed(1));}
+  else{if(sec!==PL.lastSec){PL.lastSec=sec;n.textContent=s_.dur>=60?mmss(sec):sec;sm.textContent=s_.dur>=60?"restant":"secondes";
+      if(sec<=3&&sec>=1&&!PL.paused&&PL.el>.05){SND.tick();n.classList.remove("tick");void n.offsetWidth;n.classList.add("tick")}
+      if(sec===10&&s_.kind==="rest"&&s_.dur>=30&&!PL.paused)say("Dix secondes");
+      if(s_.kind==="work"&&s_.dur>=40&&sec===Math.round(s_.dur/2)&&!PL.paused)say("Moitié");}
+    $("#pl-arc").setAttribute("stroke-dashoffset",(452.4*(PL.el/s_.dur)).toFixed(1));}
+  const g=PL.starts[PL.i]+(s_.open?Math.min(PL.el,s_.est):PL.el);$("#pl-fill").style.width=Math.min(100,g/PL.tot*100).toFixed(2)+"%";$("#pl-el").textContent=mmss(g);
   const smp=sample(ex,PL.sim),pts=place(ex,smp.p),hb=hairBase(pts,smp.p);
   if(hb){const tg=[hb[0]-5,hb[1]+12];if(!PL.tail||smp.a<.05)PL.tail=tg;else{PL.tail[0]+=(tg[0]-PL.tail[0])*.22;PL.tail[1]+=(tg[1]-PL.tail[1])*.22}
     const dx=PL.tail[0]-hb[0],dy=PL.tail[1]-hb[1],dd=Math.hypot(dx,dy);if(dd>15)PL.tail=[hb[0]+dx/dd*15,hb[1]+dy/dd*15]}else PL.tail=null;
   const gh=s_.kind==="work"&&FAST.has(ex.cat)&&!PL.paused?[sample(ex,PL.sim-55).p,sample(ex,PL.sim-110).p]:null;
   $("#pl-fig").innerHTML=figInner(ex,smp.p,{s:pts,a:smp.a,tail:PL.tail,ghosts:gh});
-  if(smp.i!==PL.capI){PL.capI=smp.i;const c=$("#pl-cap");c.textContent=s_.kind==="work"?(ex.anim.fr[smp.i][3]||""):""}
+  if(smp.i!==PL.capI){PL.capI=smp.i;$("#pl-cap").textContent=s_.kind==="work"?(ex.anim.fr[smp.i][3]||""):""}
   PL.raf=requestAnimationFrame(plLoop);
 }
+function plFinishOpen(){if(!PL.on)return;const s_=PL.steps[PL.i];if(s_&&s_.test==="wall")PL.rec.wall=Math.round(PL.el);plAdvance()}
 function plPause(p){PL.paused=p;const b=$("#pl-pp");if(!b)return;b.innerHTML=p?ICON.play:ICON.pause;b.setAttribute("aria-label",p?"Reprendre":"Pause");
   let pz=$("#pl-pz");if(p&&!pz){$("#pl-stage").insertAdjacentHTML("beforeend",'<div class="pl-paused" id="pl-pz">En pause</div>')}else if(!p&&pz)pz.remove();
   if(p){try{speechSynthesis.cancel()}catch(e){}}}
 function plJump(d){if(!PL.on)return;if(d<0&&PL.el>2){PL.el=0;enterStep(false);return}
+  if(d>0){const s_=PL.steps[PL.i];if(s_&&s_.open){plFinishOpen();return}if(PL.i>=PL.steps.length-1){plDone();return}}
   PL.i=Math.max(0,Math.min(PL.steps.length-1,PL.i+d));PL.el=0;enterStep(true);}
-function plClose(){cancelAnimationFrame(PL.raf);PL.on=false;wake(false);try{speechSynthesis.cancel()}catch(e){}$("#player").hidden=true;document.body.style.overflow="";renderToday()}
+function plClose(){cancelAnimationFrame(PL.raf);PL.on=false;wake(false);try{speechSynthesis.cancel()}catch(e){}$("#player").hidden=true;document.body.style.overflow="";render()}
+function testInputs(k,ids){const v=st.tests[k]||{};return ids.map(id=>{const t=TESTS.find(x=>x.id===id);return `<label class="tin"><span>${esc(t.n)}</span><input type="number" inputmode="decimal" data-test="${id}" data-k="${k}" value="${v[id]!=null?esc(v[id]):""}" placeholder="—"><small>${t.u}</small></label>`}).join("")}
 function plDone(){
-  cancelAnimationFrame(PL.raf);PL.on=false;wake(false);SND.end();say("Bravo ! Séance terminée.");
-  const k=PL.k,s=SES[PLAN[k]],T=s.timed;$("#player").dataset.ph="done";$("#pl-fill").style.width="100%";$("#pl-el").textContent=mmss(PL.tot);
-  if(T.full)st.checks[k]=s.items.map((_,i)=>i);else{const a=st.checks[k]||(st.checks[k]=[]);T.items.forEach(i=>{if(!a.includes(i))a.push(i)})}save();
+  cancelAnimationFrame(PL.raf);PL.on=false;wake(false);SND.end();
+  const M=PL.meta,k=M.k;$("#player").dataset.ph="done";$("#pl-fill").style.width="100%";$("#pl-el").textContent=mmss(PL.tot);
+  if(k&&PL.rec.wall!=null){(st.tests[k]||(st.tests[k]={})).wall=PL.rec.wall}
   const cols=["var(--red)","var(--blue)"];let conf="";for(let i=0;i<18;i++){const a=i/18*Math.PI*2,r=90+Math.random()*60;conf+=`<i class="conf" style="background:${cols[i%2]};--x:${(Math.cos(a)*r).toFixed(0)}px;--y:${(Math.sin(a)*r).toFixed(0)}px;--r:${(Math.random()*540-270).toFixed(0)}deg"></i>`}
-  const left=T.full?[]:s.items.map((_,i)=>i).filter(i=>!T.items.includes(i));
-  $("#pl-body").innerHTML=`<div class="pl-end"><div class="badge"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="54" transform="rotate(-90 60 60)"/><path d="M38 62l15 15 30-32"/></svg>${conf}</div>
-   <h2>Bravo !</h2><p class="muted" style="margin:0">${mmss(PL.tot)} de séance · ${PL.works} efforts</p>
-   ${T.full&&!st.done[k]?`<div class="finish"><div class="rpe-row"><label for="rpe" style="font-weight:600">Difficulté ressentie</label><span class="rpe-v" id="rpev">8/10</span></div><input type="range" id="rpe" min="1" max="10" value="8"><textarea id="note" placeholder="Note (sensations, douleur…)"></textarea><button class="btn" data-finish="${k}" data-pl="1">Valider la séance</button></div>`
-   :`${left.length?`<p style="margin:0;max-width:420px">Il te reste : <b>${left.map(i=>esc(EX[s.items[i][0]].n)+" ("+esc(s.items[i][1])+")").join(", ")}</b>.</p>`:""}<button class="btn" id="pl-back" style="width:100%;max-width:420px">Retour à la séance</button>`}</div>`;
+  const badge=`<div class="badge"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="54" transform="rotate(-90 60 60)"/><path d="M38 62l15 15 30-32"/></svg>${conf}</div>`;
+  let body="";
+  if(M.mode==="session"){say("Bravo ! Séance terminée.");const s=SES[PLAN[k]];st.checks[k]=s.items.map((_,i)=>i);
+    body=`<h2>Bravo !</h2><p class="muted" style="margin:0">${mmss(PL.tot)} de séance · ${PL.works} séries et efforts</p>
+    ${PLAN[k]==="T"?`<div class="tins"><b>Tes résultats</b>${testInputs(k,TESTS.map(t=>t.id))}</div>`:""}
+    ${!st.done[k]?`<div class="finish"><div class="rpe-row"><label for="rpe" style="font-weight:600">Difficulté ressentie</label><span class="rpe-v">8/10</span></div><input type="range" id="rpe" min="1" max="10" value="8"><textarea id="note" placeholder="Note (sensations, douleur…)"></textarea><button class="btn" data-finish="${k}" data-pl="1">Valider la séance</button></div>`:`<button class="btn" id="pl-back" style="width:100%;max-width:420px">Fermer</button>`}`;}
+  else if(M.mode==="test"){say("Test terminé.");body=`<h2>Test terminé</h2><div class="tins">${testInputs(k,[M.test])}</div><button class="btn" id="pl-back" style="width:100%;max-width:420px">Enregistrer</button>`;}
+  else{say("Exercice terminé.");if(k&&M.i!=null&&M.i!==""){const a=st.checks[k]||(st.checks[k]=[]);if(!a.includes(+M.i))a.push(+M.i)}
+    body=`<h2>Exercice terminé</h2><p class="muted" style="margin:0">${esc(M.title)} · ${mmss(PL.tot)}</p><button class="btn" id="pl-back" style="width:100%;max-width:420px">Retour à la séance</button>`;}
+  save();
+  $("#pl-body").innerHTML=`<div class="pl-end">${badge}${body}</div>`;
 }
 document.addEventListener("visibilitychange",()=>{if(!PL.on)return;if(document.hidden)plPause(true);else wake(true)});
 
@@ -1024,6 +1181,7 @@ document.addEventListener("click",e=>{
   if(ds.close!==undefined){closeEx();return}
   if(ds.play){openPlayer(ds.play);return}
   if(b.id==="pl-start"){plStart();return}
+  if(b.id==="pl-done"){plFinishOpen();return}
   if(b.id==="pl-pp"){plPause(!PL.paused);return}
   if(b.id==="pl-prev"){plJump(-1);return}
   if(b.id==="pl-next"){plJump(1);return}
@@ -1032,14 +1190,14 @@ document.addEventListener("click",e=>{
   if(b.id==="pl-quit"||b.id==="pl-back"){plClose();return}
   if(b.id==="pl-voice"){plVoice=!plVoice;b.setAttribute("aria-pressed",plVoice);try{localStorage.setItem("prepaSlalom.voice",plVoice?"1":"0")}catch(e){}if(!plVoice)try{speechSynthesis.cancel()}catch(e){};return}
   if(ds.tab){setTab(ds.tab);return}
-  if(ds.ex){openEx(ds.ex,ds.rx);return}
+  if(ds.run){const c=SHEET;closeEx();openItem(c.id,c.rx,c.ctx);return}
+  if(ds.ex){openEx(ds.ex,ds.rx,{k:ds.k,i:ds.i,test:ds.test});return}
   if(ds.day){view=D(ds.day);renderToday();return}
   if(ds.go){view=D(ds.go);setTab("today");return}
   if(ds.chk!==undefined){const k=ds.k,i=+ds.chk,a=st.checks[k]||(st.checks[k]=[]);const j=a.indexOf(i);j>=0?a.splice(j,1):a.push(i);save();renderToday();return}
   if(ds.finish){const k=ds.finish,f=b.closest(".finish");st.done[k]={rpe:+f.querySelector("input[type=range]").value,note:f.querySelector("textarea").value.trim(),at:TK};st.checks[k]=SES[PLAN[k]].items.map((_,i)=>i);save();if(ds.pl)plClose();else renderToday();return}
   if(ds.undo){delete st.done[ds.undo];save();renderToday();return}
   if(ds.cat){libCat=ds.cat;renderLib();return}
-  if(ds.tm!==undefined){if(+ds.tm===0)stopTimer(true);else startTimer(+ds.tm);return}
   if(b.id==="pp"){paused=!paused;b.textContent=paused?"Lecture":"Pause";b.setAttribute("aria-pressed",paused);return}
   if(b.id==="sl"){speed=speed===1?.4:1;b.setAttribute("aria-pressed",speed!==1);return}
   if(b.id==="bk-copy"){const txt=JSON.stringify(st);const m=$("#bk-msg");
