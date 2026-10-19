@@ -1054,6 +1054,18 @@ const planDur=steps=>steps.reduce((a,x)=>a+(x.open?x.est:x.dur),0);
 let PL={on:false};
 let plVoice=true;try{plVoice=localStorage.getItem("prepaSlalom.voice")!=="0"}catch(e){}
 function say(t){if(!plVoice||!("speechSynthesis" in window))return;try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="fr-FR";u.rate=1.05;const v=speechSynthesis.getVoices().find(v=>/^fr/i.test(v.lang));if(v)u.voice=v;speechSynthesis.speak(u)}catch(e){}}
+
+/* Voix enregistrée (Fish) : messages pré-générés dans voix/, sinon voix de l'iPhone */
+const VX={buf:{},list:null,src:[]};
+const LABK={"Fin du tour":"l_tour","Récup · bloc suivant":"l_bloc","Exercice suivant":"l_exo","Prépare-toi":"l_prep","Trot":"l_trot","Récup · retiens ton score":"l_score","Change de jambe":"l_jambe","Change de côté":"l_cote"};
+const VXFIX=["go","prep","jambe_g","l_jambe","l_cote","l_tour","l_bloc","l_exo","l_prep","l_trot","l_score","moitie","dix","fin_seance","fin_exo","fin_test"];
+async function vxLoad(keys){const a=audio();if(!a)return;
+  if(!VX.list){try{VX.list=new Set(await (await fetch("voix/liste.json")).json())}catch(e){VX.list=new Set()}}
+  await Promise.all(keys.filter(k=>VX.list.has(k)&&!VX.buf[k]).map(async k=>{try{const r=await fetch(`voix/${k}.mp3`);if(r.ok)VX.buf[k]=await a.decodeAudioData(await r.arrayBuffer())}catch(e){}}))}
+function vxStop(){VX.src.forEach(x=>{try{x.stop()}catch(e){}});VX.src=[];try{speechSynthesis.cancel()}catch(e){}}
+function voice(keys,txt){if(!plVoice)return;vxStop();const a=audio();
+  if(!a||!keys.every(k=>VX.buf[k])){vxLoad(keys);say(txt);return}
+  let t=a.currentTime+.03;keys.forEach(k=>{const b=a.createBufferSource();b.buffer=VX.buf[k];b.connect(a.destination);b.start(t);t+=VX.buf[k].duration+.04;VX.src.push(b)})}
 async function wake(on){try{if(on&&"wakeLock" in navigator){if(!PL.wl)PL.wl=await navigator.wakeLock.request("screen")}else if(!on&&PL.wl){await PL.wl.release();PL.wl=null}}catch(e){}}
 function plInit(steps,meta){
   const tot=planDur(steps),works=steps.filter(x=>x.kind==="work"&&!x.warm).length;
@@ -1062,6 +1074,7 @@ function plInit(steps,meta){
   $("#player").hidden=false;$("#player").dataset.ph="prep";document.body.style.overflow="hidden";
   $("#pl-title").textContent=meta.title;$("#pl-tot").textContent=mmss(tot);$("#pl-el").textContent="0:00";$("#pl-fill").style.width="0";
   $("#pl-voice").setAttribute("aria-pressed",plVoice);$("#pl-conf").hidden=true;
+  vxLoad(VXFIX.concat([...new Set(steps.map(x=>x.ex).filter(Boolean))].flatMap(id=>["n_"+id,"nx_"+id])));
 }
 function openPlayer(k){
   const sid=PLAN[k],s=SES[sid],steps=buildSteps(k);
@@ -1091,7 +1104,7 @@ function runView(){
   <div class="pl-ctl"><button id="pl-prev" aria-label="Précédent">${ICON.prev}</button><button class="big" id="pl-pp" aria-label="Pause">${ICON.pause}</button><button id="pl-next" aria-label="Suivant">${ICON.next}</button></div></div>`;
 }
 function plStart(){
-  audio();tone(1,.01,0,.0001);say("C’est parti");
+  audio();tone(1,.01,0,.0001);voice(["go"],"C’est parti");
   PL.on=true;PL.i=0;PL.el=0;PL.last=performance.now();runView();enterStep(true);wake(true);
   cancelAnimationFrame(PL.raf);PL.raf=requestAnimationFrame(plLoop);
 }
@@ -1110,11 +1123,11 @@ function enterStep(fx){
   $("#pl-done").hidden=!st_.open;
   $("#pl-after").innerHTML=st_.kind==="work"?(nw?`<span class="th">${thumb(nw.ex)}</span><span>Ensuite : <b>${esc(EX[nw.ex].n)}</b>${esc(sideTxt(nw))}</span>`:`<span>Dernier effort, à fond !</span>`):"";
   if(!fx)return;
-  if(st_.kind==="work"){SND.go();if(!st_.warm){const f=$("#pl-flash");f.textContent="GO";f.classList.remove("on");void f.offsetWidth;f.classList.add("on")}else say(ex.n);}
+  if(st_.kind==="work"){SND.go();if(!st_.warm){const f=$("#pl-flash");f.textContent="GO";f.classList.remove("on");void f.offsetWidth;f.classList.add("on")}else voice(["n_"+st_.ex],ex.n);}
   else if(st_.kind==="rest"){SND.rest();const pv=PL.steps[PL.i-1];
-    if(/^Change/.test(st_.label))say(st_.label);
-    else if(st_.dur>=15||!pv||pv.ex!==st_.ex)say(`${/^(Repos|Enchaîne)$/.test(st_.label)?"":st_.label+". "}Ensuite : ${ex.n}${st_.side==="G"?", jambe gauche":""}`);}
-  else say(`Prépare-toi. ${ex.n}`);
+    if(/^Change/.test(st_.label))voice([LABK[st_.label]],st_.label);
+    else if(st_.dur>=15||!pv||pv.ex!==st_.ex)voice([LABK[st_.label],"nx_"+st_.ex,st_.side==="G"?"jambe_g":null].filter(Boolean),`${/^(Repos|Enchaîne)$/.test(st_.label)?"":st_.label+". "}Ensuite : ${ex.n}${st_.side==="G"?", jambe gauche":""}`);}
+  else voice(["prep","n_"+st_.ex],`Prépare-toi. ${ex.n}`);
 }
 function plAdvance(){PL.el=0;PL.i++;if(PL.i>=PL.steps.length){plDone();return}enterStep(true)}
 function plLoop(now){
@@ -1133,8 +1146,8 @@ function plLoop(now){
     $("#pl-arc").setAttribute("stroke-dashoffset",(452.4*(PL.el/s_.dur)).toFixed(1));}
   else{if(sec!==PL.lastSec){PL.lastSec=sec;n.textContent=s_.dur>=60?mmss(sec):sec;sm.textContent=s_.dur>=60?"restant":"secondes";
       if(sec<=3&&sec>=1&&!PL.paused&&PL.el>.05){SND.tick();n.classList.remove("tick");void n.offsetWidth;n.classList.add("tick")}
-      if(sec===10&&s_.kind==="rest"&&s_.dur>=30&&!PL.paused)say("Dix secondes");
-      if(s_.kind==="work"&&s_.dur>=40&&sec===Math.round(s_.dur/2)&&!PL.paused)say("Moitié");}
+      if(sec===10&&s_.kind==="rest"&&s_.dur>=30&&!PL.paused)voice(["dix"],"Dix secondes");
+      if(s_.kind==="work"&&s_.dur>=40&&sec===Math.round(s_.dur/2)&&!PL.paused)voice(["moitie"],"Moitié");}
     $("#pl-arc").setAttribute("stroke-dashoffset",(452.4*(PL.el/s_.dur)).toFixed(1));}
   const g=PL.starts[PL.i]+(s_.open?Math.min(PL.el,s_.est):PL.el);$("#pl-fill").style.width=Math.min(100,g/PL.tot*100).toFixed(2)+"%";$("#pl-el").textContent=mmss(g);
   const smp=sample(ex,PL.sim),pts=place(ex,smp.p),hb=hairBase(pts,smp.p);
@@ -1148,11 +1161,11 @@ function plLoop(now){
 function plFinishOpen(){if(!PL.on)return;const s_=PL.steps[PL.i];if(s_&&s_.test==="wall")PL.rec.wall=Math.round(PL.el);plAdvance()}
 function plPause(p){PL.paused=p;const b=$("#pl-pp");if(!b)return;b.innerHTML=p?ICON.play:ICON.pause;b.setAttribute("aria-label",p?"Reprendre":"Pause");
   let pz=$("#pl-pz");if(p&&!pz){$("#pl-stage").insertAdjacentHTML("beforeend",'<div class="pl-paused" id="pl-pz">En pause</div>')}else if(!p&&pz)pz.remove();
-  if(p){try{speechSynthesis.cancel()}catch(e){}}}
+  if(p)vxStop()}
 function plJump(d){if(!PL.on)return;if(d<0&&PL.el>2){PL.el=0;enterStep(false);return}
   if(d>0){const s_=PL.steps[PL.i];if(s_&&s_.open){plFinishOpen();return}if(PL.i>=PL.steps.length-1){plDone();return}}
   PL.i=Math.max(0,Math.min(PL.steps.length-1,PL.i+d));PL.el=0;enterStep(true);}
-function plClose(){cancelAnimationFrame(PL.raf);PL.on=false;wake(false);try{speechSynthesis.cancel()}catch(e){}$("#player").hidden=true;document.body.style.overflow="";render()}
+function plClose(){cancelAnimationFrame(PL.raf);PL.on=false;wake(false);vxStop();$("#player").hidden=true;document.body.style.overflow="";render()}
 function testInputs(k,ids){const v=st.tests[k]||{};return ids.map(id=>{const t=TESTS.find(x=>x.id===id);return `<label class="tin"><span>${esc(t.n)}</span><input type="number" inputmode="decimal" data-test="${id}" data-k="${k}" value="${v[id]!=null?esc(v[id]):""}" placeholder="—"><small>${t.u}</small></label>`}).join("")}
 function plDone(){
   cancelAnimationFrame(PL.raf);PL.on=false;wake(false);SND.end();
@@ -1161,12 +1174,12 @@ function plDone(){
   const cols=["var(--red)","var(--blue)"];let conf="";for(let i=0;i<18;i++){const a=i/18*Math.PI*2,r=90+Math.random()*60;conf+=`<i class="conf" style="background:${cols[i%2]};--x:${(Math.cos(a)*r).toFixed(0)}px;--y:${(Math.sin(a)*r).toFixed(0)}px;--r:${(Math.random()*540-270).toFixed(0)}deg"></i>`}
   const badge=`<div class="badge"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="54" transform="rotate(-90 60 60)"/><path d="M38 62l15 15 30-32"/></svg>${conf}</div>`;
   let body="";
-  if(M.mode==="session"){say("Bravo ! Séance terminée.");const s=SES[PLAN[k]];st.checks[k]=s.items.map((_,i)=>i);
+  if(M.mode==="session"){voice(["fin_seance"],"Bravo ! Séance terminée.");const s=SES[PLAN[k]];st.checks[k]=s.items.map((_,i)=>i);
     body=`<h2>Bravo !</h2><p class="muted" style="margin:0">${mmss(PL.tot)} de séance · ${PL.works} séries et efforts</p>
     ${PLAN[k]==="T"?`<div class="tins"><b>Tes résultats</b>${testInputs(k,TESTS.map(t=>t.id))}</div>`:""}
     ${!st.done[k]?`<div class="finish"><div class="rpe-row"><label for="rpe" style="font-weight:600">Difficulté ressentie</label><span class="rpe-v">8/10</span></div><input type="range" id="rpe" min="1" max="10" value="8"><textarea id="note" placeholder="Note (sensations, douleur…)"></textarea><button class="btn" data-finish="${k}" data-pl="1">Valider la séance</button></div>`:`<button class="btn" id="pl-back" style="width:100%;max-width:420px">Fermer</button>`}`;}
-  else if(M.mode==="test"){say("Test terminé.");body=`<h2>Test terminé</h2><div class="tins">${testInputs(k,[M.test])}</div><button class="btn" id="pl-back" style="width:100%;max-width:420px">Enregistrer</button>`;}
-  else{say("Exercice terminé.");if(k&&M.i!=null&&M.i!==""){const a=st.checks[k]||(st.checks[k]=[]);if(!a.includes(+M.i))a.push(+M.i)}
+  else if(M.mode==="test"){voice(["fin_test"],"Test terminé.");body=`<h2>Test terminé</h2><div class="tins">${testInputs(k,[M.test])}</div><button class="btn" id="pl-back" style="width:100%;max-width:420px">Enregistrer</button>`;}
+  else{voice(["fin_exo"],"Exercice terminé.");if(k&&M.i!=null&&M.i!==""){const a=st.checks[k]||(st.checks[k]=[]);if(!a.includes(+M.i))a.push(+M.i)}
     body=`<h2>Exercice terminé</h2><p class="muted" style="margin:0">${esc(M.title)} · ${mmss(PL.tot)}</p><button class="btn" id="pl-back" style="width:100%;max-width:420px">Retour à la séance</button>`;}
   save();
   $("#pl-body").innerHTML=`<div class="pl-end">${badge}${body}</div>`;
@@ -1188,7 +1201,7 @@ document.addEventListener("click",e=>{
   if(b.id==="pl-x"){if(PL.on){plPause(true);$("#pl-conf").hidden=false}else plClose();return}
   if(b.id==="pl-stay"){$("#pl-conf").hidden=true;plPause(false);return}
   if(b.id==="pl-quit"||b.id==="pl-back"){plClose();return}
-  if(b.id==="pl-voice"){plVoice=!plVoice;b.setAttribute("aria-pressed",plVoice);try{localStorage.setItem("prepaSlalom.voice",plVoice?"1":"0")}catch(e){}if(!plVoice)try{speechSynthesis.cancel()}catch(e){};return}
+  if(b.id==="pl-voice"){plVoice=!plVoice;b.setAttribute("aria-pressed",plVoice);try{localStorage.setItem("prepaSlalom.voice",plVoice?"1":"0")}catch(e){}if(!plVoice)vxStop();return}
   if(ds.tab){setTab(ds.tab);return}
   if(ds.run){const c=SHEET;closeEx();openItem(c.id,c.rx,c.ctx);return}
   if(ds.ex){openEx(ds.ex,ds.rx,{k:ds.k,i:ds.i,test:ds.test});return}
