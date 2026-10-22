@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -22,7 +22,8 @@
 :root{
   --bg:#EEF3F7; --surface:#FFFFFF; --ink:#0F2131; --muted:#5A6B7B; --line:#D6E0E8; --chip:#E3EBF2;
   --red:#D2253A; --blue:#1D5AD3; --teal:#0C8676; --amber:#B9730A; --prop:#C6D4E0;
-  --fig:#0F2131; --fig2:#8C9FB0; --hair:#7A4A26; --snow:#E2EAF1; --violet:#6A47D6;
+  --fig:#0F2131; --fig2:#8C9FB0; --hair:#6B3E1F; --snow:#E2EAF1; --violet:#6A47D6;
+  --skin:#EFC3A0; --suit:#22323F; --shoe:#141C24; --eye:#22150C;
   --f-disp:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
   --f-body:"Barlow",system-ui,-apple-system,"Segoe UI",sans-serif;
   --r:14px;
@@ -30,12 +31,16 @@
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#09131C; --surface:#121F2B; --ink:#E5EDF4; --muted:#93A5B5; --line:#223442; --chip:#1A2A38;
   --red:#FF5B6C; --blue:#6F9DFF; --teal:#3CC4AF; --amber:#F0A83A; --prop:#2B3D4D;
-  --fig:#E5EDF4; --fig2:#647B8E; --hair:#C98F5E; --snow:#0F1C27; --violet:#A895FF; color-scheme:dark}}
+  --fig:#E5EDF4; --fig2:#647B8E; --hair:#B9824F; --snow:#0F1C27; --violet:#A895FF;
+  --skin:#E8B892; --suit:#DCE6EF; --shoe:#F1F5F9; --eye:#22150C; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#09131C; --surface:#121F2B; --ink:#E5EDF4; --muted:#93A5B5; --line:#223442; --chip:#1A2A38;
   --red:#FF5B6C; --blue:#6F9DFF; --teal:#3CC4AF; --amber:#F0A83A; --prop:#2B3D4D;
-  --fig:#E5EDF4; --fig2:#647B8E; --hair:#C98F5E; --snow:#0F1C27; --violet:#A895FF; color-scheme:dark}
+  --fig:#E5EDF4; --fig2:#647B8E; --hair:#B9824F; --snow:#0F1C27; --violet:#A895FF;
+  --skin:#E8B892; --suit:#DCE6EF; --shoe:#F1F5F9; --eye:#22150C; color-scheme:dark}
 *{box-sizing:border-box}
+html,body,button,a,input,textarea,label,.stage,.pl-stage,.player,.sheet{touch-action:manipulation}
+button,.player,.stage,.tabs{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 html,body{background:var(--bg)}
 body{margin:0;color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.45;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
 button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
@@ -194,7 +199,7 @@ th{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;le
 .stage .lg{position:absolute;left:12px;top:36px;display:flex;flex-direction:column;gap:3px;font-size:11px;color:var(--muted)}
 .stage .lg i{display:inline-block;width:12px;height:4px;border-radius:2px;margin-right:5px;vertical-align:middle}
 .sbar{display:flex;align-items:center;gap:10px;padding:10px 12px 12px;border-top:1px solid var(--line)}
-.cap{flex:1;min-width:0;font-family:var(--f-disp);font-weight:700;font-size:19px;line-height:1.1}
+.cap{flex:1;min-width:0;font-family:var(--f-disp);font-weight:700;font-size:19px;line-height:1.1;min-height:2.2em;display:flex;align-items:center}
 .cap.in{animation:capin .35s cubic-bezier(.2,.8,.2,1)}
 @keyframes capin{from{opacity:0;transform:translateY(6px)}}
 .ctl{display:flex;gap:6px;flex:none}
@@ -228,10 +233,11 @@ th{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;le
 .player[data-ph="work"]{--ph:var(--red)}.player[data-ph="rest"]{--ph:var(--teal)}.player[data-ph="done"]{--ph:var(--teal)}
 .glow{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .6s}
 .glow.g-prep{background:radial-gradient(130% 55% at 50% 0%,color-mix(in srgb,var(--amber) 26%,transparent),transparent 70%)}
-.glow.g-work{background:radial-gradient(130% 55% at 50% 0%,color-mix(in srgb,var(--red) 26%,transparent),transparent 70%)}
-.glow.g-rest{background:radial-gradient(130% 55% at 50% 0%,color-mix(in srgb,var(--teal) 26%,transparent),transparent 70%)}
+.glow.g-work{background:radial-gradient(130% 55% at 50% 0%,color-mix(in srgb,var(--red) 24%,transparent),transparent 70%);box-shadow:inset 0 5px 0 var(--red)}
+.glow.g-rest{background:linear-gradient(180deg,color-mix(in srgb,var(--teal) 62%,var(--bg)) 0%,color-mix(in srgb,var(--teal) 34%,var(--bg)) 48%,color-mix(in srgb,var(--teal) 18%,var(--bg)) 100%)}
 .player[data-ph="prep"] .g-prep,.player[data-ph="work"] .g-work,.player[data-ph="rest"] .g-rest,.player[data-ph="done"] .g-rest{opacity:1}
 .player>*{position:relative}
+.player>.glow{position:absolute;inset:0;z-index:0}
 .pl-top{display:grid;grid-template-columns:40px 1fr 40px;align-items:center;gap:8px}
 .pl-ic{width:40px;height:40px;border-radius:50%;background:var(--chip);display:grid;place-items:center;font-size:22px;line-height:1}
 .pl-ic svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
@@ -242,12 +248,20 @@ th{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;le
 .pl-time{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted);margin-top:4px;font-variant-numeric:tabular-nums}
 .pl-body{flex:1;min-height:0;display:flex;flex-direction:column}
 .pl-run{flex:1;min-height:0;display:flex;flex-direction:column;gap:6px}
-.pl-head{display:flex;align-items:center;gap:10px;margin-top:6px}
+.pl-head{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin-top:6px}
 .pl-chip{font-family:var(--f-disp);font-weight:800;font-size:18px;letter-spacing:.06em;padding:3px 12px;border-radius:8px;background:var(--ph);color:#fff;transition:background-color .4s}
 .pl-sub{font-size:14px;color:var(--muted);font-weight:600;font-variant-numeric:tabular-nums}
 .pl-stage{flex:1;min-height:150px;position:relative;display:flex;justify-content:center;align-items:flex-end}
 .pl-stage svg{height:100%;width:auto;max-width:100%;transition:opacity .4s}
-.pl-stage.next svg{opacity:.5}
+.pl-stage svg{position:relative;z-index:1}
+.pl-stage.next svg{opacity:.55}
+.pl-wm{position:absolute;z-index:0;left:0;right:0;top:14%;text-align:center;font-family:var(--f-disp);font-weight:800;font-size:76px;line-height:1;letter-spacing:.05em;color:var(--teal);opacity:0;transition:opacity .4s;pointer-events:none}
+.pl-wm small{display:block;font-size:20px;letter-spacing:.08em;margin-top:6px}
+.player[data-ph="rest"] .pl-wm{opacity:.5}
+.player[data-ph="rest"] .pl-chip{font-size:21px;padding:5px 14px;white-space:nowrap}
+.player[data-ph="rest"] .pl-ring{animation:breathe 4s ease-in-out infinite}
+.player[data-ph="rest"] .pl-ring .trk{stroke:color-mix(in srgb,var(--teal) 28%,var(--bg))}
+@keyframes breathe{50%{transform:scale(1.05)}}
 .pl-nl{position:absolute;top:6px;left:50%;transform:translateX(-50%);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);background:var(--surface);padding:3px 10px;border-radius:99px;box-shadow:0 0 0 1px var(--line);opacity:0;transition:opacity .3s}
 .pl-stage.next .pl-nl{opacity:1}
 .pl-info{display:grid;grid-template-columns:128px 1fr;gap:14px;align-items:center}
@@ -263,7 +277,8 @@ th{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;le
 .pl-txt{min-width:0;display:flex;flex-direction:column;gap:4px}
 .pl-name{font-family:var(--f-disp);font-weight:800;font-size:30px;line-height:1;text-wrap:balance}
 .pl-name.in{animation:capin .4s cubic-bezier(.2,.8,.2,1)}
-.pl-cap{font-size:15.5px;font-weight:600;line-height:1.25;color:var(--ink)}
+.pl-cap{font-size:17px;font-weight:700;line-height:1.25;color:var(--ink);min-height:2.6em}
+.pl-cap.in{animation:capin .45s cubic-bezier(.2,.8,.2,1)}
 .pl-tip{font-size:13px;color:var(--muted);line-height:1.25}
 .pl-after{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);min-height:34px}
 .pl-after .th{width:30px;height:34px;flex:none}
@@ -273,10 +288,13 @@ th{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;le
 .pl-ctl button.big{width:76px;height:76px;background:var(--ink);color:var(--bg)}
 .pl-ctl svg{width:24px;height:24px;fill:currentColor}
 .pl-ctl .big svg{width:30px;height:30px}
-.pl-flash{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;font-family:var(--f-disp);font-weight:800;font-size:120px;color:var(--red);opacity:0}
+.pl-flash{position:absolute;inset:0;z-index:2;display:grid;place-items:center;pointer-events:none;font-family:var(--f-disp);font-weight:800;font-size:120px;color:var(--red);opacity:0}
 .pl-flash.on{animation:flash .7s cubic-bezier(.2,.8,.2,1)}
 @keyframes flash{0%{opacity:0;transform:scale(.6)}25%{opacity:1}100%{opacity:0;transform:scale(1.5)}}
-.pl-paused{position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);background:var(--surface);box-shadow:0 0 0 1px var(--line),0 10px 30px -10px rgba(0,0,0,.4);border-radius:14px;padding:10px 18px;font-family:var(--f-disp);font-weight:800;font-size:24px}
+.pl-paused{position:absolute;inset:0;display:grid;place-items:center;align-content:center;gap:4px;text-align:center;background:color-mix(in srgb,var(--bg) 60%,transparent);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);z-index:2;border-radius:14px}
+.pl-paused b{font-family:var(--f-disp);font-size:40px;font-weight:800}
+.pl-paused small{font-size:14px;color:var(--muted)}
+.pl-paused-old{position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);background:var(--surface);box-shadow:0 0 0 1px var(--line),0 10px 30px -10px rgba(0,0,0,.4);border-radius:14px;padding:10px 18px;font-family:var(--f-disp);font-weight:800;font-size:24px}
 .pl-confirm{position:absolute;left:16px;right:16px;bottom:calc(env(safe-area-inset-bottom,0px) + 16px);z-index:3;background:var(--surface);border-radius:16px;box-shadow:0 0 0 1px var(--line),0 20px 40px -12px rgba(0,0,0,.5);padding:16px;display:flex;flex-direction:column;gap:12px}
 .pl-confirm div{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .pl-intro{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:14px;padding-top:14px}
@@ -303,7 +321,7 @@ th{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;le
 @keyframes draw{to{stroke-dashoffset:0}}
 .conf{position:absolute;left:50%;top:50%;width:7px;height:14px;border-radius:2px;opacity:0;animation:conf 1.1s .6s cubic-bezier(.1,.7,.3,1) forwards}
 @keyframes conf{0%{opacity:1;transform:translate(-50%,-50%) rotate(0)}100%{opacity:0;transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) rotate(var(--r))}}
-@media (prefers-reduced-motion:reduce){.pl-flash.on,.pl-num.tick,.pl-name.in,.conf{animation:none}.badge circle,.badge path{animation:none;stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){.pl-flash.on,.pl-num.tick,.pl-name.in,.pl-cap.in,.conf,.player[data-ph="rest"] .pl-ring{animation:none}.badge circle,.badge path{animation:none;stroke-dashoffset:0}}
 
 /* À prévoir */
 .eqwrap{padding:12px 16px 0}
@@ -332,7 +350,13 @@ th{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;le
 .tin small{color:var(--muted)}
 
 /* Bonhomme */
-.fig polyline,.fig path{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.fig polyline{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.fig .sk{fill:var(--skin)}.fig .sk2{fill:color-mix(in srgb,var(--skin) 72%,var(--bg))}
+.fig .su{fill:var(--suit)}.fig .su2{fill:color-mix(in srgb,var(--suit) 68%,var(--bg))}
+.fig .lr{fill:var(--red)}.fig .ll{fill:var(--blue)}.fig .ll2{fill:color-mix(in srgb,var(--blue) 70%,var(--bg))}
+.fig .sh{fill:var(--shoe)}.fig .sh2{fill:color-mix(in srgb,var(--shoe) 68%,var(--bg))}
+.fig .ar{stroke:var(--bg);stroke-width:1.6;stroke-linejoin:round}
+.fig .hr{fill:var(--hair)}.fig .ey{fill:var(--eye)}.fig .st,.fig .tie{fill:var(--red)}
 .fig .leg{stroke-width:7}.fig .lft{stroke:var(--blue)}.fig .rgt{stroke:var(--red)}
 .fig .arm{stroke-width:5;stroke:var(--fig)}.fig .arm.far{stroke:var(--fig2)}
 .fig .body{stroke:var(--fig);stroke-width:8}
@@ -418,26 +442,51 @@ function prep(ex){
   ex._props=(A.props||[]).map(pr=>propSVG(ex,pr)).join("");
   ex._tot=A.fr.reduce((s,f)=>s+f[1]+f[2],0);ex._ok=true;
 }
-/* Queue de cheval : point d'attache derrière la tête (vue de profil, tête à peu près droite) */
+/* Personnage : membres en volume (capsules effilées), combinaison, visage orienté, cheveux et queue de cheval */
+const n1=v=>v.toFixed(1);
+function capsule(a,b,r1,r2,cls){const dx=b[0]-a[0],dy=b[1]-a[1],L=Math.hypot(dx,dy);
+  if(L<.01)return `<circle class="${cls}" cx="${n1(a[0])}" cy="${n1(a[1])}" r="${Math.max(r1,r2)}"/>`;
+  const nx=-dy/L,ny=dx/L;
+  return `<path class="${cls}" d="M${n1(a[0]+nx*r1)} ${n1(a[1]+ny*r1)}L${n1(b[0]+nx*r2)} ${n1(b[1]+ny*r2)}A${r2} ${r2} 0 0 0 ${n1(b[0]-nx*r2)} ${n1(b[1]-ny*r2)}L${n1(a[0]-nx*r1)} ${n1(a[1]-ny*r1)}A${r1} ${r1} 0 0 0 ${n1(a[0]+nx*r1)} ${n1(a[1]+ny*r1)}Z"/>`}
+function headFrame(p){const a=(p.hd==null?p.t:p.hd)*RAD;return {u:[Math.sin(a),-Math.cos(a)],f:[Math.cos(a),Math.sin(a)]}}
+const LOC=(c,f,u,R,th)=>{const a=th*RAD;return [c[0]+R*(Math.cos(a)*f[0]+Math.sin(a)*u[0]),c[1]+R*(Math.cos(a)*f[1]+Math.sin(a)*u[1])]};
+/* Queue de cheval : attache derrière la tête (vue de profil, tête à peu près droite) */
 function hairBase(s,p){
   if(p.v!=="s")return null;const hd=p.hd==null?p.t:p.hd;if(Math.abs(hd)>55)return null;
-  const a=hd*RAD,ox=-8,oy=-3;return [s.head[0]+ox*Math.cos(a)-oy*Math.sin(a),s.head[1]+ox*Math.sin(a)+oy*Math.cos(a)];
+  const {f,u}=headFrame(p);return LOC(s.head,f,u,8.4,158);
 }
-const n1=v=>v.toFixed(1);
 function figBody(s,p,tail){
-  const f=p.v==="f",pl=(...ks)=>ks.filter(k=>s[k]).map(k=>n1(s[k][0])+","+n1(s[k][1])).join(" ");
-  let h="";
+  const fr=p.v==="f",{f,u}=headFrame(p),H=s.head;let h="";
+  const tx=s.neck[0]-s.pel[0],ty=s.neck[1]-s.pel[1],tl=Math.hypot(tx,ty)||1,tu=[tx/tl,ty/tl];
+  const shoe=(an,toe,c)=>{if(!toe)return `<ellipse class="${c}" cx="${n1(an[0])}" cy="${n1(an[1]+1.6)}" rx="5.8" ry="3.3"/>`;
+    const dx=toe[0]-an[0],dy=toe[1]-an[1],L=Math.hypot(dx,dy)||1;return capsule([an[0]-dx/L*2.6,an[1]-dy/L*2.6],toe,3.9,3,c)};
+  const leg=(hip,k,an,toe,c,cs)=>capsule(hip,k,6.6,4.7,c)+capsule(k,an,4.7,3.3,c)+shoe(an,toe,cs);
+  const arm=(sh,e,w,c,ck)=>capsule(sh,e,4.3,3.6,c)+capsule(e,w,3.6,3,c)+`<circle class="${ck}" cx="${n1(w[0])}" cy="${n1(w[1])}" r="3.5"/>`;
+  const head=()=>{let r=capsule(s.neck,[(s.neck[0]+H[0])/2,(s.neck[1]+H[1])/2],3.6,3.6,"sk")+`<circle class="sk" cx="${n1(H[0])}" cy="${n1(H[1])}" r="9.7"/>`;
+    const pts=[],a0=fr?14:36,a1=fr?166:222,NP=fr?13:16;for(let q=0;q<=NP;q++)pts.push(LOC(H,f,u,10.5,a0+(a1-a0)*q/NP));
+    const cl=fr?[H[0]+u[0]*2.8,H[1]+u[1]*2.8]:[H[0]+u[0]*1.8-f[0]*3.2,H[1]+u[1]*1.8-f[1]*3.2];
+    r+=`<path class="hr" d="M${pts.map(q=>n1(q[0])+" "+n1(q[1])).join("L")}L${n1(cl[0])} ${n1(cl[1])}Z"/>`;
+    if(fr)[-1,1].forEach(g=>{r+=`<circle class="ey" cx="${n1(H[0]+f[0]*3.5*g-u[0]*1.3)}" cy="${n1(H[1]+f[1]*3.5*g-u[1]*1.3)}" r="1.3"/>`});
+    else{const e=LOC(H,f,u,5.8,-6);r+=`<circle class="ey" cx="${n1(e[0])}" cy="${n1(e[1])}" r="1.35"/>`}
+    return r};
   const hb=hairBase(s,p);
-  if(hb){const e=tail||[hb[0]-5,hb[1]+12];h+=`<path class="hair" d="M${n1(hb[0])} ${n1(hb[1])} Q${n1(hb[0]-6)} ${n1(hb[1]+2)} ${n1(e[0])} ${n1(e[1])}"/>`;}
-  h+=`<polyline class="arm far" points="${pl("ls","le","lw")}"/><circle class="hand far" cx="${n1(s.lw[0])}" cy="${n1(s.lw[1])}" r="3"/>`;
-  h+=`<polyline class="leg lft" points="${pl("lh","lk","lan","lt")}"/>`;
-  if(f){const mp=[(s.lh[0]+s.rh[0])/2,(s.lh[1]+s.rh[1])/2],ms=[(s.ls[0]+s.rs[0])/2,(s.ls[1]+s.rs[1])/2];
-    h+=`<polyline class="body" points="${pl("lh","rh")}"/><polyline class="body" points="${pl("ls","rs")}"/><polyline class="body" points="${n1(mp[0])},${n1(mp[1])} ${n1(ms[0])},${n1(ms[1])}"/>`;
-    h+=`<polyline class="leg lft" points="${n1(s.lan[0]-6)},${n1(s.lan[1]+1)} ${n1(s.lan[0]+1)},${n1(s.lan[1]+1)}"/><polyline class="leg rgt" points="${n1(s.ran[0]-1)},${n1(s.ran[1]+1)} ${n1(s.ran[0]+6)},${n1(s.ran[1]+1)}"/>`;}
-  else h+=`<polyline class="body" points="${pl("pel","neck")}"/>`;
-  h+=`<polyline class="leg rgt" points="${pl("rh","rk","ran","rt")}"/>`;
-  h+=`<polyline class="arm" points="${pl("rs","re","rw")}"/><circle class="hand" cx="${n1(s.rw[0])}" cy="${n1(s.rw[1])}" r="3"/>`;
-  h+=`<circle class="head" cx="${n1(s.head[0])}" cy="${n1(s.head[1])}" r="9"/>`;
+  if(hb){const e=tail||[hb[0]-5,hb[1]+12];h+=capsule(hb,e,3.5,1.6,"hr")+`<circle class="tie" cx="${n1(hb[0])}" cy="${n1(hb[1])}" r="2.4"/>`;}
+  if(fr){
+    const mh=[(s.lh[0]+s.rh[0])/2,(s.lh[1]+s.rh[1])/2],ms=[(s.ls[0]+s.rs[0])/2,(s.ls[1]+s.rs[1])/2];
+    h+=leg(s.lh,s.lk,s.lan,null,"ll","sh")+leg(s.rh,s.rk,s.ran,null,"lr","sh");
+    h+=capsule(mh,[ms[0]-tu[0]*2,ms[1]-tu[1]*2],9.2,11.8,"su")+`<circle class="su" cx="${n1(s.ls[0])}" cy="${n1(s.ls[1])}" r="4.8"/><circle class="su" cx="${n1(s.rs[0])}" cy="${n1(s.rs[1])}" r="4.8"/>`;
+    h+=capsule([mh[0]+tu[0]*4,mh[1]+tu[1]*4],[ms[0]-tu[0]*6,ms[1]-tu[1]*6],1.1,1.1,"su2");
+    h+=head();
+    h+=arm(s.ls,s.le,s.lw,"su ar","sk ar")+arm(s.rs,s.re,s.rw,"su ar","sk ar");
+  }else{
+    h+=arm(s.ls,s.le,s.lw,"su2","sk2");
+    h+=leg(s.lh,s.lk,s.lan,s.lt,"ll2","sh2");
+    const ch=[s.neck[0]-tu[0]*4,s.neck[1]-tu[1]*4];
+    h+=capsule(s.pel,ch,8,9.6,"su");
+    h+=head();
+    h+=leg(s.rh,s.rk,s.ran,s.rt,"lr","sh");
+    h+=arm(s.rs,s.re,s.rw,"su ar","sk ar");
+  }
   return h;
 }
 function figInner(ex,p,o){
@@ -446,6 +495,15 @@ function figInner(ex,p,o){
   if(o.ghosts)o.ghosts.forEach((g,i)=>{h+=`<g opacity="${i?0.08:0.16}">${figBody(place(ex,g),g)}</g>`});
   return h+`<g opacity="${o.a==null?1:o.a.toFixed(2)}">${figBody(s,p,o.tail)}</g>`;
 }
+
+/* Consignes lisibles : chacune reste au moins CAPMIN ms, dans l'ordre, même si le mouvement est rapide */
+const CAPMIN=2600;
+function frameCaps(ex){if(!ex._fcap){const fr=ex.anim.fr,n=fr.length,c=new Array(n);let last=null;for(let k=0;k<2*n;k++){const i=k%n;if(fr[i][3])last=fr[i][3];if(k>=n)c[i]=last}ex._fcap=c}return ex._fcap}
+function capList(ex){if(!ex._caps){const L=[];frameCaps(ex).forEach(c=>{if(c&&L[L.length-1]!==c)L.push(c)});if(L.length>1&&L[0]===L[L.length-1])L.pop();ex._caps=L}return ex._caps}
+function pacedCap(cs,ex,fi,now){const L=capList(ex);if(!L.length)return "";const fc=frameCaps(ex)[fi]||L[0];
+  if(cs.ex!==ex){cs.ex=ex;cs.i=Math.max(0,L.indexOf(fc));cs.t=now;return L[cs.i]}
+  const nx=(cs.i+1)%L.length;if(L.length>1&&now-cs.t>=CAPMIN&&fc===L[nx]){cs.i=nx;cs.t=now}
+  return L[cs.i]}
 const VB=`viewBox="0 -30 200 222"`;
 function figSVG(ex,p){return `<svg viewBox="8 -6 184 198" class="fig" aria-hidden="true">${figInner(ex,p)}</svg>`}
 function thumb(id){const ex=EX[id],fr=ex.anim.fr,i=ex.anim.th!=null?ex.anim.th:(fr.length>1?1:0);return figSVG(ex,fr[i][0])}
@@ -558,7 +616,7 @@ lunge_lat:{n:"Fente latérale",cat:"force",side:"alt",uni:1,
   why:"Adducteurs et mobilité de hanche dans le plan latéral, celui des virages.",
   cues:["Pieds très écartés","Descends sur une jambe, l’autre reste tendue","Talon de la jambe fléchie au sol","Dos droit, poitrine ouverte"],
   avoid:"Décoller le talon de la jambe fléchie.",easy:"Descendre moins bas.",hard:"Pause 3 s en bas, remontée explosive.",
-  anim:{fr:[[fS({l:[-36,-36],r:[36,36],la:[-20,120],ra:[20,-120]}),700,200,"Pieds très écartés"],[fS({t:-8,kr:25,l:[-49,-49],r:[70,-15],la:[-20,120],ra:[20,-120],px:16}),700,500,"Assise sur la jambe droite"],[fS({l:[-36,-36],r:[36,36],la:[-20,120],ra:[20,-120]}),700,200,"Repasse au centre"],[fS({t:8,kl:25,l:[-70,15],r:[49,49],la:[-20,120],ra:[20,-120],px:-16}),700,500,"Puis sur la gauche"]],th:1}},
+  anim:{fr:[[fS({l:[-36,-36],r:[36,36],la:[-20,120],ra:[20,-120]}),700,200,""],[fS({t:-8,kr:25,l:[-49,-49],r:[70,-15],la:[-20,120],ra:[20,-120],px:16}),700,1300,"Pieds écartés, assise sur la jambe droite"],[fS({l:[-36,-36],r:[36,36],la:[-20,120],ra:[20,-120]}),700,200,""],[fS({t:8,kl:25,l:[-70,15],r:[49,49],la:[-20,120],ra:[20,-120],px:-16}),700,1300,"Repasse au centre, puis sur la gauche"]],th:1}},
 hambridge:{n:"Pont ischios 1 jambe",cat:"force",side:"swap",uni:1,
   why:"Le talon loin des fesses fait travailler les ischios, les muscles qui protègent le ligament croisé du genou.",
   cues:["Sur le dos, un talon posé loin devant toi, jambe presque tendue","L’autre jambe tendue vers le plafond","Pousse dans le talon et monte les hanches","Tiens 2 s en haut, redescends en 3 s"],
@@ -578,7 +636,7 @@ wallsit:{n:"Chaise contre le mur",cat:"force",eq:"wall",
   why:"Endurance des cuisses en position fléchie, celle que tu tiens toute la manche.",
   cues:["Dos plaqué au mur, cuisses parallèles au sol","Genoux au-dessus des chevilles","Respire calmement","Variante : tends une jambe quelques secondes, puis l’autre"],
   avoid:"Mains sur les cuisses pour pousser.",easy:"Moins bas.",hard:"Sur une jambe, en alternant toutes les 10 s.",
-  anim:{fr:[[P({t:0,l:[90,0],r:[88,0],la:[90,90],ra:[88,88]}),600,1000,"Cuisses parallèles au sol"],[P({t:0,l:[90,90],r:[88,0],la:[90,90],ra:[88,88]}),600,1200,"Tends la jambe gauche"],[P({t:0,l:[90,0],r:[88,0],la:[90,90],ra:[88,88]}),600,1000,"Repose"],[P({t:0,l:[90,0],r:[88,88],la:[90,90],ra:[88,88]}),600,1200,"Tends la jambe droite"]],props:[{k:"wall",at:"pel",f:0,dx:-14}],th:0}},
+  anim:{fr:[[P({t:0,l:[90,0],r:[88,0],la:[90,90],ra:[88,88]}),600,1000,""],[P({t:0,l:[90,90],r:[88,0],la:[90,90],ra:[88,88]}),600,1400,"Cuisses parallèles, tends la jambe gauche"],[P({t:0,l:[90,0],r:[88,0],la:[90,90],ra:[88,88]}),600,1000,""],[P({t:0,l:[90,0],r:[88,88],la:[90,90],ra:[88,88]}),600,1400,"Repose, puis tends la jambe droite"]],props:[{k:"wall",at:"pel",f:0,dx:-14}],th:0}},
 calf:{n:"Mollets 1 jambe",cat:"force",side:"swap",uni:1,
   why:"Chevilles solides et réactives dans la chaussure ; aide à rester en avant sur les skis.",
   cues:["Au sol, sur une jambe","Monte le plus haut possible sur la pointe, tiens 1 s","Redescends lentement, le talon frôle le sol","Une main au mur pour l’équilibre"],
@@ -623,12 +681,12 @@ broadjump:{n:"Saut en longueur pieds joints",cat:"plyo",rt:5,
   why:"Puissance horizontale et réception stable : apprendre à freiner fort sans que les genoux rentrent.",
   cues:["Pieds largeur de hanches, bras en arrière","Saute le plus loin possible vers l’avant","Réception en demi-squat, figée 2 s","Reviens en marchant et recommence"],
   avoid:"Réception jambes tendues ou genoux qui rentrent.",easy:"Saut plus court.",hard:"3 sauts enchaînés sans pause.",
-  anim:{fr:[[P({t:40,l:[78,-25],r:[82,-27],la:[-55,-45],ra:[-60,-50],px:-45}),330,300,"Bras en arrière, pousse loin","out"],[P({t:20,l:[95,10],r:[98,8],la:[90,110],ra:[85,105],lift:30}),330,0,"Ramène les genoux","in"],[P({t:38,l:[80,-25],r:[84,-27],la:[75,85],ra:[70,80],px:45}),0,1100,"Réception figée 2 s"]],th:1}},
+  anim:{fr:[[P({t:40,l:[78,-25],r:[82,-27],la:[-55,-45],ra:[-60,-50],px:-28}),330,300,"Bras en arrière, pousse loin","out"],[P({t:20,l:[95,10],r:[98,8],la:[90,110],ra:[85,105],lift:30}),330,0,"Ramène les genoux","in"],[P({t:38,l:[80,-25],r:[84,-27],la:[75,85],ra:[70,80],px:28}),0,1100,"Réception figée 2 s"]],th:1}},
 hopstick:{n:"Saut 1 jambe + réception figée",cat:"plyo",side:"swap",rt:4.5,uni:1,
   why:"Apprend au genou à encaisser sur une jambe sans plier vers l’intérieur. Clé de la prévention des blessures.",
   cues:["Sur une jambe, saute vers l’avant","Réception sur la même jambe","Fige la position 2 s, genou au-dessus du pied","Recule et recommence"],
   avoid:"Réception jambe tendue.",easy:"Petite distance.",hard:"Saut plus long, en diagonale ou par-dessus un obstacle.",
-  anim:{fr:[[P({t:22,r:[40,-15],l:[10,-70],la:[-40,-20],ra:[-45,-25],px:-30}),330,300,"Saute sur une jambe","out"],[P({t:12,r:[20,-30],l:[30,-60],la:[100,120],ra:[95,115],lift:22}),330,0,"Réception sur la même jambe","in"],[P({t:35,r:[72,-22],l:[15,-75],la:[70,80],ra:[65,75],px:30}),0,1200,"Fige 2 s, genou au-dessus du pied"]],th:2}},
+  anim:{fr:[[P({t:22,r:[40,-15],l:[10,-70],la:[-40,-20],ra:[-45,-25],px:-20}),330,300,"Saute sur une jambe","out"],[P({t:12,r:[20,-30],l:[30,-60],la:[100,120],ra:[95,115],lift:22}),330,0,"Réception sur la même jambe","in"],[P({t:35,r:[72,-22],l:[15,-75],la:[70,80],ra:[65,75],px:20}),0,1200,"Fige 2 s, genou au-dessus du pied"]],th:2}},
 hoplat:{n:"Sauts latéraux 1 jambe",cat:"agil",side:"swap",uni:1,
   why:"Indépendance des jambes et stabilité de cheville dans le plan latéral.",
   cues:["Sur une jambe à côté d’une ligne","Saute de l’autre côté et stabilise","Reviens","Hanche, genou et pied alignés"],
@@ -643,7 +701,7 @@ plank:{n:"Planche",cat:"core",side:"alt",
   why:"Un tronc solide garde les skis sous toi, même en position déséquilibrée.",
   cues:["Sur les avant-bras, coudes sous les épaules","Corps aligné, fesses serrées","Lève une jambe 2 s, puis l’autre","Respire"],
   avoid:"Fesses trop hautes ou dos creusé.",easy:"Sans lever de jambe.",hard:"Bras tendus et toucher d’épaule.",
-  anim:{fr:[[PLK,500,700,"Gainée, fesses serrées"],[P(Object.assign({},PLK,{l:[-100,-100]})),500,900,"Lève la jambe gauche 2 s"],[PLK,500,700,"Gainée, fesses serrées"],[P(Object.assign({},PLK,{r:[-100,-100]})),500,900,"Puis la droite"]],th:0}},
+  anim:{fr:[[PLK,500,1000,""],[P(Object.assign({},PLK,{l:[-100,-100]})),500,2100,"Gainée : lève la jambe gauche 2 s"],[PLK,500,1000,""],[P(Object.assign({},PLK,{r:[-100,-100]})),500,2100,"Puis la droite, fesses serrées"]],th:0}},
 sideplank:{n:"Gainage latéral + rotation",cat:"core",side:"swap",
   why:"Les obliques tiennent l’angulation : hanches vers l’intérieur, buste vers l’extérieur.",
   cues:["Coude sous l’épaule, corps aligné","Bras du dessus vers le ciel","Passe le bras sous le corps en tournant le buste","Hanches hautes tout du long"],
@@ -653,7 +711,7 @@ deadbug:{n:"Dead bug",cat:"core",side:"alt",
   why:"Bras et jambes bougent, le tronc reste fixe : coordination et bas du dos protégé.",
   cues:["Sur le dos, bras vers le plafond, genoux à 90°","Tends une jambe et le bras opposé","Bas du dos collé au sol","Expire en tendant"],
   avoid:"Dos qui se décolle du sol.",easy:"Bouger seulement les jambes.",hard:"Plus lent, 4 s par mouvement.",
-  anim:{fr:[[DB,700,250,"Bas du dos collé au sol"],[P(Object.assign({},DB,{l:[100,100],fl:100,ra:[-95,-95]})),700,450,"Jambe gauche + bras droit"],[DB,700,250,"Bas du dos collé au sol"],[P(Object.assign({},DB,{r:[100,100],fr:100,la:[-95,-95]})),700,450,"Puis l’autre côté"]]}},
+  anim:{fr:[[DB,700,250,""],[P(Object.assign({},DB,{l:[100,100],fl:100,ra:[-95,-95]})),700,1100,"Jambe gauche + bras droit, dos collé"],[DB,700,250,""],[P(Object.assign({},DB,{r:[100,100],fr:100,la:[-95,-95]})),700,1100,"Puis l’autre côté, expire"]],th:0}},
 climber:{n:"Mountain climbers",cat:"core",per:2,
   why:"Cardio et gainage : les genoux bougent vite sous un tronc fixe.",
   cues:["Mains sous les épaules","Ramène un genou vers la poitrine puis alterne","Hanches basses","Rythme régulier et rapide"],
@@ -925,7 +983,7 @@ function openEx(id,rx,ctx){
   document.body.style.overflow="hidden";
   cancelAnimationFrame(raf);
   const svg=$("#anim"),capEl=$("#cap"),cyc=$("#cyc"),ghost=FAST.has(ex.cat);
-  let sim=0,last=performance.now(),capI=-1,tail=null;
+  let sim=0,last=performance.now(),tail=null;const capSt={};
   const loop=now=>{
     const dt=Math.min(64,now-last);last=now;if(!paused)sim+=dt*speed;
     const s=sample(ex,sim),pts=place(ex,s.p),hb=hairBase(pts,s.p);
@@ -934,7 +992,7 @@ function openEx(id,rx,ctx){
     const gh=ghost&&!paused?[sample(ex,sim-55).p,sample(ex,sim-110).p]:null;
     svg.innerHTML=figInner(ex,s.p,{s:pts,a:s.a,tail,ghosts:gh});
     cyc.style.width=((sim%ex._tot)/ex._tot*100).toFixed(1)+"%";
-    if(s.i!==capI){capI=s.i;const c=ex.anim.fr[s.i][3]||"";if(c!==capEl.textContent){capEl.textContent=c;capEl.classList.remove("in");void capEl.offsetWidth;capEl.classList.add("in")}}
+    const c=pacedCap(capSt,ex,s.i,now);if(c!==capEl.textContent){capEl.textContent=c;capEl.classList.remove("in");void capEl.offsetWidth;capEl.classList.add("in")}
     raf=requestAnimationFrame(loop)};
   raf=requestAnimationFrame(loop);
 }
@@ -1062,11 +1120,12 @@ const VXFIX=["go","prep","jambe_g","l_jambe","l_cote","l_tour","l_bloc","l_exo",
 async function vxLoad(keys){const a=audio();if(!a)return;
   if(!VX.list){try{VX.list=new Set(await (await fetch("voix/liste.json")).json())}catch(e){VX.list=new Set()}}
   await Promise.all(keys.filter(k=>VX.list.has(k)&&!VX.buf[k]).map(async k=>{try{const r=await fetch(`voix/${k}.mp3`);if(r.ok)VX.buf[k]=await a.decodeAudioData(await r.arrayBuffer())}catch(e){}}))}
+function primeSpeech(){try{if("speechSynthesis" in window){const u=new SpeechSynthesisUtterance(" ");u.volume=0;speechSynthesis.speak(u)}}catch(e){}}
 function vxStop(){VX.src.forEach(x=>{try{x.stop()}catch(e){}});VX.src=[];try{speechSynthesis.cancel()}catch(e){}}
 function voice(keys,txt){if(!plVoice)return;vxStop();const a=audio();
   if(!a||!keys.every(k=>VX.buf[k])){vxLoad(keys);say(txt);return}
   let t=a.currentTime+.03;keys.forEach(k=>{const b=a.createBufferSource();b.buffer=VX.buf[k];b.connect(a.destination);b.start(t);t+=VX.buf[k].duration+.04;VX.src.push(b)})}
-async function wake(on){try{if(on&&"wakeLock" in navigator){if(!PL.wl)PL.wl=await navigator.wakeLock.request("screen")}else if(!on&&PL.wl){await PL.wl.release();PL.wl=null}}catch(e){}}
+async function wake(on){try{if(on&&"wakeLock" in navigator){if(!PL.wl||PL.wl.released){PL.wl=await navigator.wakeLock.request("screen");PL.wl.addEventListener("release",()=>{PL.wl=null})}}else if(!on&&PL.wl){const w=PL.wl;PL.wl=null;await w.release()}}catch(e){}}
 function plInit(steps,meta){
   const tot=planDur(steps),works=steps.filter(x=>x.kind==="work"&&!x.warm).length;
   PL={on:false,steps,tot,works,meta,i:0,el:0,paused:false,raf:0,lastSec:-1,lastRep:-1,starts:[],sim:0,tail:null,capI:-1,wl:null,rec:{}};
@@ -1074,7 +1133,7 @@ function plInit(steps,meta){
   $("#player").hidden=false;$("#player").dataset.ph="prep";document.body.style.overflow="hidden";
   $("#pl-title").textContent=meta.title;$("#pl-tot").textContent=mmss(tot);$("#pl-el").textContent="0:00";$("#pl-fill").style.width="0";
   $("#pl-voice").setAttribute("aria-pressed",plVoice);$("#pl-conf").hidden=true;
-  vxLoad(VXFIX.concat([...new Set(steps.map(x=>x.ex).filter(Boolean))].flatMap(id=>["n_"+id,"nx_"+id])));
+  PL.loading=vxLoad(VXFIX.concat([...new Set(steps.map(x=>x.ex).filter(Boolean))].flatMap(id=>["n_"+id,"nx_"+id])));
 }
 function openPlayer(k){
   const sid=PLAN[k],s=SES[sid],steps=buildSteps(k);
@@ -1092,11 +1151,13 @@ function openPlayer(k){
 function openItem(id,rx,ctx){
   const steps=itemPlan(id,rx,ctx);
   plInit(steps,{mode:ctx.test?"test":"item",k:ctx.k,i:ctx.i,test:ctx.test,id,title:EX[id].n});
-  plStart();
+  audio();primeSpeech();
+  $("#pl-body").innerHTML=`<div class="pl-end"><p class="muted">Préparation…</p></div>`;
+  const P0=PL;Promise.race([PL.loading,new Promise(r=>setTimeout(r,1500))]).then(()=>{if(PL===P0&&!PL.on&&!$("#player").hidden)plStart()});
 }
 function runView(){
   $("#pl-body").innerHTML=`<div class="pl-run"><div class="pl-head"><span class="pl-chip" id="pl-chip"></span><span class="pl-sub" id="pl-sub"></span></div>
-  <div class="pl-stage" id="pl-stage"><svg ${VB} class="fig" id="pl-fig" role="img" aria-label="Animation de l’exercice"></svg><span class="pl-nl">Ensuite</span></div>
+  <div class="pl-stage" id="pl-stage"><svg ${VB} class="fig" id="pl-fig" role="img" aria-label="Animation de l’exercice"></svg><span class="pl-nl">Ensuite</span><span class="pl-wm" id="pl-wm"></span></div>
   <div class="pl-info"><div class="pl-ring"><svg viewBox="0 0 160 160"><circle class="trk" cx="80" cy="80" r="72"/><circle class="arc" id="pl-arc" cx="80" cy="80" r="72" stroke-dasharray="452.4" stroke-dashoffset="0"/></svg><div class="ctr"><b class="pl-num" id="pl-num"></b><small class="pl-small" id="pl-small"></small></div></div>
   <div class="pl-txt"><div class="pl-name" id="pl-name"></div><div class="pl-cap" id="pl-cap"></div><div class="pl-tip" id="pl-tip"></div></div></div>
   <div class="pl-after" id="pl-after"></div>
@@ -1104,7 +1165,7 @@ function runView(){
   <div class="pl-ctl"><button id="pl-prev" aria-label="Précédent">${ICON.prev}</button><button class="big" id="pl-pp" aria-label="Pause">${ICON.pause}</button><button id="pl-next" aria-label="Suivant">${ICON.next}</button></div></div>`;
 }
 function plStart(){
-  audio();tone(1,.01,0,.0001);voice(["go"],"C’est parti");
+  audio();tone(1,.01,0,.0001);primeSpeech();PL.go=true;
   PL.on=true;PL.i=0;PL.el=0;PL.last=performance.now();runView();enterStep(true);wake(true);
   cancelAnimationFrame(PL.raf);PL.raf=requestAnimationFrame(plLoop);
 }
@@ -1112,7 +1173,7 @@ function nextWorkAfter(i){for(let j=i+1;j<PL.steps.length;j++)if(PL.steps[j].kin
 const sideTxt=x=>x.side?(x.sub&&/côté/.test(x.sub)?(x.side==="G"?" · côté gauche":" · côté droit"):(x.side==="G"?" · jambe gauche":" · jambe droite")):"";
 function enterStep(fx){
   const st_=PL.steps[PL.i];if(!st_)return;const ex=exSide(st_.ex,st_.side),pl=$("#player");
-  pl.dataset.ph=st_.kind;PL.sim=0;PL.capI=-1;PL.tail=null;PL.lastSec=-1;PL.lastRep=-1;
+  pl.dataset.ph=st_.kind;PL.sim=0;PL.capI=-1;PL.capSt={};PL.tail=null;PL.lastSec=-1;PL.lastRep=-1;
   $("#pl-chip").textContent=st_.kind==="work"?(st_.warm?"ÉCHAUFFEMENT":st_.test?"TEST":"GO"):st_.kind==="prep"?"PRÊTE ?":st_.label.toUpperCase();
   const nw=nextWorkAfter(PL.i);
   $("#pl-sub").textContent=st_.kind==="work"?(st_.sub||""):st_.kind==="rest"?`${mmss(st_.dur)} de récup`:`Départ dans ${st_.dur} s`;
@@ -1121,13 +1182,14 @@ function enterStep(fx){
   $("#pl-stage").classList.toggle("next",st_.kind!=="work");
   $("#pl-num").classList.toggle("long",!!st_.open||(!st_.reps&&st_.dur>=60));
   $("#pl-done").hidden=!st_.open;
+  {const lb=st_.label||"";$("#pl-wm").innerHTML=st_.kind!=="rest"?"":/^Change/.test(lb)?`CHANGE<small>de ${/côté/.test(lb)?"côté":"jambe"}</small>`:/^Trot/.test(lb)?"TROT<small>respire</small>":/^Enchaîne/.test(lb)?"VITE<small>enchaîne</small>":/^Prépare/.test(lb)?"PRÊTE ?<small>mets-toi en place</small>":"REPOS<small>respire</small>";}
   $("#pl-after").innerHTML=st_.kind==="work"?(nw?`<span class="th">${thumb(nw.ex)}</span><span>Ensuite : <b>${esc(EX[nw.ex].n)}</b>${esc(sideTxt(nw))}</span>`:`<span>Dernier effort, à fond !</span>`):"";
   if(!fx)return;
   if(st_.kind==="work"){SND.go();if(!st_.warm){const f=$("#pl-flash");f.textContent="GO";f.classList.remove("on");void f.offsetWidth;f.classList.add("on")}else voice(["n_"+st_.ex],ex.n);}
   else if(st_.kind==="rest"){SND.rest();const pv=PL.steps[PL.i-1];
     if(/^Change/.test(st_.label))voice([LABK[st_.label]],st_.label);
     else if(st_.dur>=15||!pv||pv.ex!==st_.ex)voice([LABK[st_.label],"nx_"+st_.ex,st_.side==="G"?"jambe_g":null].filter(Boolean),`${/^(Repos|Enchaîne)$/.test(st_.label)?"":st_.label+". "}Ensuite : ${ex.n}${st_.side==="G"?", jambe gauche":""}`);}
-  else voice(["prep","n_"+st_.ex],`Prépare-toi. ${ex.n}`);
+  else{const g=PL.go;PL.go=false;voice((g?["go"]:[]).concat(["prep","n_"+st_.ex]),`${g?"C’est parti ! ":""}Prépare-toi. ${ex.n}`);}
 }
 function plAdvance(){PL.el=0;PL.i++;if(PL.i>=PL.steps.length){plDone();return}enterStep(true)}
 function plLoop(now){
@@ -1155,12 +1217,12 @@ function plLoop(now){
     const dx=PL.tail[0]-hb[0],dy=PL.tail[1]-hb[1],dd=Math.hypot(dx,dy);if(dd>15)PL.tail=[hb[0]+dx/dd*15,hb[1]+dy/dd*15]}else PL.tail=null;
   const gh=s_.kind==="work"&&FAST.has(ex.cat)&&!PL.paused?[sample(ex,PL.sim-55).p,sample(ex,PL.sim-110).p]:null;
   $("#pl-fig").innerHTML=figInner(ex,smp.p,{s:pts,a:smp.a,tail:PL.tail,ghosts:gh});
-  if(smp.i!==PL.capI){PL.capI=smp.i;$("#pl-cap").textContent=s_.kind==="work"?(ex.anim.fr[smp.i][3]||""):""}
+  {const ct=s_.kind==="work"?pacedCap(PL.capSt,ex,smp.i,now):"",ce=$("#pl-cap");if(ct!==ce.textContent){ce.textContent=ct;ce.classList.remove("in");void ce.offsetWidth;ce.classList.add("in")}}
   PL.raf=requestAnimationFrame(plLoop);
 }
 function plFinishOpen(){if(!PL.on)return;const s_=PL.steps[PL.i];if(s_&&s_.test==="wall")PL.rec.wall=Math.round(PL.el);plAdvance()}
 function plPause(p){PL.paused=p;const b=$("#pl-pp");if(!b)return;b.innerHTML=p?ICON.play:ICON.pause;b.setAttribute("aria-label",p?"Reprendre":"Pause");
-  let pz=$("#pl-pz");if(p&&!pz){$("#pl-stage").insertAdjacentHTML("beforeend",'<div class="pl-paused" id="pl-pz">En pause</div>')}else if(!p&&pz)pz.remove();
+  let pz=$("#pl-pz");if(p&&!pz){$("#pl-stage").insertAdjacentHTML("beforeend",'<div class="pl-paused" id="pl-pz"><b>En pause</b><small>Touche ▶ pour reprendre</small></div>')}else if(!p&&pz)pz.remove();
   if(p)vxStop()}
 function plJump(d){if(!PL.on)return;if(d<0&&PL.el>2){PL.el=0;enterStep(false);return}
   if(d>0){const s_=PL.steps[PL.i];if(s_&&s_.open){plFinishOpen();return}if(PL.i>=PL.steps.length-1){plDone();return}}
@@ -1195,7 +1257,7 @@ document.addEventListener("click",e=>{
   if(ds.play){openPlayer(ds.play);return}
   if(b.id==="pl-start"){plStart();return}
   if(b.id==="pl-done"){plFinishOpen();return}
-  if(b.id==="pl-pp"){plPause(!PL.paused);return}
+  if(b.id==="pl-pp"){plPause(!PL.paused);if(!PL.paused)wake(true);return}
   if(b.id==="pl-prev"){plJump(-1);return}
   if(b.id==="pl-next"){plJump(1);return}
   if(b.id==="pl-x"){if(PL.on){plPause(true);$("#pl-conf").hidden=false}else plClose();return}
@@ -1226,6 +1288,7 @@ document.addEventListener("input",e=>{
     const s=SES.T,chk=(st.checks[k]||[]).length,got=TESTS.filter(t=>st.tests[k][t.id]!=null&&st.tests[k][t.id]!=="").length;
     const p=document.querySelector("#tab-today .prog div");if(p)p.style.width=((chk+got)/(s.items.length+TESTS.length)*100)+"%";}
 });
+document.addEventListener("dblclick",e=>e.preventDefault(),{passive:false});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("#sheet").hidden)closeEx();if(PL.on&&e.key===" "){e.preventDefault();plPause(!PL.paused)}});
 render();
 </script>
