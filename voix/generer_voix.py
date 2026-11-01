@@ -1,7 +1,7 @@
 """Messages vocaux de l'appli avec la voix finale de Baptiste (Fish Audio, réglages du 22/10/26).
 
-Réglages (Documents/VOIX-BAPTISTE-REGLAGES.md) : clone v4, balise [excited], temperature 0.9,
-top_p 0.9, chunk_length 300, normalize false, vitesse 1.0, texte écrit comme on parle.
+Réglages (Documents/VOIX-BAPTISTE-REGLAGES.md) : clone v4, balise [shouting] (ton coach / ordres), temperature 0.9,
+top_p 0.85, chunk_length 300, normalize false, vitesse 1.0, texte écrit comme on parle.
 Pour chaque message : plusieurs prises, contrôle par transcription (faster-whisper),
 on garde la plus fidèle, puis silences coupés et volume normalisé à -16 LUFS (crête -1,5 dB).
 
@@ -21,7 +21,7 @@ FIX = r'C:\Users\bapti\Documents\projet_code\FixNow31\fixnow31\videos\moteur'
 API = 'https://api.fish.audio'
 MODELE_TTS = 's2.1-pro-free'
 CLONE = '3c491d8ae3c5479c9a8a1efa952655a5'  # « Baptiste FixNow31 v4 », voix finale du 22/10/26
-REGLAGES = {'temperature': 0.9, 'top_p': 0.9, 'chunk_length': 300, 'normalize': False,
+REGLAGES = {'temperature': 0.9, 'top_p': 0.85, 'chunk_length': 300, 'normalize': False,
             'latency': 'normal', 'prosody': {'speed': 1.0, 'volume': 0}}
 PRISES, PRISES_MAX, SEUIL = 3, 6, 0.86
 WHISPER = 'small'
@@ -38,21 +38,21 @@ def cle():
 
 # Textes écrits pour l'oreille : phrases courtes, points d'exclamation, nombres en lettres.
 FIXES = {
-    'go': "C'est parti !",
-    'prep': 'Prépare-toi !',
+    'go': "Allez ! En avant, on y va !",
+    'prep': 'Garde à vous ! En position !',
     'jambe_g': 'Jambe gauche !',
-    'l_jambe': 'Change de jambe !',
-    'l_cote': 'Change de côté !',
-    'l_tour': 'Fin du tour !',
-    'l_bloc': 'Récup ! Bloc suivant !',
-    'l_exo': 'Exercice suivant !',
-    'l_prep': 'Prépare-toi !',
-    'l_trot': 'Trottine tranquille !',
-    'l_score': 'Récup ! Retiens bien ton score !',
-    'moitie': "T'es à la moitié !",
-    'dix': 'Plus que dix secondes !',
-    'fin_seance': 'Bravo ! Séance terminée !',
-    'fin_exo': 'Exercice terminé ! Bien joué !',
+    'l_jambe': 'Change de jambe ! Vite !',
+    'l_cote': 'Change de côté ! Vite !',
+    'l_tour': 'Fin du tour ! Repos !',
+    'l_bloc': 'Repos ! Bloc suivant, tiens-toi prête !',
+    'l_exo': 'Exercice suivant ! En position !',
+    'l_prep': 'Garde à vous ! En position !',
+    'l_trot': 'Trot ! Garde le rythme !',
+    'l_score': 'Repos ! Retiens bien ton score !',
+    'moitie': 'Moitié ! Ne lâche rien !',
+    'dix': 'Dix secondes ! Tiens bon !',
+    'fin_seance': 'Terminé ! Bravo championne ! Rompez !',
+    'fin_exo': 'Exercice terminé ! Rompez !',
     'fin_test': 'Test terminé ! Note ton score !',
 }
 DIT = {'Fractionné 30/30': 'Fractionné trente trente', 'Gainage latéral + rotation': 'Gainage latéral avec rotation'}
@@ -71,8 +71,8 @@ def manifeste():
     clips = dict(FIXES)
     for id_, nom in re.findall(r'^([a-z0-9_]+):\{n:"([^"]+)"', html, flags=re.M):
         dit = parle(nom)
-        clips[f'n_{id_}'] = dit + ' !'
-        clips[f'nx_{id_}'] = f'Ensuite {dit[0].lower() + dit[1:]} !'
+        clips[f'n_{id_}'] = dit + ' ! Allez, on y va !'
+        clips[f'nx_{id_}'] = f'Ensuite, {dit[0].lower() + dit[1:]} ! Prépare-toi !'
     return clips
 
 
@@ -110,7 +110,7 @@ def duree(wav):
 
 
 def prise(texte, sortie, k):
-    corps = dict(REGLAGES, text='[excited] ' + texte, reference_id=CLONE, format='wav', sample_rate=44100)
+    corps = dict(REGLAGES, text='[shouting] ' + texte, reference_id=CLONE, format='wav', sample_rate=44100)
     for essai in range(4):
         try:
             r = requests.post(f'{API}/v1/tts', json=corps, timeout=120,

@@ -1,0 +1,1085 @@
+{
+ "go": {
+  "texte": "Allez ! En avant, on y va !",
+  "score": 1.0,
+  "entendu": "Allez, en avant on y va !",
+  "prises": 3,
+  "scores": [
+   0.955,
+   1.0,
+   1.0
+  ]
+ },
+ "prep": {
+  "texte": "Garde à vous ! En position !",
+  "score": 1.0,
+  "entendu": "garde à vous en position",
+  "prises": 3,
+  "scores": [
+   1.0,
+   0.957,
+   0.957
+  ]
+ },
+ "jambe_g": {
+  "texte": "Jambe gauche !",
+  "score": 1.0,
+  "entendu": "Jambe gauche.",
+  "prises": 5,
+  "scores": [
+   1.0,
+   0.696,
+   1.0,
+   0.923,
+   1.0
+  ]
+ },
+ "l_jambe": {
+  "texte": "Change de jambe ! Vite !",
+  "score": 1.0,
+  "entendu": "Change de jambe. Vite!",
+  "prises": 3,
+  "scores": [
+   1.0,
+   1.0,
+   1.0
+  ]
+ },
+ "l_cote": {
+  "texte": "Change de côté ! Vite !",
+  "score": 1.0,
+  "entendu": "change de côté vite.",
+  "prises": 3,
+  "scores": [
+   1.0,
+   0.622,
+   1.0
+  ]
+ },
+ "l_tour": {
+  "texte": "Fin du tour ! Repos !",
+  "score": 1.0,
+  "entendu": "Fin du tour. Repos.",
+  "prises": 3,
+  "scores": [
+   1.0,
+   1.0,
+   1.0
+  ]
+ },
+ "l_bloc": {
+  "texte": "Repos ! Bloc suivant, tiens-toi prête !",
+  "score": 1.0,
+  "entendu": "Repos, bloc suivant, tiens-toi prête.",
+  "prises": 3,
+  "scores": [
+   0.957,
+   0.941,
+   1.0
+  ]
+ },
+ "l_exo": {
+  "texte": "Exercice suivant ! En position !",
+  "score": 1.0,
+  "entendu": "exercice suivant, en position.",
+  "prises": 3,
+  "scores": [
+   1.0,
+   1.0,
+   1.0
+  ]
+ },
+ "l_prep": {
+  "texte": "Garde à vous ! En position !",
+  "score": 1.0,
+  "entendu": "garde à vous en position",
+  "prises": 3,
+  "scores": [
+   1.0,
+   0.957,
+   0.735
+  ]
+ },
+ "l_trot": {
+  "texte": "Trot ! Garde le rythme !",
+  "score": 0.95,
+  "entendu": "Trop ! Garde le rythme !",
+  "prises": 3,
+  "scores": [
+   0.95,
+   0.769,
+   0.95
+  ]
+ },
+ "l_score": {
+  "texte": "Repos ! Retiens bien ton score !",
+  "score": 1.0,
+  "entendu": "Repos, retiens bien ton score.",
+  "prises": 3,
+  "scores": [
+   0.912,
+   1.0,
+   1.0
+  ]
+ },
+ "moitie": {
+  "texte": "Moitié ! Ne lâche rien !",
+  "score": 1.0,
+  "entendu": "Moitié, ne lâche rien !",
+  "prises": 3,
+  "scores": [
+   1.0,
+   1.0,
+   0.857
+  ]
+ },
+ "dix": {
+  "texte": "Dix secondes ! Tiens bon !",
+  "score": 1.0,
+  "entendu": "10 secondes ! Tiens bon !",
+  "prises": 3,
+  "scores": [
+   1.0,
+   1.0,
+   1.0
+  ]
+ },
+ "fin_seance": {
+  "texte": "Terminé ! Bravo championne ! Rompez !",
+  "score": 0.984,
+  "entendu": "Terminé ! Bravo championne ! Rompé !",
+  "prises": 3,
+  "scores": [
+   0.984,
+   0.984,
+   0.984
+  ]
+ },
+ "fin_exo": {
+  "texte": "Exercice terminé ! Rompez !",
+  "score": 0.933,
+  "entendu": "exercice terminé.  Rampé.",
+  "prises": 3,
+  "scores": [
+   0.72,
+   0.933,
+   0.933
+  ]
+ },
+ "fin_test": {
+  "texte": "Test terminé ! Note ton score !",
+  "score": 1.0,
+  "entendu": "Test terminé, note ton score.",
+  "prises": 3,
+  "scores": [
+   1.0,
+   0.881,
+   0.877
+  ]
+ },
+ "n_echauf": {
+  "texte": "Échauffement dynamique ! Allez, on y va !",
+  "score": 0.973,
+  "entendu": "Et chauffement dynamique ! Allez on y va !",
+  "prises": 3,
+  "scores": [
+   0.757,
+   0.973,
+   1.0
+  ]
+ },
+ "nx_echauf": {
+  "texte": "Ensuite, échauffement dynamique ! Prépare-toi !",
+  "score": 1.0,
+  "entendu": "Ensuite, échauffement dynamique, prépare-toi.",
+  "prises": 3,
+  "scores": [
+   1.0,
+   0.871,
+   0.93
+  ]
+ },
+ "n_revlunge": {
+  "texte": "Fente arrière lente ! Allez, on y va !",
+  "score": 0.955,
+  "entendu": "Fontes arrière lente. Allez, on y va.",
+  "prises": 3,
+  "scores": [
+   0.879,
+   0.767,
+   0.955
+  ]
+ },
+ "nx_revlunge": {
+  "texte": "Ensuite, fente arrière lente ! Prépare-toi !",
+  "score": 0.911,
+  "entendu": "Ensuite, font derrière l'ente, prépare-toi.",
+  "prises": 3,
+  "scores": [
+   0.911,
+   0.875,
+   0.872
+  ]
+ },
+ "n_jj": {
+  "texte": "Jumping jacks ! Allez, on y va !",
+  "score": 1.0,
+  "entendu": "Jumping Jacks ! Allez, on y va !",
+  "prises": 3,
+  "scores": [
+   0.923,
+   1.0,
+   0.885
+  ]
+ },
+ "nx_jj": {
+  "texte": "Ensuite, jumping jacks ! Prépare-toi !",
+  "score": 1.0,
+  "entendu": "Ensuite, jumping jacks, prépare-toi.",
+  "prises": 3,
+  "scores": [
+   1.0,
+   1.0,
+   1.0
+  ]
+ },
+ "n_swing_fb": {
+  "texte": "Balanciers avant arrière ! Allez, on y va !",
+  "score": 0.933,
+  "entendu": "Balance-y avant, arrière. Allez, on y va.",
+  "prises": 3,
+  "scores": [
+   0.946,
+   0.933,
+   0.933
+  ]
+ },
+ "nx_swing_fb": {
+  "texte": "Ensuite, balanciers avant arrière ! Prépare-toi !",
+  "score": 0.953,
+  "entendu": "Ensuite, balancez avant-arrière, prépare-toi.",
+  "prises": 3,
+  "scores": [
+   0.953,
+   0.953,
+   0.953
+  ]
+ },
+ "n_swing_lat": {
+  "texte": "Balanciers latéraux ! Allez, on y va !",
+  "score": 0.925,
+  "entendu": "balancier la terreau. Allez, on y va.",
+  "prises": 3,
+  "scores": [
+   0.925,
+   0.879,
+   0.836
+  ]
+ },
+ "nx_swing_lat": {
+  "texte": "Ensuite, balanciers latéraux ! Prépare-toi !",
+  "score": 0.897,
+  "entendu": "Ensuite, balancez la terreau. Prépare-toi.",
+  "prises": 3,
+  "scores": [
+   0.897,
+   0.88,
+   0.897
+  ]
+ },
+ "n_squat": {
+  "texte": "Squat ! Allez, on y va !",
+  "score": 1.0,
+  "entendu": "Squat, allez on y va.",
+  "prises": 3,
+  "scores": [
+   0.947,
+   1.0,
+   1.0
+  ]
+ },
+ "nx_squat": {
+  "texte": "Ensuite, squat ! Prépare-toi !",
+  "score": 1.0,
+  "entendu": "Ensuite, squat, prépare-toi.",
+  "prises": 3,
+  "scores": [
+   1.0,
+   1.0,
+   1.0
+  ]
+ },
+ "n_walklunge": {
+  "texte": "Fentes avant alternées ! Allez, on y va !",
+  "score": 0.943,
+  "entendu": "Fante avant alternée. Allez, on y va.",
+  "prises": 3,
+  "scores": [
+   0.8,
+   0.757,
+   0.943
+  ]
+ },
+ "nx_walklunge": {
+  "texte": "Ensuite, fentes avant alternées ! Prépare-toi !",
+  "score": 0.914,
+  "entendu": "Ensuite font avant alterner. Prépare-toi.",
+  "prises": 3,
+  "scores": [
+   0.914,
+   0.914,
+   0.825
+  ]
+ },
+ "n_highknees": {
+  "texte": "Montées de genoux ! Allez, on y va !",
+  "score": 0.951,
+  "entendu": "Montez de genoux ! Allez, on y va !",
+  "prises": 3,
+  "scores": [
+   0.951,
+   0.951,
+   0.867
+  ]
+ },
+ "nx_highknees": {
+  "texte": "Ensuite, montées de genoux ! Prépare-toi !",
+  "score": 0.959,
+  "entendu": "Ensuite, montez de genoux. Prépare-toi.",
+  "prises": 3,
+  "scores": [
+   0.959,
+   0.959,
+   0.933
+  ]
+ },
+ "n_bulgare": {
+  "texte": "Squat bulgare ! Allez, on y va !",
+  "score": 0.943,
+  "entendu": "Squad bulgar, allez on y va !",
+  "prises": 3,
+  "scores": [
+   0.943,
+   0.943,
+   0.943
+  ]
+ },
+ "nx_bulgare": {
+  "texte": "Ensuite, squat bulgare ! Prépare-toi !",
+  "score": 0.985,
+  "entendu": "Ensuite, squat bulgar, prépare-toi.",
+  "prises": 3,
+  "scores": [
+   0.954,
+   0.985,
+   0.954
+  ]
+ },
+ "n_bulgjump": {
+  "texte": "Squat bulgare sauté ! Allez, on y va !",
+  "score": 0.954,
+  "entendu": "Squad bulgar sauté. Allez, on y va.",
+  "prises": 3,
+  "scores": [
+   0.857,
+   0.954,
+   0.954
+  ]
+ },
+ "nx_bulgjump": {
+  "texte": "Ensuite, squat bulgare sauté ! Prépare-toi !",
+  "score": 0.961,
+  "entendu": "Ensuite, squad bulgar sauté, prépare-toi.",
+  "prises": 3,
+  "scores": [
+   0.987,
+   0.961,
+   0.921
+  ]
+ },
+ "n_skatersq": {
+  "texte": "Squat patineur ! Allez, on y va !",
+  "score": 0.964,
+  "entendu": "Squad patineur, allez on y va !",
+  "prises": 3,
+  "scores": [
+   0.964,
+   0.964,
+   0.964
+  ]
+ },
+ "nx_skatersq": {
+  "texte": "Ensuite, squat patineur ! Prépare-toi !",
+  "score": 0.971,
+  "entendu": "Ensuite, squad patineur, prépare-toi.",
+  "prises": 3,
+  "scores": [
+   0.971,
+   0.899,
+   0.928
+  ]
+ },
+ "n_pistolfull": {
+  "texte": "Pistol squat ! Allez, on y va !",
+  "score": 0.962,
+  "entendu": "Pistol Squad, allez, on y va !",
+  "prises": 3,
+  "scores": [
+   0.962,
+   0.962,
+   0.759
+  ]
+ },
+ "nx_pistolfull": {
+  "texte": "Ensuite, pistol squat ! Prépare-toi !",
+  "score": 0.969,
+  "entendu": "Ensuite, pistol squad, prépare-toi.",
+  "prises": 3,
+  "scores": [
+   0.969,
+   0.969,
+   0.969
+  ]
+ },
+ "n_rdl1": {
+  "texte": "Soulevé de terre sur une jambe ! Allez, on y va !",
+  "score": 1.0,
+  "entendu": "soulevé de terre sur une jambe. Allez, on y va.",
+  "prises": 3,
+  "scores": [
+   0.957,
+   1.0,
+   1.0
+  ]
+ },
+ "nx_rdl1": {
+  "texte": "Ensuite, soulevé de terre sur une jambe ! Prépare-toi !",
+  "score": 0.99,
+  "entendu": "Ensuite, soulevez de terre sur une jambe, prépare-toi.",
+  "prises": 3,
+  "scores": [
+   0.902,
+   0.99,
+   0.99
+  ]
+ },
+ "n_kneedrive": {
+  "texte": "Fente et genou explosif ! Allez, on y va !",
+  "score": 0.947,
+  "entendu": "Fante et genoux explosifs. Allez, on y va.",
+  "prises": 3,
+  "scores": [
+   0.947,
+   0.88,
+   0.773
+  ]
+ },
+ "nx_kneedrive": {
+  "texte": "Ensuite, fente et genou explosif ! Prépare-toi !",
+  "score": 0.977,
+  "entendu": "Ensuite, fente et genoux explosifs, prépare-toi.",
+  "prises": 3,
+  "scores": [
+   0.874,
+   0.977,
+   0.874
+  ]
+ },
+ "n_lunge_lat": {
+  "texte": "Fente latérale ! Allez, on y va !",
+  "score": 0.964,
+  "entendu": "Fante latérale ! Allez on y va !",
+  "prises": 3,
+  "scores": [
+   0.964,
+   0.964,
+   0.964
+  ]
+ },
+ "nx_lunge_lat": {
+  "texte": "Ensuite, fente latérale ! Prépare-toi !",
+  "score": 1.0,
+  "entendu": "Ensuite, fente latérale, prépare-toi.",
+  "prises": 3,
+  "scores": [
+   0.943,
+   0.87,
+   1.0
+  ]
+ },
+ "n_hambridge": {
+  "texte": "Pont ischios sur une jambe ! Allez, on y va !",
+  "score": 0.923,
+  "entendu": "Bon, Iskios sur une jambe ! Allez, on y va !",
+  "prises": 3,
+  "scores": [
+   0.831,
+   0.795,
+   0.923
+  ]
+ },
+ "nx_hambridge": {
+  "texte": "Ensuite, pont ischios sur une jambe ! Prépare-toi !",
+  "score": 0.911,
+  "entendu": "Ensuite, ponvisquio sur une jambe, prépare-toi.",
+  "prises": 3,
+  "scores": [
+   0.889,
+   0.911,
+   0.848
+  ]
+ },
+ "n_sidestar": {
+  "texte": "Gainage latéral étoile ! Allez, on y va !",
+  "score": 0.958,
+  "entendu": "Génage latéral étoile. Allez on y va.",
+  "prises": 3,
+  "scores": [
+   0.93,
+   0.868,
+   0.958
+  ]
+ },
+ "nx_sidestar": {
+  "texte": "Ensuite, gainage latéral étoile ! Prépare-toi !",
+  "score": 0.952,
+  "entendu": "Ensuite, guénage latéral étoile, prépare-toi.",
+  "prises": 3,
+  "scores": [
+   0.899,
+   0.952,
+   0.874
+  ]
+ },
+ "n_copen": {
+  "texte": "Planche de Copenhague ! Allez, on y va !",
+  "score": 0.971,
+  "entendu": "Pranche de Copenhague. Allez on y va.",
+  "prises": 3,
+  "scores": [
+   1.0,
+   0.971,
+   1.0
+  ]
+ },
+ "nx_copen": {
+  "texte": "Ensuite, planche de Copenhague ! Prépare-toi !",
+  "score": 0.975,
+  "entendu": "Ensuite, planche de copénage, prépare-toi.",
+  "prises": 3,
+  "scores": [
+   0.975,
+   1.0,
+   1.0
+  ]
+ },
+ "n_wallsit": {
+  "texte": "Chaise contre le mur ! Allez, on y va !",
+  "score": 1.0,
+  "entendu": "chaise contre le mur. Allez, on y va !",
+  "prises": 3,
+  "scores": [
+   1.0,
+   0.943,
+   1.0
+  ]
+ },
+ "nx_wallsit": {
+  "texte": "Ensuite, chaise contre le mur ! Prépare-toi !",
+  "score": 1.0,
+  "entendu": "Ensuite, chaise contre le mur. Prépare-toi.",
+  "prises": 3,
+  "scores": [
+   1.0,
+   1.0,
+   1.0
+  ]
+ },
+ "n_calf": {
+  "texte": "Mollets sur une jambe ! Allez, on y va !",
+  "score": 0.971,
+  "entendu": "mollé sur une jambe ! Allez on y va !",
+  "prises": 3,
+  "scores": [
+   0.914,
+   0.971,
+   0.899
+  ]
+ },
+ "nx_calf": {
+  "texte": "Ensuite, mollets sur une jambe ! Prépare-toi !",
+  "score": 0.963,
+  "entendu": "Ensuite, moller sur une jambe. Prépare-toi.",
+  "prises": 3,
+  "scores": [
+   0.963,
+   0.963,
+   0.963
+  ]
+ },
+ "n_hipthrust": {
+  "texte": "Pont fessier sur une jambe ! Allez, on y va !",
+  "score": 0.897,
+  "entendu": "Pour fêter sur une jambe. Allez on y va.",
+  "prises": 3,
+  "scores": [
+   0.923,
+   0.8,
+   0.897
+  ]
+ },
+ "nx_hipthrust": {
+  "texte": "Ensuite, pont fessier sur une jambe ! Prépare-toi !",
+  "score": 0.957,
+  "entendu": "Ensuite, pour fessier sur une jambe, prépare-toi.",
+  "prises": 3,
+  "scores": [
+   0.957,
+   0.899,
+   0.967
+  ]
+ },
+ "n_skater": {
+  "texte": "Bonds du patineur ! Allez, on y va !",
+  "score": 0.967,
+  "entendu": "Bon du patineur, allez on y va !",
+  "prises": 3,
+  "scores": [
+   0.967,
+   0.885,
+   0.967
+  ]
+ },
+ "nx_skater": {
+  "texte": "Ensuite, bonds du patineur ! Prépare-toi !",
+  "score": 0.972,
+  "entendu": "Ensuite, bon du patineur, prépare-toi.",
+  "prises": 3,
+  "scores": [
+   0.972,
+   0.972,
+   0.946
+  ]
+ },
+ "n_squatjump": {
+  "texte": "Squat sauté ! Allez, on y va !",
+  "score": 1.0,
+  "entendu": "Squat sauté ! Allez on y va !",
+  "prises": 3,
+  "scores": [
+   1.0,
+   0.96,
+   0.96
+  ]
+ },
+ "nx_squatjump": {
+  "texte": "Ensuite, squat sauté ! Prépare-toi !",
+  "score": 1.0,
+  "entendu": "Ensuite, squat sauté, prépare-toi.",
+  "prises": 3,
+  "scores": [
+   1.0,
+   1.0,
+   1.0
+  ]
+ },
+ "n_pogo": {
+  "texte": "Rebonds chevilles ! Allez, on y va !",
+  "score": 0.918,
+  "entendu": "Rebonne cheville ! Allez on y va !",
+  "prises": 3,
+  "scores": [
+   0.918,
+   0.918,
+   0.881
+  ]
+ },
+ "nx_pogo": {
+  "texte": "Ensuite, rebonds chevilles ! Prépare-toi !",
+  "score": 0.987,
+  "entendu": "Ensuite, rebondes-chevilles. Prépare-toi.",
+  "prises": 3,
+  "scores": [
+   0.96,
+   0.987,
+   0.987
+  ]
+ },
+ "n_linehop": {
+  "texte": "Sauts latéraux rapides ! Allez, on y va !",
+  "score": 0.904,
+  "entendu": "Saut la terre au rapide ! Allez on y va !",
+  "prises": 3,
+  "scores": [
+   0.861,
+   0.873,
+   0.904
+  ]
+ },
+ "nx_linehop": {
+  "texte": "Ensuite, sauts latéraux rapides ! Prépare-toi !",
+  "score": 0.892,
+  "entendu": "Ensuite, sur la terreau rapide, prépare-toi.",
+  "prises": 3,
+  "scores": [
+   0.892,
+   0.892,
+   0.892
+  ]
+ },
+ "n_hurdle": {
+  "texte": "Sauts par dessus la bouteille ! Allez, on y va !",
+  "score": 0.965,
+  "entendu": "Sous par-dessus la bouteille ! Allez on y va !",
+  "prises": 3,
+  "scores": [
+   0.965,
+   0.977,
+   0.977
+  ]
+ },
+ "nx_hurdle": {
+  "texte": "Ensuite, sauts par dessus la bouteille ! Prépare-toi !",
+  "score": 0.948,
+  "entendu": "Ensuite, sois par dessus la bouteille, prépare-toi.",
+  "prises": 3,
+  "scores": [
+   0.948,
+   0.938,
+   0.948
+  ]
+ },
+ "n_splitjump": {
+  "texte": "Fentes sautées ! Allez, on y va !",
+  "score": 0.893,
+  "entendu": "Formes sautées. Allez, on y va.",
+  "prises": 4,
+  "scores": [
+   0.8,
+   0.786,
+   0.621,
+   0.893
+  ]
+ },
+ "nx_splitjump": {
+  "texte": "Ensuite, fentes sautées ! Prépare-toi !",
+  "score": 0.97,
+  "entendu": "Ensuite, fente sautée. Prépare-toi.",
+  "prises": 5,
+  "scores": [
+   0.97,
+   0.97,
+   0.882,
+   0.97,
+   0.97
+  ]
+ },
+ "n_broadjump": {
+  "texte": "Saut en longueur pieds joints ! Allez, on y va !",
+  "score": 0.905,
+  "entendu": "Soit un longueur pied joint ! Allez, on y va !",
+  "prises": 3,
+  "scores": [
+   0.878,
+   0.864,
+   0.905
+  ]
+ },
+ "nx_broadjump": {
+  "texte": "Ensuite, saut en longueur pieds joints ! Prépare-toi !",
+  "score": 0.915,
+  "entendu": "Ensuite, sauf en longueur péjointe, prépare-toi.",
+  "prises": 3,
+  "scores": [
+   0.915,
+   0.891,
+   0.894
+  ]
+ },
+ "n_hopstick": {
+  "texte": "Saut sur une jambe et réception figée ! Allez, on y va !",
+  "score": 0.99,
+  "entendu": "saute sur une jambe et réception figée. Allez, on y va.",
+  "prises": 3,
+  "scores": [
+   0.99,
+   0.951,
+   1.0
+  ]
+ },
+ "nx_hopstick": {
+  "texte": "Ensuite, saut sur une jambe et réception figée ! Prépare-toi !",
+  "score": 0.947,
+  "entendu": "Ensuite, sors sur une jambe et réception figée, prépare-toi.",
+  "prises": 3,
+  "scores": [
+   0.974,
+   0.947,
+   0.947
+  ]
+ },
+ "n_hoplat": {
+  "texte": "Sauts latéraux sur une jambe ! Allez, on y va !",
+  "score": 0.878,
+  "entendu": "Sola terreau sur une jambe. Allez, on y va.",
+  "prises": 3,
+  "scores": [
+   0.8,
+   0.878,
+   0.878
+  ]
+ },
+ "nx_hoplat": {
+  "texte": "Ensuite, sauts latéraux sur une jambe ! Prépare-toi !",
+  "score": 0.917,
+  "entendu": "Ensuite, sur la terreau sur une jambe, prépare-toi.",
+  "prises": 3,
+  "scores": [
+   0.917,
+   0.917,
+   0.928
+  ]
+ },
+ "n_tuck": {
+  "texte": "Sauts genoux poitrine ! Allez, on y va !",
+  "score": 0.886,
+  "entendu": "Sous-je-nous, Poitrine ? Allez, on y va !",
+  "prises": 3,
+  "scores": [
+   0.794,
+   0.899,
+   0.886
+  ]
+ },
+ "nx_tuck": {
+  "texte": "Ensuite, sauts genoux poitrine ! Prépare-toi !",
+  "score": 0.95,
+  "entendu": "Ensuite, sur Genoux Poitrine, prépare-toi.",
+  "prises": 3,
+  "scores": [
+   0.95,
+   0.805,
+   0.886
+  ]
+ },
+ "n_plank": {
+  "texte": "Planche ! Allez, on y va !",
+  "score": 1.0,
+  "entendu": "Planche ! Allez, on y va !",
+  "prises": 3,
+  "scores": [
+   0.952,
+   0.905,
+   1.0
+  ]
+ },
+ "nx_plank": {
+  "texte": "Ensuite, planche ! Prépare-toi !",
+  "score": 1.0,
+  "entendu": "Ensuite, planche, prépare-toi.",
+  "prises": 3,
+  "scores": [
+   1.0,
+   1.0,
+   0.909
+  ]
+ },
+ "n_sideplank": {
+  "texte": "Gainage latéral avec rotation ! Allez, on y va !",
+  "score": 1.0,
+  "entendu": "Gainage latéral avec rotation. Allez, on y va.",
+  "prises": 3,
+  "scores": [
+   0.965,
+   1.0,
+   0.965
+  ]
+ },
+ "nx_sideplank": {
+  "texte": "Ensuite, gainage latéral avec rotation ! Prépare-toi !",
+  "score": 0.94,
+  "entendu": "Ensuite, gainage latéral avec rotation. Très part toi.",
+  "prises": 3,
+  "scores": [
+   0.959,
+   0.94,
+   0.969
+  ]
+ },
+ "n_deadbug": {
+  "texte": "Dead bug ! Allez, on y va !",
+  "score": 1.0,
+  "entendu": "Dead bug, allez on y va.",
+  "prises": 3,
+  "scores": [
+   1.0,
+   1.0,
+   1.0
+  ]
+ },
+ "nx_deadbug": {
+  "texte": "Ensuite, dead bug ! Prépare-toi !",
+  "score": 1.0,
+  "entendu": "Ensuite, dead bug, prépare-toi.",
+  "prises": 3,
+  "scores": [
+   0.982,
+   1.0,
+   1.0
+  ]
+ },
+ "n_climber": {
+  "texte": "Mountain climbers ! Allez, on y va !",
+  "score": 1.0,
+  "entendu": "Mountain climbers ! Allez on y va !",
+  "prises": 3,
+  "scores": [
+   1.0,
+   1.0,
+   1.0
+  ]
+ },
+ "nx_climber": {
+  "texte": "Ensuite, mountain climbers ! Prépare-toi !",
+  "score": 1.0,
+  "entendu": "Ensuite, Mountain Climbers, prépare-toi.",
+  "prises": 3,
+  "scores": [
+   0.88,
+   0.986,
+   1.0
+  ]
+ },
+ "n_shuffle": {
+  "texte": "Pas chassés bas ! Allez, on y va !",
+  "score": 0.966,
+  "entendu": "Pas chasser bas. Allez, on y va.",
+  "prises": 3,
+  "scores": [
+   0.966,
+   0.897,
+   0.906
+  ]
+ },
+ "nx_shuffle": {
+  "texte": "Ensuite, pas chassés bas ! Prépare-toi !",
+  "score": 0.971,
+  "entendu": "Ensuite, pas chasser bas. Prépare-toi.",
+  "prises": 3,
+  "scores": [
+   0.971,
+   0.971,
+   0.914
+  ]
+ },
+ "n_latsquat": {
+  "texte": "Sauts latéraux en squat ! Allez, on y va !",
+  "score": 0.914,
+  "entendu": "Solatéraux en squat. Allez, on y va.",
+  "prises": 3,
+  "scores": [
+   0.853,
+   0.861,
+   0.914
+  ]
+ },
+ "nx_latsquat": {
+  "texte": "Ensuite, sauts latéraux en squat ! Prépare-toi !",
+  "score": 0.907,
+  "entendu": "Ensuite, sur la terreau en squat, prépare-toi.",
+  "prises": 3,
+  "scores": [
+   0.927,
+   0.907,
+   0.907
+  ]
+ },
+ "n_balance": {
+  "texte": "Équilibre sur une jambe ! Allez, on y va !",
+  "score": 1.0,
+  "entendu": "équilibre sur une jambe. Allez, on y va.",
+  "prises": 3,
+  "scores": [
+   0.886,
+   1.0,
+   1.0
+  ]
+ },
+ "nx_balance": {
+  "texte": "Ensuite, équilibre sur une jambe ! Prépare-toi !",
+  "score": 1.0,
+  "entendu": "Ensuite, équilibre sur une jambe.  Prépare-toi.",
+  "prises": 3,
+  "scores": [
+   1.0,
+   1.0,
+   1.0
+  ]
+ },
+ "n_run_easy": {
+  "texte": "Footing ! Allez, on y va !",
+  "score": 1.0,
+  "entendu": "FOOTING ! Allez on y va !",
+  "prises": 3,
+  "scores": [
+   1.0,
+   0.905,
+   1.0
+  ]
+ },
+ "nx_run_easy": {
+  "texte": "Ensuite, footing ! Prépare-toi !",
+  "score": 0.982,
+  "entendu": "Ensuite, footings, prépare-toi.",
+  "prises": 3,
+  "scores": [
+   0.982,
+   0.982,
+   0.982
+  ]
+ },
+ "n_run_int": {
+  "texte": "Fractionné trente trente ! Allez, on y va !",
+  "score": 0.987,
+  "entendu": "fractionner 30-30. Allez, on y va.",
+  "prises": 3,
+  "scores": [
+   0.987,
+   0.987,
+   0.987
+  ]
+ },
+ "nx_run_int": {
+  "texte": "Ensuite, fractionné trente trente ! Prépare-toi !",
+  "score": 0.989,
+  "entendu": "Ensuite, fractionnez 30-30. Prépare-toi.",
+  "prises": 3,
+  "scores": [
+   0.989,
+   0.989,
+   0.989
+  ]
+ },
+ "n_run_hill": {
+  "texte": "Sprints en côte ! Allez, on y va !",
+  "score": 0.982,
+  "entendu": "Sprint en cote. Allez, on y va.",
+  "prises": 3,
+  "scores": [
+   0.871,
+   0.9,
+   0.982
+  ]
+ },
+ "nx_run_hill": {
+  "texte": "Ensuite, sprints en côte ! Prépare-toi !",
+  "score": 0.986,
+  "entendu": "Ensuite, sprint en côte, prépare-toi.",
+  "prises": 3,
+  "scores": [
+   0.986,
+   0.849,
+   0.986
+  ]
+ }
+}
