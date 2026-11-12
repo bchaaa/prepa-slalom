@@ -1081,5 +1081,27 @@
    0.849,
    0.986
   ]
+ },
+ "n_glutebridge": {
+  "texte": "Pont fessier ! Allez, on y va !",
+  "score": 0.941,
+  "entendu": "Bon fessier, allez on y va !",
+  "prises": 3,
+  "scores": [
+   0.941,
+   0.731,
+   0.298
+  ]
+ },
+ "nx_glutebridge": {
+  "texte": "Ensuite, pont fessier ! Prépare-toi !",
+  "score": 0.952,
+  "entendu": "Ensuite, bon fessier, prépare-toi.",
+  "prises": 3,
+  "scores": [
+   0.952,
+   0.952,
+   0.952
+  ]
  }
 }
